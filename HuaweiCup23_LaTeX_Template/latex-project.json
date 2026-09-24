@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "contest": "generic",
+  "main_tex": "HuaweiCup23_LaTeX_Template.tex",
+  "template": {
+    "path": "D:\\cpi\\cpi\\HuaweiCup23_LaTeX_Template",
+    "source": "supplied Word paper template converted locally",
+    "version": "23rd Huawei Cup",
+    "sha256": "860858b07d2963e3bea94d564e2b6f369918aa4cd39579c66dd489b77b1cb694"
+  },
+  "template_files": {
+    "figures/contest-logo.png": "d5cae3c2fd0b2574eb742657589489e95412fdcdc1169c4a57e5888f3b6fac69",
+    "figures/cpipc-logo.png": "e438706ce5feb8acab7c64693f4f0f7f87f984d8a32f7c970618d41423932faa",
+    "figures/huawei-logo.png": "99ced3af8924baa45321dfb0367001f15c3645538d1da37ecb6fb78026fe8b49",
+    "figures/university-logo.png": "dd545f7fdbb7b8121bab603062e6ee25f5328419f3841b38a9865be10e117f6c",
+    "HuaweiCup23_LaTeX_Template.tex": "e35710835aa25811c10179d440ea1eddd0c453af3cf27ad7a95ca100c987cac6",
+    "README.md": "1f51e402e292d8c879d7b45043e38e96e608f6a434a12bd82989bcbe7811b74d"
+  },
+  "resource_bindings": [],
+  "created_at": "2026-09-22T18:04:50.796561+00:00"
+}

@@ -1,0 +1,260 @@
+{
+  "status": "P1_SLICE_EXECUTED_NOT_INDEPENDENTLY_REVIEWED",
+  "generated_utc": "2026-09-23T11:52:36.697241+00:00",
+  "reproduction_command": "\"D:\\cpi\\cpi\\.venv\\Scripts\\python.exe\" -m src.experiments.q1_p1",
+  "scope": {
+    "origin": "O01",
+    "destination": "S001",
+    "cargo_ids": [
+      "S001-MED-01",
+      "S001-MED-02",
+      "S001-WAT-01"
+    ],
+    "total_cargo_rows_in_source": 80,
+    "candidate_count": 21,
+    "selected_sorties": 1,
+    "objective": "minimize number of sorties",
+    "pareto_or_sensitivity_run": false
+  },
+  "source_field_audit": {
+    "dispatch_workbook": {
+      "coordinate_fields": [
+        "Longitude (degrees)",
+        "Latitude (degrees)"
+      ],
+      "elevation_field": "Elevation (m)"
+    },
+    "cargo_sheet": "Cargo Box List",
+    "cargo_fields": [
+      "Cargo Box ID",
+      "Service Area ID",
+      "Mass per Box (kg)",
+      "Volume per Box (m³)"
+    ],
+    "aircraft_sheet": "Data",
+    "units": {
+      "mass": "kg",
+      "volume": "m^3",
+      "distance": "m",
+      "speed": "m/s",
+      "energy": "kWh",
+      "time": "s",
+      "return_reserve": "fraction from source percent"
+    },
+    "cargo_values": [
+      {
+        "id": "S001-MED-01",
+        "mass_kg": 3.0,
+        "volume_m3": 0.012
+      },
+      {
+        "id": "S001-MED-02",
+        "mass_kg": 3.0,
+        "volume_m3": 0.012
+      },
+      {
+        "id": "S001-WAT-01",
+        "mass_kg": 14.0,
+        "volume_m3": 0.027
+      }
+    ],
+    "nodes": {
+      "O01": {
+        "longitude_deg": 109.2308517,
+        "latitude_deg": 23.0085095,
+        "elevation_m": 127.7
+      },
+      "S001": {
+        "longitude_deg": 109.2432319,
+        "latitude_deg": 23.0335927,
+        "elevation_m": 154.0
+      }
+    },
+    "aircraft_model_ids": [
+      "A",
+      "B",
+      "C"
+    ],
+    "aircraft_parameters": {
+      "A": {
+        "payload_capacity_kg": 25.0,
+        "loading_volume_m3": 0.06,
+        "unloaded_range_m": 25000.0,
+        "full_range_m": 20000.0,
+        "usable_energy_kwh": 4.5,
+        "return_reserve_fraction": 0.2,
+        "cruise_speed_m_s": 12.0,
+        "ascent_speed_m_s": 3.0,
+        "descent_speed_m_s": 2.5,
+        "ascent_efficiency": 0.72,
+        "preparation_time_s": 300.0,
+        "loading_time_per_box_s": 30.0,
+        "base_handover_time_s": 150.0,
+        "handover_time_per_box_s": 30.0
+      },
+      "B": {
+        "payload_capacity_kg": 30.0,
+        "loading_volume_m3": 0.073,
+        "unloaded_range_m": 28000.0,
+        "full_range_m": 16000.0,
+        "usable_energy_kwh": 4.0,
+        "return_reserve_fraction": 0.2,
+        "cruise_speed_m_s": 15.0,
+        "ascent_speed_m_s": 3.0,
+        "descent_speed_m_s": 2.5,
+        "ascent_efficiency": 0.72,
+        "preparation_time_s": 300.0,
+        "loading_time_per_box_s": 30.0,
+        "base_handover_time_s": 150.0,
+        "handover_time_per_box_s": 30.0
+      },
+      "C": {
+        "payload_capacity_kg": 80.0,
+        "loading_volume_m3": 0.25,
+        "unloaded_range_m": 26000.0,
+        "full_range_m": 12000.0,
+        "usable_energy_kwh": 8.0,
+        "return_reserve_fraction": 0.2,
+        "cruise_speed_m_s": 15.0,
+        "ascent_speed_m_s": 2.5,
+        "descent_speed_m_s": 2.0,
+        "ascent_efficiency": 0.72,
+        "preparation_time_s": 300.0,
+        "loading_time_per_box_s": 30.0,
+        "base_handover_time_s": 180.0,
+        "handover_time_per_box_s": 36.0
+      }
+    }
+  },
+  "dem": {
+    "driver": "GTiff",
+    "width": 1486,
+    "height": 1309,
+    "bands": 1,
+    "dtype": "float32",
+    "nodata": null,
+    "crs": "EPSG:4326",
+    "transform": [
+      0.00027777777777777393,
+      0.0,
+      109.0326388888889,
+      0.0,
+      -0.0002777777777777777,
+      23.22486111111111,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "bounds": [
+      109.0326388888889,
+      22.86125,
+      109.44541666666667,
+      23.22486111111111
+    ],
+    "resolution_degrees": [
+      0.00027777777777777393,
+      0.0002777777777777777
+    ],
+    "area_or_point": "Point"
+  },
+  "coordinate_method": {
+    "projected_crs": "UTM zone derived from origin longitude, WGS84 / UTM zone 49N (EPSG:32649)",
+    "distance": "Euclidean distance between projected endpoints; raster route sampled along projected straight segment, including crossed cells"
+  },
+  "energy_model": {
+    "source": "analysis/problems/Q1.md conditional baseline",
+    "alpha": 1.0,
+    "beta": 1.0,
+    "formula_horizontal": "E_use * d / L(q)",
+    "formula_ascent": "(M+q)*9.81*h/(3.6e6*eta_up)",
+    "return_payload_kg": 0.0,
+    "reserve_source": "Minimum Return Battery Level (%) from aircraft workbook"
+  },
+  "solver": {
+    "solver": "scipy.optimize.milp (HiGHS)",
+    "status": 0,
+    "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+    "objective_sorties": 1,
+    "mip_gap": 0.0,
+    "mip_node_count": 1
+  },
+  "validation": {
+    "box_exactly_once": {
+      "S001-MED-01": 1,
+      "S001-MED-02": 1,
+      "S001-WAT-01": 1
+    },
+    "all_boxes_covered_once": true,
+    "mass_kg_total": 20.0,
+    "volume_m3_total": 0.051000000000000004,
+    "physical_checks_pass": true,
+    "outbound_uses_batch_payload_return_uses_zero": true,
+    "route_leg_audit": [
+      {
+        "sortie_id": "P1-01",
+        "cargo_ids": [
+          "S001-MED-01",
+          "S001-MED-02",
+          "S001-WAT-01"
+        ],
+        "outbound_payload_kg": 20.0,
+        "return_payload_kg": 0.0,
+        "outbound_range_fraction": 0.12593767845944823,
+        "return_range_fraction": 0.1174611039477546,
+        "outbound_distance_m": 3053.9887026416195,
+        "return_distance_m": 3053.9887026416195,
+        "outbound_terrain_max_m": 223.05661010742188,
+        "return_terrain_max_m": 223.05661010742188,
+        "outbound_dem_cells_sampled": 136,
+        "return_dem_cells_sampled": 136,
+        "outbound_energy_kwh": 1.0569585095541842,
+        "return_energy_kwh": 0.9632489433205595,
+        "energy_kwh_recomputed": 2.020207452874744,
+        "return_soc_percent_recomputed": 74.7474068390657,
+        "round_trip_flight_and_handover_s": 906.1703918789086,
+        "total_operation_time_s_including_prep_loading": 1296.1703918789085
+      }
+    ],
+    "max_single_box_mass_kg": 14.0,
+    "empty_payload_round_trip_by_model": {
+      "A": {
+        "energy_kwh": 1.1615391576120684,
+        "return_soc_percent": 74.18801871973182,
+        "reserve_fraction": 0.2,
+        "feasible": true
+      },
+      "B": {
+        "energy_kwh": 0.9302354807971849,
+        "return_soc_percent": 76.74411298007038,
+        "reserve_fraction": 0.2,
+        "feasible": true
+      },
+      "C": {
+        "energy_kwh": 1.9413921689327858,
+        "return_soc_percent": 75.73259788834018,
+        "reserve_fraction": 0.2,
+        "feasible": true
+      }
+    },
+    "candidate_enumeration_complete": true,
+    "candidate_theoretical_upper_bound": 21,
+    "feasible_candidates_enumerated": 21
+  },
+  "runtime": {
+    "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "rasterio": "1.5.1",
+    "pyproj": "3.8.0"
+  },
+  "inputs_sha256": {
+    "questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Dispatch Center and Service Areas.xlsx": "f1d23ec1c7463de50a012ca878e05e1d088cbe890808725f7dcfd2f438fc89a5",
+    "questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Supply Demand and Delivery Deadlines.xlsx": "90c65bf4b9afcc69ed639e85378d31b29c81c052fd123d2fd2127c181c0573a0",
+    "questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Transport Drone Data.xlsx": "7278fca19d06a8ace75e310245d0a359a27b7f5c973c1ea604008ea97f88b980",
+    "questions\\Data\\Zhenlong Township Geospatial Data\\Geospatial Data for Zhenlong Township and Surrounding Areas\\Digital Elevation Model (DEM) Data\\30 m DEM for Zhenlong Township and Surrounding Areas.tif": "741fe6de0b2bcaffd0f4007f574ee698d46197094f52cc954b532c4f90fc7c03"
+  },
+  "outputs": {
+    "csv": "results\\tables\\q1_p1_batches.csv"
+  }
+}

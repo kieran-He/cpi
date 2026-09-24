@@ -1,0 +1,2 @@
+﻿Sortie ID,Service Area ID,Model ID,Cargo Box ID List,Total Mass (kg),Total Volume (m³),Round-Trip Time (s),Sortie Energy (kWh),Return SOC (%)
+P1-01,S001,C,"S001-MED-01, S001-MED-02, S001-WAT-01",20.0,0.051000000000000004,906.1703918789086,2.020207452874744,74.7474068390657

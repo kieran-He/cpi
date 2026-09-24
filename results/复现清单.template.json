@@ -1,0 +1,39 @@
+{
+  "status": "template",
+  "project_root": "D:/cpi/cpi",
+  "contest": {
+    "name": "待确认",
+    "edition": "待确认",
+    "official_rules_url": "待补充"
+  },
+  "runtime": {
+    "language": "待确认",
+    "command": "待填写：从仓库根目录执行的唯一复现命令",
+    "started_at": "待填写",
+    "finished_at": "待填写",
+    "exit_code": null,
+    "dependency_versions": {}
+  },
+  "randomness": {
+    "seed": null,
+    "notes": "无随机过程时明确记录；有随机过程时固定并写入代码"
+  },
+  "inputs": [
+    {
+      "path": "questions/",
+      "sha256": "待计算",
+      "role": "题目与原始数据"
+    }
+  ],
+  "parameters": {},
+  "outputs": {
+    "tables": [],
+    "figures": [],
+    "flowcharts": []
+  },
+  "verification": {
+    "model_contract": "analysis/model_contract.md",
+    "checks": [],
+    "reviewers": []
+  }
+}

@@ -1,0 +1,26 @@
+.DS_Store
+Thumbs.db
+
+# Python / MATLAB caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.asv
+
+# Local scratch space; reproducible outputs should be committed.
+results/_tmp/
+figures/_preview/
+paper/_build/
+*.bak
+
+# LaTeX build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc

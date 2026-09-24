@@ -1,0 +1,312 @@
+% The 23rd Huawei Cup China Post-Graduate Mathematical Contest in Modeling
+% LaTeX template converted from the supplied Word paper template.
+% Compile with XeLaTeX or LuaLaTeX.
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,top=3.0cm,bottom=1.75cm,left=2.25cm,right=2.25cm,footskip=1.9cm]{geometry}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{lmodern}
+  \newcommand{\stxinwei}{\sffamily}
+  \newcommand{\lishu}{\rmfamily}
+  \newcommand{\tnr}{\rmfamily}
+\else
+  \usepackage{fontspec}
+  \usepackage{xeCJK}
+  \setmainfont{Times New Roman}
+  \setCJKmainfont{SimSun}
+  \newfontfamily\stxinwei{STXinwei}
+  \newfontfamily\lishu{LiSu}
+  \newfontfamily\tnr{Times New Roman}
+\fi
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{HuaweiRed}{HTML}{D71920}
+\definecolor{ContestGreen}{HTML}{2B9B2B}
+\definecolor{RuleGray}{HTML}{777777}
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\baselinestretch}{1.08}
+
+% Four numbered heading levels: section, subsection, subsubsection, paragraph.
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\captionsetup{font=small,labelfont=bf,labelsep=period}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries}{\thesection}{0.7em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}
+  {\normalfont\small\bfseries}{\theparagraph}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.1em}{0.45em}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\titlespacing*{\subsubsection}{0pt}{0.65em}{0.25em}
+\titlespacing*{\paragraph}{0pt}{0.55em}{0.2em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{cover}{%
+  \fancyhf{}
+  \fancyfoot[C]{%
+    {\stxinwei\fontsize{12}{14}\selectfont
+      China Postgraduate Innovation \& Practice Competitions\\[-0.1em]}
+    {\normalfont\fontsize{9}{11}\selectfont 0}%
+  }
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+% ---------- Editable paper metadata ----------
+\newcommand{\University}{Your University}
+\newcommand{\TeamNumber}{Your Team Number}
+\newcommand{\TeamMemberOne}{First Author}
+\newcommand{\TeamMemberTwo}{Second Author}
+\newcommand{\TeamMemberThree}{Third Author}
+\newcommand{\PaperTitle}{Your Paper Title}
+\newcommand{\AbstractText}{}
+\newcommand{\Keywords}{}
+
+\newcommand{\ContestTitle}{%
+  {\stxinwei\fontsize{22}{27}\selectfont\bfseries
+    The 23rd “Huawei Cup” China Post-Graduate\\[-0.05em]
+    Mathematical Contest in Modeling}%
+}
+
+\newcommand{\CoverInfoTable}{%
+  {\normalfont\fontsize{18}{25}\selectfont\bfseries
+   \setlength{\arrayrulewidth}{0.75pt}
+   \setlength{\tabcolsep}{0pt}
+   \renewcommand{\arraystretch}{1.15}
+   \begin{tabular}{@{}p{3.25cm}p{11.25cm}@{}}
+     University & \hrulefill\\ \hline
+     Team & \hrulefill\\
+     Number & \hrulefill\\ \hline
+     \multirow{3}{3.25cm}{\centering Team\\Members} & 1.\ \hrulefill\\
+       & 2.\ \hrulefill\\
+       & 3.\ \hrulefill\\ \hline
+   \end{tabular}}
+}
+
+\newcommand{\DocCoverPage}{%
+  \begin{center}
+    \begin{tabular}{@{}c@{\hspace{0.5cm}}c@{\hspace{0.5cm}}c@{\hspace{0.5cm}}c@{}}
+      \includegraphics[width=102pt,height=65pt]{figures/cpipc-logo.png} &
+      \includegraphics[width=78.21819pt,height=75.27273pt]{figures/contest-logo.png} &
+      \includegraphics[width=79.44pt,height=79.44pt]{figures/huawei-logo.png} &
+      \includegraphics[width=68.16pt,height=64.32pt]{figures/university-logo.png}\\
+    \end{tabular}\par
+    \vspace{1.65cm}
+    {\stxinwei\fontsize{18}{22}\selectfont\bfseries
+      China Postgraduate Innovation \& Practice Competitions\\[0.25em]}
+    \ContestTitle
+    \vspace{1.55cm}
+    \CoverInfoTable
+  \end{center}
+}
+
+\newcommand{\DocAbstractPage}{%
+  \vspace{0.2cm}
+  \begin{center}
+    \ContestTitle
+  \end{center}
+  \vspace{1.45cm}
+  {\lishu\fontsize{18}{22}\selectfont
+    {\tnr Title}{\lishu ：}\hspace{0.8cm}\rule{8.7cm}{0.4pt}\\[0.2cm]
+    \begin{center}{\tnr Abstract}{\lishu ：}\end{center}
+    \vspace{3.2cm}
+    \noindent {\tnr Keywords}{\lishu ：}\par
+  }
+  \ifx\AbstractText\empty\else
+    \vspace{0.4em}\noindent\AbstractText\par
+  \fi
+  \ifx\Keywords\empty\else
+    \noindent\Keywords\par
+  \fi
+}
+
+\begin{document}
+
+\pagenumbering{arabic}
+\setcounter{page}{0}
+\thispagestyle{cover}
+\DocCoverPage
+\clearpage
+\DocAbstractPage
+\clearpage
+
+% ---------- Table of contents ----------
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+% ---------- Main text ----------
+\section{Introduction}
+\subsection{Background and Motivation}
+Describe the real-world background and explain why the problem is important.
+
+\subsection{Objectives and Contributions}
+State the research objectives and summarize the main contributions in a concise list.
+
+\subsubsection{Research Questions}
+List the questions that the model is designed to answer.
+
+\paragraph{Contribution Statement}
+Explain the specific methodological or practical contribution in one focused paragraph.
+
+\section{Problem Restatement and Data Description}
+\subsection{Problem Restatement}
+Restate each subproblem in precise mathematical language without copying the original
+question verbatim.
+
+\subsection{Data Sources and Preprocessing}
+Describe the data source, sample size, units, missing-value treatment, normalization,
+and any other preprocessing steps.
+
+\subsubsection{Data Quality Checks}
+Report outlier detection, consistency checks, and the criteria used to retain or remove
+observations.
+
+\paragraph{Notation}
+Define the symbols used throughout the paper. For example, $x_i$ denotes the value of
+the $i$-th decision variable and $\mathcal{X}$ denotes the feasible set.
+
+\section{Assumptions and Model Formulation}
+\subsection{Modeling Assumptions}
+List assumptions and explain why each is reasonable for the problem.
+
+\subsection{Variables and Parameters}
+Define all decision variables, state variables, parameters, and units before using them.
+
+\subsubsection{Objective Function}
+Present the optimization objective and explain its interpretation.
+
+\begin{equation}
+  \min_{x \in \mathcal{X}}\; f(x)
+  \label{eq:objective}
+\end{equation}
+
+\paragraph{Constraints}
+Give the model constraints and explain the meaning of their bounds and domains.
+
+\section{Solution Method}
+\subsection{Algorithm Overview}
+Describe the overall solution procedure and include a flowchart when it improves clarity.
+
+\subsection{Detailed Algorithm}
+Give sufficient detail for the method to be reproduced, including initialization,
+termination criteria, parameter settings, and computational complexity when relevant.
+
+\subsubsection{Numerical Implementation}
+Record the software environment, solver, random seed, and important implementation choices.
+
+\paragraph{Reproducibility Note}
+Provide the command, configuration, or repository information needed to reproduce the results.
+
+\section{Results and Discussion}
+\subsection{Baseline Results}
+Present the main results and compare them with a baseline or benchmark.
+
+\subsection{Figures and Figure Captions}
+Every figure must be numbered, have an informative caption below it, and be cited in the
+main text. Use a caption that explains the plotted quantity, units, and experimental setting.
+For example, Fig.~\ref{fig:overall-framework} shows the overall workflow.
+
+\begin{figure}[H]
+  \centering
+  % Replace the placeholder with, for example:
+  % \includegraphics[width=0.82\linewidth]{figures/flow_overall_model.png}
+  \fbox{\rule{0pt}{4cm}\rule{0.82\linewidth}{0pt}}
+  \caption{Overall framework of the proposed modeling and solution procedure.}
+  \label{fig:overall-framework}
+\end{figure}
+
+\subsection{Tables and Table Captions}
+Table captions are placed above tables in this template. Each table must be numbered,
+have clear column headings and units, and be cited in the main text.
+
+\begin{table}[H]
+  \centering
+  \caption{Definition of the main variables and parameters}
+  \label{tab:notation}
+  \begin{tabularx}{0.9\textwidth}{@{}lXl@{}}
+    \toprule
+    Symbol & Description & Unit \\
+    \midrule
+    $x_i$ & Decision variable for item $i$ & -- \\
+    $c_i$ & Cost or coefficient associated with item $i$ & unit \\
+    $\mathcal{X}$ & Feasible solution set & -- \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{Validation and Sensitivity Analysis}
+Evaluate the model using independent data, alternative parameter settings, cross-validation,
+or other appropriate tests. Explain which conclusions are robust.
+
+\subsubsection{Sensitivity to Key Parameters}
+Show how the results change when the most influential parameters are varied.
+
+\paragraph{Error and Robustness Analysis}
+Discuss uncertainty, error sources, limitations, and the conditions under which the model may fail.
+
+\section{Conclusions}
+Summarize the main findings, answer the research questions, and state practical implications
+and possible future improvements.
+
+% ---------- References ----------
+\clearpage
+\phantomsection
+\section*{References}
+\addcontentsline{toc}{section}{References}
+Use author--year or numbered citations consistently. Every reference listed below should
+be cited in the text, for example, \cite{example-paper}. Replace the sample entries with
+verified sources before submission.
+
+\begin{thebibliography}{99}
+  \bibitem{example-paper}
+  Author, A. A. (Year).
+  Title of the article.
+  \textit{Journal Name}, volume(issue), pages.
+
+  \bibitem{example-book}
+  Author, B. B. (Year).
+  \textit{Title of the Book}.
+  Publisher.
+\end{thebibliography}
+
+% ---------- Optional appendix ----------
+\appendix
+\section{Supplementary Derivations}
+Place lengthy derivations, additional proofs, parameter tables, or supplementary results here.
+
+\section{Additional Figures and Tables}
+Place supporting figures and tables here when they are not essential to the main argument.
+
+\end{document}

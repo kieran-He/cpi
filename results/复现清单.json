@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-24T02:16:39.593558+00:00",
+  "random_seed": 0,
+  "input_files": [
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Dispatch Center and Service Areas.xlsx",
+      "sha256": "f1d23ec1c7463de50a012ca878e05e1d088cbe890808725f7dcfd2f438fc89a5",
+      "bytes": 11867
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Supply Demand and Delivery Deadlines.xlsx",
+      "sha256": "90c65bf4b9afcc69ed639e85378d31b29c81c052fd123d2fd2127c181c0573a0",
+      "bytes": 18412
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Transport Drone Data.xlsx",
+      "sha256": "7278fca19d06a8ace75e310245d0a359a27b7f5c973c1ea604008ea97f88b980",
+      "bytes": 11324
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Zhenlong Township Geospatial Data\\Geospatial Data for Zhenlong Township and Surrounding Areas\\Digital Elevation Model (DEM) Data\\30 m DEM for Zhenlong Township and Surrounding Areas.tif",
+      "sha256": "741fe6de0b2bcaffd0f4007f574ee698d46197094f52cc954b532c4f90fc7c03",
+      "bytes": 7867096
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Results Submission Template.xlsx",
+      "sha256": "009c02d1dc549d619a4db848dfa3d309933187df0a5d21e740ab66b9ee5e929a",
+      "bytes": 22158
+    },
+    {
+      "path": "D:\\cpi\\cpi\\analysis\\problems\\Q1.md",
+      "sha256": "5ba020e4e80fa5117c6bf82e5990613fcc785dbd8b973e10cbceb8fa4b265425",
+      "bytes": 10749
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\models\\q1_full.py",
+      "sha256": "a2ae52d7ebc17eb097522fb3fc48c798d88c9ee8e05179bc554ca8808040e553",
+      "bytes": 17975
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q1_full.py",
+      "sha256": "1f477611b2d1009bc13a4b29828eb72f83c1c61211beea60dd64d08bc79535af",
+      "bytes": 29727
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q1_full_report.py",
+      "sha256": "256e9ea7933301a9901544a662da834f7df8cd1f4f4dc758ee1ca72c2a364773",
+      "bytes": 30693
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\visualization\\q1_full_figures.py",
+      "sha256": "5e1787041ceffd876333a8eb8f9512292a5c34020350482941138d1a28e25570",
+      "bytes": 13184
+    },
+    {
+      "path": "D:\\cpi\\cpi\\pyproject.toml",
+      "sha256": "eb5a2a6836ae7263e5ab5fc4ce18ca5f9afe45ca07f3f013853667e512bb8d79",
+      "bytes": 256
+    },
+    {
+      "path": "D:\\cpi\\cpi\\uv.lock",
+      "sha256": "d2c4c993024aab9caa5c657a266c38a0e7b99532142759b38718bea4d9249ed3",
+      "bytes": 201413
+    }
+  ],
+  "runtime": {
+    "name": "python",
+    "version": "3.12.14",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "dependencies": {}
+  },
+  "key_parameters": {
+    "scenarios": 27,
+    "rho": [
+      0.2,
+      0.3,
+      0.4
+    ],
+    "alpha": [
+      0.9,
+      1.0,
+      1.1
+    ],
+    "beta": [
+      0.9,
+      1.0,
+      1.1
+    ],
+    "milp_time_limit_seconds": 600,
+    "max_solves_per_scenario": 100000,
+    "q1_energy_model": "conditional baseline",
+    "checkpoint_algorithm": "q1-exact-epsilon-certificate-v2"
+  },
+  "reproduce_command": "& \"D:\\Research\\tools\\uv\\uv.exe\" run --locked python -m src.experiments.q1_full --scenario <one-unstarted-key> --time-limit 600 --max-solves 100000 --max-scenarios 1 --resume; repeat for the 10 unstarted keys; then run q1_full_report and q1_full_figures"
+}
