@@ -1,0 +1,226 @@
+{
+  "q1_fig01_mass_profile": {
+    "claim": "The 80-box demand uses four discrete payload masses.",
+    "evidence": "Frequency of every original cargo-box mass.",
+    "archetype": "quantitative grid",
+    "chart_type": "discrete frequency dot plot",
+    "source": [
+      "q1_full_input_boxes.csv"
+    ],
+    "size_inches": [
+      3.5,
+      2.55
+    ],
+    "caption": "Frequency distribution of the 80 original cargo-box masses. Mass is discrete in the supplied data; points report exact counts rather than a fitted continuous density. Descriptive data only; no uncertainty intervals or inferential tests are applicable. Source: q1_full_input_boxes.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig02_mass_volume": {
+    "claim": "Mass and volume are distinct loading dimensions across cargo classes.",
+    "evidence": "All 80 original mass-volume pairs, grouped by cargo class.",
+    "archetype": "quantitative grid",
+    "chart_type": "categorical scatter plot",
+    "source": [
+      "q1_full_input_boxes.csv"
+    ],
+    "size_inches": [
+      3.5,
+      2.8
+    ],
+    "caption": "Mass-volume pairs for all 80 cargo boxes, with marker and color identifying cargo class. No jitter or smoothing is applied, so plotted coordinates remain the supplied values. Descriptive data only; no inferential fit is implied. Source: q1_full_input_boxes.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig03_area_demand": {
+    "claim": "Cargo demand is concentrated unevenly across 15 service areas.",
+    "evidence": "Exact box count for every service area.",
+    "archetype": "quantitative grid",
+    "chart_type": "ordered lollipop plot",
+    "source": [
+      "q1_full_input_areas.csv"
+    ],
+    "size_inches": [
+      3.5,
+      4.35
+    ],
+    "caption": "Exact number of cargo boxes assigned to each of the 15 service areas, ordered by demand. Each dot is one area; labels give exact counts. No uncertainty interval is applicable. Source: q1_full_input_areas.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig04_candidate_reduction": {
+    "claim": "Physical filtering and dominance screening reduce the enumerated batch pool.",
+    "evidence": "Possible, physically feasible, and retained candidate counts in all 27 scenarios.",
+    "archetype": "quantitative grid",
+    "chart_type": "stage-wise profile with empirical IQR",
+    "source": [
+      "q1_full_scenario_status.csv"
+    ],
+    "size_inches": [
+      3.5,
+      3.15
+    ],
+    "caption": "Candidate counts through the three enumeration stages for 27 parameter scenarios. Thin lines are individual scenarios; the dark line is the median and the shaded band is the empirical 25th-75th percentile range across scenarios (not a confidence interval). The vertical axis is log-scaled. Source: q1_full_scenario_status.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig05_epsilon_certification": {
+    "claim": "The exact Pareto front certifies every epsilon-grid record as feasible or infeasible.",
+    "evidence": "Resolved epsilon records by primary objective across the 18 feasible scenarios.",
+    "archetype": "quantitative grid",
+    "chart_type": "horizontal stacked bars",
+    "source": [
+      "q1_full_epsilon_status.csv",
+      "q1_full_scenario_status.csv"
+    ],
+    "size_inches": [
+      3.5,
+      2.85
+    ],
+    "caption": "Counts of epsilon-grid records certified feasible or infeasible by the exact subset Pareto DP, grouped by primary objective and pooled over 18 globally feasible parameter scenarios. The nine globally infeasible scenarios are excluded from this epsilon-grid summary. These are exact optimization certificates, not sampled observations. Source: q1_full_epsilon_status.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig06_frontier_cardinality": {
+    "claim": "The number of nondominated plans depends on the safety and energy parameters.",
+    "evidence": "Exact Pareto-front cardinality over the 3 \u00d7 3 alpha-beta grid at each return reserve.",
+    "archetype": "quantitative grid",
+    "chart_type": "faceted annotated heatmap",
+    "source": [
+      "q1_full_pareto_sample.csv",
+      "q1_full_scenario_status.csv"
+    ],
+    "size_inches": [
+      6.1,
+      2.45
+    ],
+    "caption": "Cardinality of the complete exact nondominated objective set for each (alpha, beta) combination, faceted by return reserve rho. Gray cells marked X are scenarios proven globally infeasible; integer annotations are exact front sizes. Source: q1_full_pareto_sample.csv and q1_full_scenario_status.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig07_capacity_envelope": {
+    "claim": "Maximum safe payload varies by service area and aircraft model.",
+    "evidence": "All 45 model-area capacity calculations at the baseline parameters.",
+    "archetype": "quantitative grid",
+    "chart_type": "annotated capacity heatmap",
+    "source": [
+      "q1_full_baseline_capacity.csv"
+    ],
+    "size_inches": [
+      6.1,
+      2.55
+    ],
+    "caption": "Maximum safe payload (kg) for each aircraft model and service area under the baseline parameter setting (rho=0.20, alpha=1.0, beta=1.0). Cell annotations are exact computed capacities; color encodes the same quantity. Source: q1_full_baseline_capacity.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig08_baseline_pareto": {
+    "claim": "The baseline exact frontier exposes the trade-off among sorties, energy, and operation time.",
+    "evidence": "All distinct nondominated objective vectors for the baseline scenario.",
+    "archetype": "quantitative grid",
+    "chart_type": "three pairwise objective scatter panels",
+    "source": [
+      "q1_full_pareto_sample.csv",
+      "q1_full_formal_batches.csv"
+    ],
+    "size_inches": [
+      6.1,
+      3.4
+    ],
+    "caption": "Pairwise projections of every distinct objective vector on the complete baseline Pareto front. The star denotes the selected balanced representative; the diamond denotes the minimum-energy endpoint. Points are deterministic optimization plans, not replicates; no error bars or statistical tests apply. Source: q1_full_pareto_sample.csv and q1_full_formal_batches.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig09_sortie_manifest": {
+    "claim": "The representative plan partitions the 80 boxes into 18 physically defined sorties.",
+    "evidence": "Cargo-class mass composition of each baseline sortie.",
+    "archetype": "quantitative grid",
+    "chart_type": "horizontal stacked bars",
+    "source": [
+      "q1_full_baseline_batches.csv",
+      "q1_full_input_boxes.csv"
+    ],
+    "size_inches": [
+      6.1,
+      3.9
+    ],
+    "caption": "Mass composition by cargo class for each of the 18 sorties in the baseline representative plan. Stack segments sum to the exact sortie payload; all 80 boxes are assigned once. No uncertainty interval is applicable. Source: q1_full_baseline_batches.csv and q1_full_input_boxes.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  },
+  "q1_fig10_energy_sensitivity": {
+    "claim": "Energy assumptions and return reserve jointly affect energy and feasibility.",
+    "evidence": "Representative-plan energy change versus baseline across all 27 parameter scenarios.",
+    "archetype": "quantitative grid",
+    "chart_type": "faceted diverging heatmap",
+    "source": [
+      "q1_full_sensitivity.csv"
+    ],
+    "size_inches": [
+      6.1,
+      2.5
+    ],
+    "caption": "Change in representative total energy relative to the baseline plan across the full parameter grid, faceted by return reserve rho. Each feasible tile shows the exact energy difference in kWh; gray X tiles are scenarios proven globally infeasible. No statistical uncertainty is implied. Source: q1_full_sensitivity.csv.",
+    "backend": "Python / Matplotlib",
+    "formats": [
+      "PDF vector",
+      "SVG editable text",
+      "PNG 600 dpi",
+      "grayscale PNG"
+    ],
+    "statistical_note": "Deterministic optimization outputs or complete descriptive records; no sampling-based CI or hypothesis tests."
+  }
+}

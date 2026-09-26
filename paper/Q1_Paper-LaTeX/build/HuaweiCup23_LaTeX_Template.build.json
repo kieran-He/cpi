@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-25T08:26:10.471747+00:00",
+  "passed": true,
+  "main_tex": "HuaweiCup23_LaTeX_Template.tex",
+  "project_root": "D:\\cpi\\cpi\\paper\\Q1_Paper-LaTeX",
+  "source_sha256": "db43e25febe0a0a0bb3b89529c09f9cec61d0a33ca7e3744dab359fb73b3962c",
+  "compiled_source_sha256": "db43e25febe0a0a0bb3b89529c09f9cec61d0a33ca7e3744dab359fb73b3962c",
+  "post_build_source_sha256": "db43e25febe0a0a0bb3b89529c09f9cec61d0a33ca7e3744dab359fb73b3962c",
+  "pdf_sha256": "3efc53d44e473404571ee09ff73c25e4a8573d9b3fd24e3ba1780f3a6e7f68d7",
+  "project_manifest_sha256": "4144b5a86f4a99210aa00fc5002d2e1047b148edba2cf2d876ec9528b9d060fc",
+  "engine": "xelatex",
+  "tools": {
+    "latexmk": {
+      "path": "C:\\texlive\\2026\\bin\\windows\\latexmk.EXE",
+      "version": "perl: warning: Setting locale failed."
+    },
+    "xelatex": {
+      "path": "C:\\texlive\\2026\\bin\\windows\\xelatex.EXE",
+      "version": "XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "C:\\texlive\\2026\\bin\\windows\\latexmk.EXE",
+        "-norc",
+        "-gg",
+        "-xelatex",
+        "-e",
+        "$xelatex = 'xelatex -no-shell-escape %O %S'",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-outdir=build",
+        "HuaweiCup23_LaTeX_Template.tex"
+      ],
+      "cwd": "D:\\cpi\\cpi\\paper\\Q1_Paper-LaTeX",
+      "returncode": 0,
+      "duration_seconds": 7.688
+    }
+  ],
+  "warnings": [],
+  "allowed_warnings": [],
+  "warning_override": {
+    "patterns": [],
+    "reason": null
+  },
+  "issues": [],
+  "reproduce": "D:\\cpi\\cpi\\.venv\\Scripts\\python.exe C:\\Users\\Administrator\\.codex\\skills\\math-modeling\\tools\\latex\\scripts\\latex_paper.py build D:\\cpi\\cpi\\paper\\Q1_Paper-LaTeX\\HuaweiCup23_LaTeX_Template.tex --engine xelatex --timeout 180 --publish D:\\cpi\\cpi\\paper\\Q1_Paper.pdf --overwrite"
+}

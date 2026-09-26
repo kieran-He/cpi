@@ -1,0 +1,624 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-24T14:07:48.890326+00:00",
+  "random_seed": 20260924,
+  "input_files": [
+    {
+      "path": "C:\\Users\\Administrator\\.codex\\skills\\math-modeling\\tools\\figure\\scripts\\export_figure.py",
+      "sha256": "40ce3bcd31dfc4b33e38a1cb180c75dc730ee6fa046f04934c79f285c6f890c1",
+      "bytes": 6450
+    },
+    {
+      "path": "D:\\cpi\\cpi\\analysis\\model_contract.md",
+      "sha256": "cde855ef3405daa4b7878e635a790ab0b03cd909ba3132d03a14165a0c3678ae",
+      "bytes": 5098
+    },
+    {
+      "path": "D:\\cpi\\cpi\\analysis\\problems\\Q2.md",
+      "sha256": "77f2e5ecc86e2919d738d1636fdf1461fbde25485341bebaba8b2590912c53ba",
+      "bytes": 22179
+    },
+    {
+      "path": "D:\\cpi\\cpi\\analysis\\validation\\q2_miniature_milp.log",
+      "sha256": "171a9d4206dfd82af3234a99b4a5c77ee983b834f6b03421b914aa54cb462c1c",
+      "bytes": 633
+    },
+    {
+      "path": "D:\\cpi\\cpi\\analysis\\validation\\q2_miniature_milp.py",
+      "sha256": "ce2561a4bb9b7e85c20e7ad8d95b49b6c35ccc7f099d57b0182ce76308ec3388",
+      "bytes": 7416
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\flow_overall_model.png",
+      "sha256": "a36a4cd572c8e81238dae594662cbaeee2718856b844f336f0b317e9977d833c",
+      "bytes": 101531
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\flow_overall_model.svg",
+      "sha256": "203e1f4e57d7fa024afee96fcd929c5219c51c8f2a528a4fa5f73df9e9f295d0",
+      "bytes": 5768
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\flow_q2_model.png",
+      "sha256": "c0bae81406056d82ae302a3e1c9109b193928327616d8d196a1919f3e28cc02d",
+      "bytes": 115538
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\flow_q2_model.svg",
+      "sha256": "c8e9c93195507193b491570ff86d70d7bd61e118a24ba77946240143fb2f3080",
+      "bytes": 11779
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_drone_schedule.png",
+      "sha256": "8be6b744338cc2d74010e61525f87e9e6ccc5ac53b267d66d472cc101600285f",
+      "bytes": 48936
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_drone_schedule.svg",
+      "sha256": "ca9ce8703cae7406132c158435aac2cd7d6cee2075901224a48184d7142cb2d4",
+      "bytes": 15200
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_objective_tradeoff.png",
+      "sha256": "fcd8052ac316215646fdacfbbb89ea69245c5c6cadb8b92a97a0545620df1481",
+      "bytes": 67091
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_objective_tradeoff.svg",
+      "sha256": "dcd6ca093500197412e6897d670a56249c65522ef4e52e6f1f0a6c02ba15d75c",
+      "bytes": 24177
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_pareto_archive.png",
+      "sha256": "b9ee076afec2c0af53e3107ae08eb165cf8028bfff5555e42e998383f28f79ce",
+      "bytes": 87350
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_pareto_archive.svg",
+      "sha256": "5d6009673b4a719aaa9f2536b7731cf93bd8b0007128fd39c28d718f2facf4f2",
+      "bytes": 16532
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_pool_by_model.png",
+      "sha256": "3837edc81fd256eba03f2a560be126959ea1128a4e802770d73f6ee70dd7d254",
+      "bytes": 48218
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_pool_by_model.svg",
+      "sha256": "acb6c29c192e79dc12998735a6b9277b2e7835b05cc6249ef25f1878584352a1",
+      "bytes": 9029
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_route_stop_counts.png",
+      "sha256": "1a0dafd93ee960f934e224590d53d9600d260997a6d628e3165190a9867c2290",
+      "bytes": 49511
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\process_q2_route_stop_counts.svg",
+      "sha256": "fedaea83c6a307d9111c8187d9feba2d0d6c574537eaa28c9257e94c7da51805",
+      "bytes": 9073
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\raw_q2_area_demand.png",
+      "sha256": "7c48cf13ff41a7758fe3ea239ee9db8a1b20d95eddfd9ec2c9b1a081d01c3ec4",
+      "bytes": 68885
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\raw_q2_area_demand.svg",
+      "sha256": "0c5feba24af69105421fd254f234eb84598bb75cd3c88218bef2ad9215d29e29",
+      "bytes": 15982
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\raw_q2_desired_windows.png",
+      "sha256": "2ad47c7edce59d3ae94da7ea22c2066242ebad6b7f8463f08db4541cf9730731",
+      "bytes": 46930
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\raw_q2_desired_windows.svg",
+      "sha256": "3fafc2e98862beb7377653b4a1e8611725aac3a655df7137101df11e58d54a7c",
+      "bytes": 13246
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\raw_q2_mass_volume_priority.png",
+      "sha256": "d99baf507f39b50fd49b0b29337b41be0dabb759fc612a8083fe80c8ea375d95",
+      "bytes": 64282
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\raw_q2_mass_volume_priority.svg",
+      "sha256": "61c6789f63d1ad6b104270cb057eacd846f3ee5b52f1bdcac042b483ec221056",
+      "bytes": 21189
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\result_q2_delivery_windows.png",
+      "sha256": "fe9f24898f0fc5f9291ca0ac74f36498df52574609e6607a14bddf4a97f6c5b2",
+      "bytes": 140353
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\result_q2_delivery_windows.svg",
+      "sha256": "a6ad46ddce1b2ad12554f06ea55eea47e0be4dd7c0449f494e70efb4bbd37e27",
+      "bytes": 18954
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\result_q2_fleet_energy.png",
+      "sha256": "ec00687d1fe6c13206d2353f651f9687e9968874ec60db01b8d515dfd1789033",
+      "bytes": 43447
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\result_q2_fleet_energy.svg",
+      "sha256": "cadcc01f861c5a3e9e87ba54994afaf4d9dfb535628a2cc87d946be8408be0ff",
+      "bytes": 11029
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\result_q2_routes_map.png",
+      "sha256": "38566753c02e93789f3db416b7dcb16e74d94a059da8abccfc0f11250327939d",
+      "bytes": 182406
+    },
+    {
+      "path": "D:\\cpi\\cpi\\figures\\result_q2_routes_map.svg",
+      "sha256": "c3175817131d641a06dca246835949218369f339b43956ae9e3c07b0d4d6d45c",
+      "bytes": 27890
+    },
+    {
+      "path": "D:\\cpi\\cpi\\pyproject.toml",
+      "sha256": "eb5a2a6836ae7263e5ab5fc4ce18ca5f9afe45ca07f3f013853667e512bb8d79",
+      "bytes": 256
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Dispatch Center and Service Areas.xlsx",
+      "sha256": "f1d23ec1c7463de50a012ca878e05e1d088cbe890808725f7dcfd2f438fc89a5",
+      "bytes": 11867
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Supply Demand and Delivery Deadlines.xlsx",
+      "sha256": "90c65bf4b9afcc69ed639e85378d31b29c81c052fd123d2fd2127c181c0573a0",
+      "bytes": 18412
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Transport Drone Data.xlsx",
+      "sha256": "7278fca19d06a8ace75e310245d0a359a27b7f5c973c1ea604008ea97f88b980",
+      "bytes": 11324
+    },
+    {
+      "path": "D:\\cpi\\cpi\\questions\\Data\\Zhenlong Township Geospatial Data\\Geospatial Data for Zhenlong Township and Surrounding Areas\\Digital Elevation Model (DEM) Data\\30 m DEM for Zhenlong Township and Surrounding Areas.tif",
+      "sha256": "741fe6de0b2bcaffd0f4007f574ee698d46197094f52cc954b532c4f90fc7c03",
+      "bytes": 7867096
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\alns_deadline_vns.json",
+      "sha256": "8588c8b5d85c910e1f59fda6c11eac4d31e9171c68d644cf2ef3afca48f73d48",
+      "bytes": 19956
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\alns_report.json",
+      "sha256": "679a1e82c7e1cb927a068c5fcc3a75bc8cf6fde0a33fcfca52c9c3969c610b82",
+      "bytes": 731210
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\alns_sensitivity.json",
+      "sha256": "4f0bf27507171a675dc0c449427e48233a422ebef170df4375ea2c9c3352a774",
+      "bytes": 2349401
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\alns_sortie_endpoint.json",
+      "sha256": "d72e3557ca3cfc1352ebfaa9c70a12739f1eedb33ac28e08ae0b25bc504026c4",
+      "bytes": 1052832
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\alns_sortie_k400_600s.json",
+      "sha256": "9142a619ec0922d4c16c4a5a4129c0fd32a30aa0a26bae3a3258446de056a962",
+      "bytes": 19296
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\alns_sortie_k400_seed20260929.json",
+      "sha256": "4ca789d69229051261e98c9def33666127f049c670bf9068fd859346e952fa1a",
+      "bytes": 19295
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\baseline_lateness\\deliveries.csv",
+      "sha256": "ac552a151bcca6cdff1d7efc24521c72b36bb95c0bdf432aba0290e9df3ed1e5",
+      "bytes": 3538
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\baseline_lateness\\Q2_Results_Submission_Template.xlsx",
+      "sha256": "318efc51858468aaf0f50a14be5cc47b026e84ade5207b9082bbdd0b9759e0e9",
+      "bytes": 23254
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\baseline_lateness\\resource_timeline.csv",
+      "sha256": "bffa4b91a057bd8bb0df00ba24780b42183bb0168aabc13574ee563f602bedc7",
+      "bytes": 7516
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\baseline_lateness\\route_map.csv",
+      "sha256": "1673931f58d30bd3748e64a99aaa5c65c39ec392dbb4bfbd571264460df8c0f8",
+      "bytes": 8349
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\baseline_lateness\\sorties.csv",
+      "sha256": "8ac13bdeb53f07fbe46009f26655b581f06765cadfe0a26b3bf485099e56b39c",
+      "bytes": 3570
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\baseline_lateness\\timeliness_summary.csv",
+      "sha256": "730c4b9b278475bc667b4d681e68c75c60da7303e0abe57337d7bef8a4a28acf",
+      "bytes": 233
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\candidate_pool.json",
+      "sha256": "c75c6e881a59a3df3950c13fb2fb22e088b3696ac0d8ce6b225bbf473b56395b",
+      "bytes": 511510
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\candidate_pool_k100.json",
+      "sha256": "1489375d023c5d2671d200c3e48accdf37259e3aceeafb4551abc6eaf860e972",
+      "bytes": 323803
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\candidate_pool_k225.json",
+      "sha256": "5f43037e2c45a2f7f1591ccb9ddefcdbcd7ad9970cc424d0be9cb980570f892b",
+      "bytes": 792248
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\candidate_pool_k400.json",
+      "sha256": "e26125347325b5834b32d786c40cebd990b7d8301850a259fa2ae98396bd7d33",
+      "bytes": 1567730
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\cargo_profile.csv",
+      "sha256": "c54df5e9a40e663b97f54f141a9afd932007609f49d2a07bd47fcb54e511fc8d",
+      "bytes": 4839
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\cargo_profile.txt",
+      "sha256": "e8e48a68593d907e046d76d0e5709c07e5b1a8fc4b5900862d20adacb957d40e",
+      "bytes": 2373
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\deliveries.csv",
+      "sha256": "e63ebaee557f1098f6a8ba756e501f21061391e5a92e666e5298cc82fc91aa75",
+      "bytes": 3533
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\flow_overall_model_grayscale.png",
+      "sha256": "577980f6538fa63c0bedefcd2f4e5cb7f593692fcd9d4c494f828d75e3fc7065",
+      "bytes": 48805
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\flow_q2_model_grayscale.png",
+      "sha256": "8c1aa8402910363c866612c3d908009aada71bf8e1e60340e347cdd9c8da7918",
+      "bytes": 52743
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\process_q2_drone_schedule_grayscale.png",
+      "sha256": "a2bf6b602bae388bc6d8830b27b9acb72f69539203d02ba519b85e8e49fb6a9c",
+      "bytes": 22509
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\process_q2_objective_tradeoff_grayscale.png",
+      "sha256": "9d862dc56f50dba33575c0fddef11b7f6af3cfea75e662748dc33c35ebe41c11",
+      "bytes": 39087
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\process_q2_pareto_archive_grayscale.png",
+      "sha256": "53b307c63dfbd5923919d9e85ea00f52a2165275dd83baa31df4dc861b3b7bd1",
+      "bytes": 37880
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\process_q2_pool_by_model_grayscale.png",
+      "sha256": "ec0cfb903666178613cd5fc3bf083a737aadd2b851383ff6dde1e8816c9dd104",
+      "bytes": 33256
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\process_q2_route_stop_counts_grayscale.png",
+      "sha256": "21fe6cd070f401b3e738bdb36a6d1df702b2353b1dc755262536ac6de4641393",
+      "bytes": 17558
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\raw_q2_area_demand_grayscale.png",
+      "sha256": "b6031636eb9eb52bd846b82c8da2b06275e809ffada8c5065551a3ab27814950",
+      "bytes": 33034
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\raw_q2_desired_windows_grayscale.png",
+      "sha256": "b7ce91a0d04dd1c425dd1d6b8cb4307caf962545add95edeba0549171c391d15",
+      "bytes": 18926
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\raw_q2_mass_volume_priority_grayscale.png",
+      "sha256": "9d853e555d9d548aed43052a32132e0eb58d8963b9cebd9ede5f4b110cadc905",
+      "bytes": 30399
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\result_q2_delivery_windows_grayscale.png",
+      "sha256": "61a721b42d88fd9e76cea78ac709db8851954a42733ca87d14ae28b9122020d3",
+      "bytes": 67437
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\result_q2_fleet_energy_grayscale.png",
+      "sha256": "38d99200953668740237a553ad0d438ed7832535ea52bf2bf7f495f96af1007d",
+      "bytes": 18200
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\figure_previews\\result_q2_routes_map_grayscale.png",
+      "sha256": "921ae8a3b5700809e5a2096ce6f55621ddd7998beff708ba224f7e45a0f778c9",
+      "bytes": 74890
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\Q2_Results_Submission_Template.xlsx",
+      "sha256": "5b94c98eda8bbe61d87018e71238a2fbf4448fbf6c9d72d2e11d7ea526e784f3",
+      "bytes": 22111
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\README.md",
+      "sha256": "3da77a2ccb30e98fa9ce4379b7b74234678c4573bd54d1280661c13281509515",
+      "bytes": 1139
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\resource_timeline.csv",
+      "sha256": "34648f30c311a7b70214b70697ccc6805d65438fafcf7035fa8debc1c93fe66d",
+      "bytes": 4613
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\route_map.csv",
+      "sha256": "102a4c75728958a9d5b1c6167a61ee55b5252dd64a8b128ba0f2e7cb4a3840f4",
+      "bytes": 5516
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint\\deliveries.csv",
+      "sha256": "58916363908715343c9fe08b46444001fd3b87b2dde6400885cdf0a47b4bf270",
+      "bytes": 3544
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint\\Q2_Results_Submission_Template.xlsx",
+      "sha256": "b59f60cfb33d3d44debf606aa8d3ef21d820993a241804ce0e8923231d79ad9f",
+      "bytes": 22213
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint\\resource_timeline.csv",
+      "sha256": "bc36532414589da6904ef0299ec1f99924f7f71da7a8819e542cb40a296330f7",
+      "bytes": 4804
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint\\route_map.csv",
+      "sha256": "af25b789f1b708e2668b2bce2f6c07bb7df38fe5527e8448fe284f77d0f9d1f9",
+      "bytes": 5658
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint\\sorties.csv",
+      "sha256": "e16d8f49fbb7630a03f1994efa89b4f11b04faadece0a03f34d3ccb573c8442d",
+      "bytes": 2300
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint\\timeliness_summary.csv",
+      "sha256": "5ad690a9c04ba7931e34e558455676d2618e36a0798cb33fb738788dd6841e56",
+      "bytes": 263
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint_k400\\deliveries.csv",
+      "sha256": "e63ebaee557f1098f6a8ba756e501f21061391e5a92e666e5298cc82fc91aa75",
+      "bytes": 3533
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint_k400\\Q2_Results_Submission_Template.xlsx",
+      "sha256": "8a59e980d4ba344017f7db141ab1303daeb41b91b44125258b077388aba165e6",
+      "bytes": 22111
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint_k400\\resource_timeline.csv",
+      "sha256": "34648f30c311a7b70214b70697ccc6805d65438fafcf7035fa8debc1c93fe66d",
+      "bytes": 4613
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint_k400\\route_map.csv",
+      "sha256": "102a4c75728958a9d5b1c6167a61ee55b5252dd64a8b128ba0f2e7cb4a3840f4",
+      "bytes": 5516
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint_k400\\sorties.csv",
+      "sha256": "e1c643035cd3b45e6b7600d73a5c4178d517c92eab9b6a74f7d2700eaf86a904",
+      "bytes": 2217
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_endpoint_k400\\timeliness_summary.csv",
+      "sha256": "0eacd8134d0dfa6665437dec72be2dade7b7a039cd6905bfe9c556c60e1837b2",
+      "bytes": 263
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sortie_lower_bound.json",
+      "sha256": "2ea8936bd8cfd286a118293b40642b6d081071aabca335f0f747f7333917f837",
+      "bytes": 28147
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\sorties.csv",
+      "sha256": "e1c643035cd3b45e6b7600d73a5c4178d517c92eab9b6a74f7d2700eaf86a904",
+      "bytes": 2217
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\q2\\timeliness_summary.csv",
+      "sha256": "0eacd8134d0dfa6665437dec72be2dade7b7a039cd6905bfe9c556c60e1837b2",
+      "bytes": 263
+    },
+    {
+      "path": "D:\\cpi\\cpi\\results\\tables\\q1_full_baseline_batches.csv",
+      "sha256": "ce4ba465b539efc83acadf1ffb710ebad6d390934835bb28b3da07ae9cda77f6",
+      "bytes": 2704
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_alns.py",
+      "sha256": "067589bbe27c38ba18dc6423eaccaa8277c158d8fb639cef0f7d60d1fd06c8fc",
+      "bytes": 5387
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_alns_sensitivity.py",
+      "sha256": "db75733c1f895419c31f50c8ca18bc65bd7a0d7950e0b41ceae999c05803d852",
+      "bytes": 3319
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_alns_sortie_endpoint.py",
+      "sha256": "095d897945f88f21061fd2b72595edff878c8b178b363a23073d0ec91c52b7cb",
+      "bytes": 2607
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_alns_sortie_k400.py",
+      "sha256": "b6deeaa3750b8e2bb10b19f969c1140029a0cd1074e39ec78f32676c34a98f82",
+      "bytes": 2913
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_deadline_vns.py",
+      "sha256": "5deeddb91d01954b76c5c05cd06e78269b55ad8b76d2eb4a9ac980863d79b158",
+      "bytes": 15086
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_export_sortie_endpoint.py",
+      "sha256": "2202ae8142a2415edd8db4c6697836818f55714b57ed6cd22b7586ec11729df0",
+      "bytes": 1334
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_export_sortie_k400.py",
+      "sha256": "cfcf69e1a049824c41cd61fb618a728380c177fd9cc42f31db33901229d3d3d0",
+      "bytes": 1766
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_figures.py",
+      "sha256": "986bca535cd1259ed2d97ae9812f480da975c848de7f9c9e45ab9e50337ade96",
+      "bytes": 20818
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_full.py",
+      "sha256": "6e4a1f5d777ce2d48189baacac7798e5a4fbc43f72d0919646d6664188a58651",
+      "bytes": 22583
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_revalidate_alns.py",
+      "sha256": "9f63ed8f525e51ce24619e718d3ea9dc28c533238c2431ba0758497dffd955b4",
+      "bytes": 2349
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\experiments\\q2_sortie_lower_bound.py",
+      "sha256": "af416ce79285f9dfd78b0d5caded5ac84b137d915db44b752e4c3a6c8d4d0859",
+      "bytes": 8190
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\models\\q1_physics.py",
+      "sha256": "6bd6468cb0b2f1ffedd16fd07e07516f46a1869b1fec6a158d239585b83f43b0",
+      "bytes": 6321
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\models\\q2_alns.py",
+      "sha256": "97f9ed1725c776ccd4bd6a6a864dcec5580a75407bce12ca0916d6b87facb3ec",
+      "bytes": 20691
+    },
+    {
+      "path": "D:\\cpi\\cpi\\src\\models\\q2_scheduling.py",
+      "sha256": "4f651d8d73a11e06ca4dee80dfedd7f6cdbc25859f118ef243c468f1c50be665",
+      "bytes": 28747
+    },
+    {
+      "path": "D:\\cpi\\cpi\\utils\\plot_style.py",
+      "sha256": "f3de0a0c858d6018310d7e461574697a4cec7b28e5e20b8ccdaa7749772147e2",
+      "bytes": 17160
+    },
+    {
+      "path": "D:\\cpi\\cpi\\uv.lock",
+      "sha256": "d2c4c993024aab9caa5c657a266c38a0e7b99532142759b38718bea4d9249ed3",
+      "bytes": 201413
+    },
+    {
+      "path": "D:\\cpi\\cpi\\题目分析报告.md",
+      "sha256": "3aa58094173c260f419235c68bd21c2db2b1795b008a587b9a21c7adbf424976",
+      "bytes": 7505
+    }
+  ],
+  "runtime": {
+    "name": "python",
+    "version": "3.12.14",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "dependencies": {
+      "numpy": "2.5.3",
+      "scipy": "1.18.1",
+      "matplotlib": "3.11.2",
+      "pandas": "3.0.6",
+      "openpyxl": "3.1.5",
+      "Pillow": "12.3.0"
+    }
+  },
+  "key_parameters": {
+    "baseline": {
+      "K_per_model": 150,
+      "R_per_model": 1500,
+      "time_limit_s": 1800,
+      "iterations_cap": 20000,
+      "seed": 20260924,
+      "objective": "lateness,makespan,energy,sorties"
+    },
+    "sensitivity": {
+      "K_R": [
+        [
+          100,
+          1000
+        ],
+        [
+          225,
+          2250
+        ]
+      ],
+      "time_limit_s": 180,
+      "iterations_cap": 3000,
+      "seeds": [
+        20260925,
+        20260926
+      ]
+    },
+    "sorties_endpoint": {
+      "K_per_model": 225,
+      "R_per_model": 2250,
+      "time_limit_s": 300,
+      "iterations_cap": 5000,
+      "seed": 20260927,
+      "objective": "sorties,late,makespan,energy"
+    },
+    "K400_endpoints": [
+      {
+        "K_per_model": 400,
+        "R_per_model": 4000,
+        "time_limit_s": 600,
+        "iterations_cap": 10000,
+        "seed": 20260928,
+        "sorties": 24
+      },
+      {
+        "K_per_model": 400,
+        "R_per_model": 4000,
+        "time_limit_s": 900,
+        "iterations_cap": 15000,
+        "seed": 20260929,
+        "sorties": 24
+      }
+    ],
+    "lower_bound": {
+      "distinct_minimum_covers": 28,
+      "coverage_lower_bound": 18,
+      "enumeration_termination_status": 2
+    },
+    "observed_solver_seconds": {
+      "baseline": 1800.172,
+      "sensitivity": 365.5,
+      "sorties_endpoint": 301.328,
+      "lower_bound": 2.703,
+      "K400_seed20260928": 601.406,
+      "K400_seed20260929": 901.407,
+      "total": 4576.813,
+      "deadline_vns": 604.297
+    },
+    "deadline_vns": {
+      "route_proposal_cap": 7000,
+      "new_routes": 1428,
+      "time_limit_s": 600,
+      "iterations": 4032,
+      "seed": 20260930,
+      "sortie_count": 24,
+      "cover_at_most_18_with_at_most_4_B_urgent_routes": "infeasible"
+    }
+  },
+  "reproduce_command": ".venv\\Scripts\\python.exe -m src.experiments.q2_alns --time-limit 1800 --iterations 20000 --seed 20260924\n.venv\\Scripts\\python.exe -m src.experiments.q2_alns_sensitivity\n.venv\\Scripts\\python.exe -m src.experiments.q2_alns_sortie_endpoint\n.venv\\Scripts\\python.exe -m src.experiments.q2_export_sortie_endpoint\n.venv\\Scripts\\python.exe -m src.experiments.q2_alns_sortie_k400 --time-limit 600 --iterations 10000 --seed 20260928 --output alns_sortie_k400_600s.json\n.venv\\Scripts\\python.exe -m src.experiments.q2_alns_sortie_k400 --time-limit 900 --iterations 15000 --seed 20260929 --output alns_sortie_k400_seed20260929.json\n.venv\\Scripts\\python.exe -m src.experiments.q2_export_sortie_k400\n.venv\\Scripts\\python.exe -m src.experiments.q2_deadline_vns --time-limit 600 --iterations 10000 --seed 20260930 --route-proposal-cap 7000\n.venv\\Scripts\\python.exe -m src.experiments.q2_revalidate_alns\n.venv\\Scripts\\python.exe -m src.experiments.q2_sortie_lower_bound\n.venv\\Scripts\\python.exe -m src.experiments.q2_figures"
+}

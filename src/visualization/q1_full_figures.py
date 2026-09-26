@@ -36,11 +36,11 @@ CONTRACTS = {
     "raw_q1_mass_volume": ("Mass and volume are separate loading limits", "all 80 mass-volume pairs", "scatter", "q1_full_input_boxes.csv", (6.4, 4.1)),
     "raw_q1_area_demand": ("Box counts differ among the 15 areas", "all 15 area counts", "horizontal bars", "q1_full_input_areas.csv", (6.4, 5.2)),
     "process_q1_candidate_pruning": ("Physical filtering and dominance reduce the candidate pool", "27 scenario counts", "scatter", "q1_full_scenario_status.csv", (6.4, 4.1)),
-    "process_q1_epsilon_status": ("The epsilon grid has explicitly certified solve outcomes", "all epsilon statuses", "stacked bars", "q1_full_epsilon_status.csv", (7.2, 4.1)),
-    "process_q1_endpoint_shift": ("Single-objective energy endpoints respond to uncertainty", "27 energy endpoints", "dot plot", "q1_full_endpoints.csv", (6.4, 4.1)),
-    "result_q1_pareto": ("Sampled Q1 tradeoffs are finite and non-exhaustive", "baseline proven Pareto sample", "scatter", "q1_full_pareto_sample.csv", (6.4, 4.1)),
+    "process_q1_epsilon_status": ("The epsilon grid is answered from exact Pareto frontiers", "all epsilon status records", "stacked bars", "q1_full_epsilon_status.csv", (7.2, 4.1)),
+    "process_q1_endpoint_shift": ("Single-objective energy endpoints respond to uncertainty", "feasible-scenario energy endpoints", "dot plot", "q1_full_endpoints.csv", (6.4, 4.1)),
+    "result_q1_pareto": ("Exact baseline tradeoffs form the complete finite Pareto frontier", "baseline exact Pareto frontier", "scatter", "q1_full_pareto_sample.csv", (6.4, 4.1)),
     "result_q1_batch_load": ("The chosen baseline partitions cargo into physical sorties", "baseline formal batches", "strip plot", "q1_full_formal_batches.csv", (6.4, 4.1)),
-    "result_q1_sensitivity": ("Representative energy and sortie counts shift by scenario", "27 formal representatives", "scatter", "q1_full_sensitivity.csv", (6.4, 4.1)),
+    "result_q1_sensitivity": ("Representative energy and sortie counts shift by feasible scenario", "feasible-scenario representatives", "scatter", "q1_full_sensitivity.csv", (6.4, 4.1)),
     "flow_overall_model": ("Q1 feeds Q2, Q3 and Q4 in the documented model chain", "Q1 code and Q1-Q4 model documents", "method flow", "analysis/problems/Q1.md-Q4.md", (8.0, 5.0)),
 }
 
@@ -118,7 +118,8 @@ def process_figures() -> None:
     status = _rows("q1_full_scenario_status.csv")
     eps = _rows("q1_full_epsilon_status.csv")
     endpoints = _rows("q1_full_endpoints.csv")
-    if len(status) != 27 or len(eps) < 27 * 363 or len(endpoints) != 27 * 3:
+    feasible_scenarios = sum(row.get("Report status") != "proven_infeasible" for row in status)
+    if len(status) != 27 or len(eps) < feasible_scenarios * 363 or len(endpoints) != feasible_scenarios * 3:
         raise ValueError("Process CSVs do not cover 27 full scenarios")
 
     name = "process_q1_candidate_pruning"; fig, ax = _new(name)
@@ -143,7 +144,7 @@ def process_figures() -> None:
             ax.barh(range(len(keys)), values, left=left, color=color, label=label)
         left += values
     ax.set(yticks=range(0, len(keys), 3), yticklabels=[keys[i] for i in range(0, len(keys), 3)],
-           xlabel="Epsilon MILPs (count)", ylabel="Scenario")
+           xlabel="Epsilon grid records (count)", ylabel="Scenario")
     ax.legend(frameon=False, fontsize=7)
     _export(fig, name)
 
@@ -151,7 +152,8 @@ def process_figures() -> None:
     vals = [r for r in endpoints if r["Primary"] == "E"]
     colors = {"0.2": BLUE, "0.3": ORANGE, "0.4": GREEN}
     for rho, color in colors.items():
-        group = [r for r in vals if abs(float(r["Scenario"].split("_")[0][1:]) - float(rho)) < 1e-8]
+        group = [r for r in vals if r.get("Energy (kWh)") not in (None, "") and
+                 abs(float(r["Scenario"].split("_")[0][1:]) - float(rho)) < 1e-8]
         ax.scatter([_num(r, "Energy (kWh)") for r in group],
                    [r["Scenario"] for r in group], s=18, color=color, label=f"rho={rho}")
     ax.set(xlabel="Minimum energy endpoint (kWh)", ylabel="Scenario")
@@ -191,7 +193,9 @@ def result_figures() -> None:
 
     name = "result_q1_sensitivity"; fig, ax = _new(name)
     for rho, color in ((.2, BLUE), (.3, ORANGE), (.4, GREEN)):
-        subset = [r for r in sensitivity if abs(float(r["Scenario"].split("_")[0][1:]) - rho) < 1e-8]
+        subset = [r for r in sensitivity if r.get("Delta energy (kWh)") not in (None, "") and
+                  r.get("Delta sorties") not in (None, "") and
+                  abs(float(r["Scenario"].split("_")[0][1:]) - rho) < 1e-8]
         ax.scatter([_num(r, "Delta energy (kWh)") for r in subset],
                    [_num(r, "Delta sorties") for r in subset], color=color, s=25,
                    label=f"rho={rho:.1f}")
@@ -245,7 +249,7 @@ def main() -> None:
         return
     if not args.flow_only:
         envelope = json.loads(REPORT_STATUS.read_text(encoding="utf-8"))
-        if envelope["payload"].get("status") != "all_27_formal_sampled":
+        if envelope["payload"].get("status") != "all_27_proven":
             raise ValueError("Q1 result figures require a validated 27-scenario report")
     FIGURES.mkdir(parents=True, exist_ok=True)
     flow_figure()

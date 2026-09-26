@@ -1,0 +1,646 @@
+{
+  "status": "feasible_heuristic",
+  "method": "ALNS_sorties_first_K400",
+  "objective_order": [
+    "sorties",
+    "late",
+    "makespan",
+    "energy"
+  ],
+  "metrics": {
+    "late": 221269.66446788376,
+    "makespan": 8354.924673408334,
+    "energy": 71.95270409559872,
+    "sorties": 24
+  },
+  "chosen": [
+    {
+      "route_id": "Q2-1339904b693ccbf6",
+      "model": "A",
+      "cargo_ids": [
+        "S013-MED-01"
+      ],
+      "stops": [
+        "S013"
+      ],
+      "drone_id": "U01",
+      "battery_id": "A-BAT-01",
+      "start_s": 0.0,
+      "takeoff_s": 330.0,
+      "return_s": 1552.1111816650086,
+      "energy_kwh": 1.8406250679334437,
+      "return_soc": 0.5909722071259014,
+      "drone_duration_s": 1552.1111816650086,
+      "battery_duration_s": 2583.847312401337
+    },
+    {
+      "route_id": "Q2-20034c670aabcd6d",
+      "model": "A",
+      "cargo_ids": [
+        "S013-WAT-01"
+      ],
+      "stops": [
+        "S013"
+      ],
+      "drone_id": "U02",
+      "battery_id": "A-BAT-02",
+      "start_s": 0.0,
+      "takeoff_s": 330.0,
+      "return_s": 1552.1111816650086,
+      "energy_kwh": 1.9244593629908364,
+      "return_soc": 0.5723423637798142,
+      "drone_duration_s": 1552.1111816650086,
+      "battery_duration_s": 2608.06610875125
+    },
+    {
+      "route_id": "Q2-dc3a381fc291229c",
+      "model": "A",
+      "cargo_ids": [
+        "S011-FOD-01",
+        "S008-WAT-01"
+      ],
+      "stops": [
+        "S011",
+        "S008"
+      ],
+      "drone_id": "U03",
+      "battery_id": "A-BAT-03",
+      "start_s": 0.0,
+      "takeoff_s": 360.0,
+      "return_s": 2416.2318258082996,
+      "energy_kwh": 3.2555323247095727,
+      "return_soc": 0.27654837228676166,
+      "drone_duration_s": 2416.2318258082996,
+      "battery_duration_s": 3856.718941835509
+    },
+    {
+      "route_id": "Q2-02aebf7688a009c4",
+      "model": "A",
+      "cargo_ids": [
+        "S008-MED-01"
+      ],
+      "stops": [
+        "S008"
+      ],
+      "drone_id": "U04",
+      "battery_id": "A-BAT-04",
+      "start_s": 0.0,
+      "takeoff_s": 330.0,
+      "return_s": 2111.146128791162,
+      "energy_kwh": 3.015445944281155,
+      "return_soc": 0.32990090127085436,
+      "drone_duration_s": 2111.146128791162,
+      "battery_duration_s": 3482.2749571390514
+    },
+    {
+      "route_id": "Q2-e61c46c1cf7c73c3",
+      "model": "A",
+      "cargo_ids": [
+        "S008-WAT-02"
+      ],
+      "stops": [
+        "S008"
+      ],
+      "drone_id": "U01",
+      "battery_id": "A-BAT-05",
+      "start_s": 1552.1111816650086,
+      "takeoff_s": 1882.1111816650086,
+      "return_s": 3663.2573104561707,
+      "energy_kwh": 3.1464972854501783,
+      "return_soc": 0.30077838101107146,
+      "drone_duration_s": 2111.146128791162,
+      "battery_duration_s": 3520.134233476769
+    },
+    {
+      "route_id": "Q2-7845c537890da724",
+      "model": "A",
+      "cargo_ids": [
+        "S013-FOD-01"
+      ],
+      "stops": [
+        "S013"
+      ],
+      "drone_id": "U02",
+      "battery_id": "A-BAT-06",
+      "start_s": 1552.1111816650086,
+      "takeoff_s": 1882.1111816650086,
+      "return_s": 3104.2223633300173,
+      "energy_kwh": 1.871232808468375,
+      "return_soc": 0.5841704870070278,
+      "drone_duration_s": 1552.1111816650086,
+      "battery_duration_s": 2592.6895485558725
+    },
+    {
+      "route_id": "Q2-199536259c0e9af1",
+      "model": "A",
+      "cargo_ids": [
+        "S008-FOD-01"
+      ],
+      "stops": [
+        "S008"
+      ],
+      "drone_id": "U03",
+      "battery_id": "A-BAT-01",
+      "start_s": 2583.847312401337,
+      "takeoff_s": 2913.847312401337,
+      "return_s": 4694.993441192499,
+      "energy_kwh": 3.062521338572677,
+      "return_soc": 0.3194397025394051,
+      "drone_duration_s": 2111.146128791162,
+      "battery_duration_s": 3495.874515489935
+    },
+    {
+      "route_id": "Q2-0edaa47b3d4e4f4a",
+      "model": "C",
+      "cargo_ids": [
+        "S002-WAT-01",
+        "S002-WAT-02",
+        "S002-WAT-03",
+        "S002-FOD-01",
+        "S002-HYG-01"
+      ],
+      "stops": [
+        "S002"
+      ],
+      "drone_id": "U07",
+      "battery_id": "C-BAT-01",
+      "start_s": 0.0,
+      "takeoff_s": 450.0,
+      "return_s": 2041.8120186387082,
+      "energy_kwh": 5.721222591582658,
+      "return_soc": 0.2848471760521678,
+      "drone_duration_s": 2041.8120186387082,
+      "battery_duration_s": 4424.6431371923445
+    },
+    {
+      "route_id": "Q2-cac443ad6281a25a",
+      "model": "C",
+      "cargo_ids": [
+        "S007-MED-01",
+        "S007-WAT-01",
+        "S007-WAT-02",
+        "S007-FOD-01",
+        "S007-HYG-01"
+      ],
+      "stops": [
+        "S007"
+      ],
+      "drone_id": "U08",
+      "battery_id": "C-BAT-02",
+      "start_s": 0.0,
+      "takeoff_s": 450.0,
+      "return_s": 1907.5754478361764,
+      "energy_kwh": 3.41094197300521,
+      "return_soc": 0.5736322533743488,
+      "drone_duration_s": 1907.5754478361764,
+      "battery_duration_s": 3664.705565525088
+    },
+    {
+      "route_id": "Q2-6304978344c22313",
+      "model": "C",
+      "cargo_ids": [
+        "S001-MED-01",
+        "S001-MED-02",
+        "S001-WAT-01",
+        "S001-WAT-02",
+        "S001-WAT-06",
+        "S001-WAT-07",
+        "S001-FOD-03",
+        "S001-HYG-02"
+      ],
+      "stops": [
+        "S001"
+      ],
+      "drone_id": "U08",
+      "battery_id": "C-BAT-03",
+      "start_s": 1907.5754478361764,
+      "takeoff_s": 2447.5754478361764,
+      "return_s": 3533.745839715085,
+      "energy_kwh": 2.9175913912014897,
+      "return_soc": 0.6353010760998138,
+      "drone_duration_s": 1626.1703918789085,
+      "battery_duration_s": 3249.6847269959785
+    },
+    {
+      "route_id": "Q2-202bd3640df64ba5",
+      "model": "C",
+      "cargo_ids": [
+        "S006-MED-01",
+        "S006-WAT-01",
+        "S006-WAT-02",
+        "S006-WAT-03",
+        "S006-FOD-01",
+        "S006-HYG-01"
+      ],
+      "stops": [
+        "S006"
+      ],
+      "drone_id": "U07",
+      "battery_id": "C-BAT-04",
+      "start_s": 2041.8120186387082,
+      "takeoff_s": 2521.812018638708,
+      "return_s": 3603.371544579055,
+      "energy_kwh": 2.598020735971614,
+      "return_soc": 0.6752474080035482,
+      "drone_duration_s": 1561.5595259403467,
+      "battery_duration_s": 3098.523475265992
+    },
+    {
+      "route_id": "Q2-118927574a53aac6",
+      "model": "C",
+      "cargo_ids": [
+        "S004-MED-01",
+        "S004-WAT-01",
+        "S004-WAT-02",
+        "S004-WAT-03",
+        "S004-FOD-01",
+        "S004-HYG-01"
+      ],
+      "stops": [
+        "S004"
+      ],
+      "drone_id": "U07",
+      "battery_id": "C-BAT-02",
+      "start_s": 3664.705565525088,
+      "takeoff_s": 4144.705565525088,
+      "return_s": 5965.766632118313,
+      "energy_kwh": 6.152957431097441,
+      "return_soc": 0.23088032111281986,
+      "drone_duration_s": 2301.061066593226,
+      "battery_duration_s": 4800.820370848783
+    },
+    {
+      "route_id": "Q2-9f72d839d185daa3",
+      "model": "C",
+      "cargo_ids": [
+        "S003-WAT-01",
+        "S003-WAT-03",
+        "S003-WAT-04",
+        "S003-FOD-02",
+        "S003-HYG-01"
+      ],
+      "stops": [
+        "S003"
+      ],
+      "drone_id": "U08",
+      "battery_id": "C-BAT-01",
+      "start_s": 4424.6431371923445,
+      "takeoff_s": 4874.6431371923445,
+      "return_s": 6794.754281529425,
+      "energy_kwh": 5.765077516422236,
+      "return_soc": 0.27936531044722046,
+      "drone_duration_s": 2370.11114433708,
+      "battery_duration_s": 4764.8196383681025
+    },
+    {
+      "route_id": "Q2-30d865db2c27439f",
+      "model": "C",
+      "cargo_ids": [
+        "S005-MED-01",
+        "S005-WAT-01",
+        "S005-WAT-02",
+        "S005-WAT-03",
+        "S005-FOD-01",
+        "S005-HYG-01"
+      ],
+      "stops": [
+        "S005"
+      ],
+      "drone_id": "U07",
+      "battery_id": "C-BAT-03",
+      "start_s": 5965.766632118313,
+      "takeoff_s": 6445.766632118313,
+      "return_s": 7842.961790313856,
+      "energy_kwh": 4.222219779656905,
+      "return_soc": 0.47222252754288685,
+      "drone_duration_s": 1877.1951581955425,
+      "battery_duration_s": 3854.0463485192877
+    },
+    {
+      "route_id": "Q2-5bc81bb5720b5346",
+      "model": "C",
+      "cargo_ids": [
+        "S001-WAT-03",
+        "S001-WAT-04",
+        "S001-WAT-05",
+        "S001-WAT-08",
+        "S001-FOD-01",
+        "S001-FOD-02",
+        "S001-HYG-01"
+      ],
+      "stops": [
+        "S001"
+      ],
+      "drone_id": "U08",
+      "battery_id": "C-BAT-04",
+      "start_s": 6794.754281529425,
+      "takeoff_s": 7304.754281529425,
+      "return_s": 8354.924673408334,
+      "energy_kwh": 2.995778595200528,
+      "return_soc": 0.6255276755999339,
+      "drone_duration_s": 1560.1703918789085,
+      "battery_duration_s": 3204.8604280790514
+    },
+    {
+      "route_id": "Q2-f7b4efd57b02977e",
+      "model": "B",
+      "cargo_ids": [
+        "S012-MED-01",
+        "S012-WAT-01",
+        "S012-FOD-01"
+      ],
+      "stops": [
+        "S012"
+      ],
+      "drone_id": "U05",
+      "battery_id": "B-BAT-01",
+      "start_s": 0.0,
+      "takeoff_s": 390.0,
+      "return_s": 1922.7345559700407,
+      "energy_kwh": 2.7523988780677637,
+      "return_soc": 0.31190028048305907,
+      "drone_duration_s": 1922.7345559700407,
+      "battery_duration_s": 3782.107403132738
+    },
+    {
+      "route_id": "Q2-8e93c6294691a0b8",
+      "model": "B",
+      "cargo_ids": [
+        "S014-MED-01",
+        "S014-WAT-01",
+        "S014-FOD-01"
+      ],
+      "stops": [
+        "S014"
+      ],
+      "drone_id": "U06",
+      "battery_id": "B-BAT-02",
+      "start_s": 0.0,
+      "takeoff_s": 390.0,
+      "return_s": 1869.7521946190163,
+      "energy_kwh": 2.1403772473853557,
+      "return_soc": 0.46490568815366107,
+      "drone_duration_s": 1869.7521946190163,
+      "battery_duration_s": 3463.9156684860036
+    },
+    {
+      "route_id": "Q2-359cc2d3ad5b1e2f",
+      "model": "B",
+      "cargo_ids": [
+        "S002-MED-01",
+        "S002-WAT-04",
+        "S002-FOD-02"
+      ],
+      "stops": [
+        "S002"
+      ],
+      "drone_id": "U06",
+      "battery_id": "B-BAT-03",
+      "start_s": 1869.7521946190163,
+      "takeoff_s": 2259.7521946190163,
+      "return_s": 3686.446128540928,
+      "energy_kwh": 2.7134213129890172,
+      "return_soc": 0.3216446717527457,
+      "drone_duration_s": 1816.6939339219116,
+      "battery_duration_s": 3659.176502883819
+    },
+    {
+      "route_id": "Q2-431e5622672c0626",
+      "model": "B",
+      "cargo_ids": [
+        "S010-MED-01",
+        "S010-WAT-01",
+        "S010-FOD-01"
+      ],
+      "stops": [
+        "S010"
+      ],
+      "drone_id": "U05",
+      "battery_id": "B-BAT-04",
+      "start_s": 1922.7345559700407,
+      "takeoff_s": 2312.7345559700407,
+      "return_s": 3478.1114584163797,
+      "energy_kwh": 1.8231886104366914,
+      "return_soc": 0.5442028473908271,
+      "drone_duration_s": 1555.376902446339,
+      "battery_duration_s": 3012.0919669689056
+    },
+    {
+      "route_id": "Q2-28d7983964ced853",
+      "model": "B",
+      "cargo_ids": [
+        "S003-MED-01",
+        "S003-WAT-02",
+        "S003-FOD-01"
+      ],
+      "stops": [
+        "S003"
+      ],
+      "drone_id": "U05",
+      "battery_id": "B-BAT-02",
+      "start_s": 3478.1114584163797,
+      "takeoff_s": 3868.1114584163797,
+      "return_s": 5558.654556692262,
+      "energy_kwh": 2.7799701446244454,
+      "return_soc": 0.30500746384388866,
+      "drone_duration_s": 2080.5430982758826,
+      "battery_duration_s": 3951.863494279809
+    },
+    {
+      "route_id": "Q2-5f2d89f9ab0232b5",
+      "model": "B",
+      "cargo_ids": [
+        "S015-MED-01",
+        "S015-WAT-01",
+        "S015-FOD-01"
+      ],
+      "stops": [
+        "S015"
+      ],
+      "drone_id": "U06",
+      "battery_id": "B-BAT-01",
+      "start_s": 3782.107403132738,
+      "takeoff_s": 4172.107403132738,
+      "return_s": 5610.395987153188,
+      "energy_kwh": 2.3074846159010316,
+      "return_soc": 0.4231288460247421,
+      "drone_duration_s": 1828.2885840204503,
+      "battery_duration_s": 3494.8652509108974
+    },
+    {
+      "route_id": "Q2-4d88573adf4a2d76",
+      "model": "B",
+      "cargo_ids": [
+        "S009-MED-01",
+        "S009-WAT-01",
+        "S009-FOD-01"
+      ],
+      "stops": [
+        "S009"
+      ],
+      "drone_id": "U05",
+      "battery_id": "B-BAT-03",
+      "start_s": 5558.654556692262,
+      "takeoff_s": 5948.654556692262,
+      "return_s": 7117.096804086668,
+      "energy_kwh": 2.096235103068041,
+      "return_soc": 0.4759412242329898,
+      "drone_duration_s": 1558.4422473944055,
+      "battery_duration_s": 3133.47745872389
+    },
+    {
+      "route_id": "Q2-d0520369c903904f",
+      "model": "B",
+      "cargo_ids": [
+        "S011-MED-01",
+        "S008-HYG-01"
+      ],
+      "stops": [
+        "S011",
+        "S008"
+      ],
+      "drone_id": "U06",
+      "battery_id": "B-BAT-04",
+      "start_s": 5610.395987153188,
+      "takeoff_s": 5970.395987153188,
+      "return_s": 7756.386294560895,
+      "energy_kwh": 2.503095916955585,
+      "return_soc": 0.3742260207611038,
+      "drone_duration_s": 2145.9903074077074,
+      "battery_duration_s": 3897.331871421794
+    },
+    {
+      "route_id": "Q2-c29f641672ce1dd0",
+      "model": "B",
+      "cargo_ids": [
+        "S011-WAT-01"
+      ],
+      "stops": [
+        "S011"
+      ],
+      "drone_id": "U05",
+      "battery_id": "B-BAT-01",
+      "start_s": 7276.972654043635,
+      "takeoff_s": 7606.972654043635,
+      "return_s": 8345.396304155292,
+      "energy_kwh": 0.9364081196264658,
+      "return_soc": 0.7658979700933836,
+      "drone_duration_s": 1068.4236501116584,
+      "battery_duration_s": 2140.8671686164603
+    }
+  ],
+  "delivery_times": {
+    "S013-MED-01": 1023.5889241658377,
+    "S013-WAT-01": 1023.5889241658377,
+    "S008-WAT-01": 1610.8854280793853,
+    "S011-FOD-01": 863.2001261684193,
+    "S008-MED-01": 1305.7997310622477,
+    "S008-WAT-02": 2857.9109127272563,
+    "S013-FOD-01": 2575.7001058308465,
+    "S008-FOD-01": 3889.647043463585,
+    "S002-FOD-01": 1385.3160093193542,
+    "S002-HYG-01": 1421.3160093193542,
+    "S002-WAT-01": 1277.3160093193542,
+    "S002-WAT-02": 1313.3160093193542,
+    "S002-WAT-03": 1349.3160093193542,
+    "S007-FOD-01": 1311.7477239180882,
+    "S007-HYG-01": 1347.7477239180882,
+    "S007-MED-01": 1203.7477239180882,
+    "S007-WAT-01": 1239.7477239180882,
+    "S007-WAT-02": 1275.7477239180882,
+    "S001-FOD-03": 3185.845643775631,
+    "S001-HYG-02": 3221.845643775631,
+    "S001-MED-01": 2969.845643775631,
+    "S001-MED-02": 3005.845643775631,
+    "S001-WAT-01": 3041.845643775631,
+    "S001-WAT-02": 3077.845643775631,
+    "S001-WAT-06": 3113.845643775631,
+    "S001-WAT-07": 3149.845643775631,
+    "S006-FOD-01": 3215.2367816088818,
+    "S006-HYG-01": 3251.2367816088818,
+    "S006-MED-01": 3071.2367816088818,
+    "S006-WAT-01": 3107.2367816088818,
+    "S006-WAT-02": 3143.2367816088818,
+    "S006-WAT-03": 3179.2367816088818,
+    "S004-FOD-01": 5212.206098821701,
+    "S004-HYG-01": 5248.206098821701,
+    "S004-MED-01": 5068.206098821701,
+    "S004-WAT-01": 5104.206098821701,
+    "S004-WAT-02": 5140.206098821701,
+    "S004-WAT-03": 5176.206098821701,
+    "S003-FOD-02": 5968.158709360885,
+    "S003-HYG-01": 6004.158709360885,
+    "S003-WAT-01": 5860.158709360885,
+    "S003-WAT-03": 5896.158709360885,
+    "S003-WAT-04": 5932.158709360885,
+    "S005-FOD-01": 7302.999211216084,
+    "S005-HYG-01": 7338.999211216084,
+    "S005-MED-01": 7158.999211216084,
+    "S005-WAT-01": 7194.999211216084,
+    "S005-WAT-02": 7230.999211216084,
+    "S005-WAT-03": 7266.999211216084,
+    "S001-FOD-01": 7971.024477468879,
+    "S001-FOD-02": 8007.024477468879,
+    "S001-HYG-01": 8043.024477468879,
+    "S001-WAT-03": 7827.024477468879,
+    "S001-WAT-04": 7863.024477468879,
+    "S001-WAT-05": 7899.024477468879,
+    "S001-WAT-08": 7935.024477468879,
+    "S012-FOD-01": 1271.2972779850202,
+    "S012-MED-01": 1211.2972779850202,
+    "S012-WAT-01": 1241.2972779850202,
+    "S014-FOD-01": 1242.432763976175,
+    "S014-MED-01": 1182.432763976175,
+    "S014-WAT-01": 1212.432763976175,
+    "S002-FOD-02": 3090.039161579972,
+    "S002-MED-01": 3030.039161579972,
+    "S002-WAT-04": 3060.039161579972,
+    "S010-FOD-01": 3007.9596738598766,
+    "S010-MED-01": 2947.9596738598766,
+    "S010-WAT-01": 2977.9596738598766,
+    "S003-FOD-01": 4826.356340887654,
+    "S003-MED-01": 4766.356340887654,
+    "S003-WAT-02": 4796.356340887654,
+    "S015-FOD-01": 4999.691695142963,
+    "S015-MED-01": 4939.691695142963,
+    "S015-WAT-01": 4969.691695142963,
+    "S009-FOD-01": 6649.465680389465,
+    "S009-MED-01": 6589.465680389465,
+    "S009-WAT-01": 6619.465680389465,
+    "S008-HYG-01": 7085.69180764404,
+    "S011-MED-01": 6426.794478875684,
+    "S011-WAT-01": 8063.371145766131
+  },
+  "iterations": 7921,
+  "seed": 20260928,
+  "solver_elapsed_s": 600.0,
+  "elapsed_s": 601.4060000000027,
+  "pool_cap_per_model": 400,
+  "proposal_cap_per_model": 4000,
+  "route_count": 1200,
+  "candidate_pool_sha256": "e26125347325b5834b32d786c40cebd990b7d8301850a259fa2ae98396bd7d33",
+  "input_sha256": {
+    "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Dispatch Center and Service Areas.xlsx": "f1d23ec1c7463de50a012ca878e05e1d088cbe890808725f7dcfd2f438fc89a5",
+    "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Supply Demand and Delivery Deadlines.xlsx": "90c65bf4b9afcc69ed639e85378d31b29c81c052fd123d2fd2127c181c0573a0",
+    "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Transport Drone Data.xlsx": "7278fca19d06a8ace75e310245d0a359a27b7f5c973c1ea604008ea97f88b980",
+    "D:\\cpi\\cpi\\questions\\Data\\Zhenlong Township Geospatial Data\\Geospatial Data for Zhenlong Township and Surrounding Areas\\Digital Elevation Model (DEM) Data\\30 m DEM for Zhenlong Township and Surrounding Areas.tif": "741fe6de0b2bcaffd0f4007f574ee698d46197094f52cc954b532c4f90fc7c03",
+    "D:\\cpi\\cpi\\results\\tables\\q1_full_baseline_batches.csv": "ce4ba465b539efc83acadf1ffb710ebad6d390934835bb28b3da07ae9cda77f6"
+  },
+  "validation": {
+    "status": "PASS",
+    "checks": {
+      "cargo_unique_and_complete": true,
+      "compatible_resources": true,
+      "hard_deadlines": true,
+      "route_soc_and_energy": true,
+      "route_physics_recomputed": true,
+      "delivery_offsets_consistent": true,
+      "drone_intervals_nonoverlap": true,
+      "battery_charge_intervals_nonoverlap": true
+    },
+    "selected_sorties": 24,
+    "unique_cargo_count": 80
+  },
+  "scope": "Heuristic sorties-first endpoint over the K=400 candidate pool; no global optimality certificate.",
+  "generated_utc": "2026-09-24T11:58:05.770089+00:00"
+}

@@ -1,0 +1,8 @@
+﻿Metric,Value,Unit
+cargo_count,80,boxes
+delivered_count,80,boxes
+hard_deadline_count,30,boxes
+hard_deadline_pass_count,30,boxes
+weighted_lateness,221269.66446788376,priority·s
+unweighted_lateness_sum,18702.146864813272,s
+on_time_desired_count,74,boxes

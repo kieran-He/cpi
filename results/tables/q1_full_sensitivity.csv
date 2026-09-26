@@ -1,0 +1,28 @@
+﻿Scenario,Report status,Representative type,Sorties,Energy (kWh),Operation Time (s),Delta sorties,Delta energy (kWh),Delta operation time (s),Changed batch pairs,Baseline comparison available
+r0.20_a0.9_b0.9,formal_exact_pareto,formal sampled,18,53.21850231740343,32776.09267694372,0,-5.913166924155938,0.0,0,True
+r0.20_a0.9_b1.0,formal_exact_pareto,formal sampled,18,53.47407621531019,32776.09267694372,0,-5.657593026249174,0.0,0,True
+r0.20_a0.9_b1.1,formal_exact_pareto,formal sampled,18,53.72965011321696,32776.09267694372,0,-5.402019128342403,0.0,0,True
+r0.20_a1.0_b0.9,formal_exact_pareto,formal sampled,18,58.8760953436526,32776.09267694372,0,-0.2555738979067641,0.0,0,True
+r0.20_a1.0_b1.0,formal_exact_pareto,formal sampled,18,59.131669241559365,32776.09267694372,0,0.0,0.0,0,True
+r0.20_a1.0_b1.1,formal_exact_pareto,formal sampled,18,59.38724313946613,32776.09267694372,0,0.2555738979067641,0.0,0,True
+r0.20_a1.1_b0.9,formal_exact_pareto,formal sampled,19,66.64832529109798,34565.740688117025,1,7.516656049538611,1789.6480111733035,3,True
+r0.20_a1.1_b1.0,formal_exact_pareto,formal sampled,21,69.10972367561854,38011.555525025986,3,9.978054434059175,5235.462848082265,7,True
+r0.20_a1.1_b1.1,formal_exact_pareto,formal sampled,21,69.39257336510117,38011.555525025986,3,10.260904123541806,5235.462848082265,7,True
+r0.30_a0.9_b0.9,formal_exact_pareto,formal sampled,18,53.21850231740343,32776.09267694372,0,-5.913166924155938,0.0,0,True
+r0.30_a0.9_b1.0,formal_exact_pareto,formal sampled,18,53.47407621531019,32776.09267694372,0,-5.657593026249174,0.0,0,True
+r0.30_a0.9_b1.1,formal_exact_pareto,formal sampled,18,53.72965011321696,32776.09267694372,0,-5.402019128342403,0.0,0,True
+r0.30_a1.0_b0.9,formal_exact_pareto,formal sampled,22,66.56838391784991,39799.817505009094,4,7.436714676290549,7023.724828065373,16,True
+r0.30_a1.0_b1.0,formal_exact_pareto,formal sampled,22,66.85911239740796,39799.817505009094,4,7.72744315584859,7023.724828065373,16,True
+r0.30_a1.0_b1.1,formal_exact_pareto,formal sampled,22,67.149840876966,39799.817505009094,4,8.018171635406631,7023.724828065373,16,True
+r0.30_a1.1_b0.9,proven_infeasible,none,,,,,,,,True
+r0.30_a1.1_b1.0,proven_infeasible,none,,,,,,,,True
+r0.30_a1.1_b1.1,proven_infeasible,none,,,,,,,,True
+r0.40_a0.9_b0.9,formal_exact_pareto,formal sampled,23,66.28025681281052,41902.23157436099,5,7.148587571251156,9126.138897417266,19,True
+r0.40_a0.9_b1.0,formal_exact_pareto,formal sampled,23,66.58449660120907,41902.23157436099,5,7.452827359649703,9126.138897417266,19,True
+r0.40_a0.9_b1.1,formal_exact_pareto,formal sampled,25,68.65086382948869,45477.009628390246,7,9.51919458792932,12700.916951446525,21,True
+r0.40_a1.0_b0.9,proven_infeasible,none,,,,,,,,True
+r0.40_a1.0_b1.0,proven_infeasible,none,,,,,,,,True
+r0.40_a1.0_b1.1,proven_infeasible,none,,,,,,,,True
+r0.40_a1.1_b0.9,proven_infeasible,none,,,,,,,,True
+r0.40_a1.1_b1.0,proven_infeasible,none,,,,,,,,True
+r0.40_a1.1_b1.1,proven_infeasible,none,,,,,,,,True

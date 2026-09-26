@@ -15,7 +15,7 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 from src.models.q1_full import load_full_inputs
-from src.models.q2_scheduling import Route, make_pool, solve
+from src.models.q2_scheduling import Route, Stop, build_route, make_pool, solve
 
 ROOT=Path(__file__).resolve().parents[2]
 DATA=ROOT/"questions"/"Data"/"Basic Data for Drone-Based Emergency Supply Transport"
@@ -86,22 +86,47 @@ def write_json(path,payload):
     path.parent.mkdir(parents=True,exist_ok=True)
     tmp=path.with_suffix(path.suffix+".tmp"); tmp.write_text(json.dumps(payload,ensure_ascii=False,indent=2,allow_nan=False),encoding="utf-8"); tmp.replace(path)
 
-def validate_solution(result,routes,cargos,meta,aircrafts,drones,batteries):
+def validate_solution(result,routes,cargos,meta,aircrafts,drones,batteries,
+                      nodes=None, full_charge=None):
     chosen=result.get("selected",[]); ids=[cid for r in chosen for cid in r["cargo_ids"]]
     checks={"cargo_unique_and_complete":len(ids)==len(cargos) and set(ids)=={c.cargo_id for c in cargos} and len(ids)==len(set(ids)),
             "compatible_resources":True,"hard_deadlines":True,"route_soc_and_energy":True,
+            "route_physics_recomputed":nodes is not None and full_charge is not None,
+            "delivery_offsets_consistent":True,
             "drone_intervals_nonoverlap":True,"battery_charge_intervals_nonoverlap":True}
-    by_id={r.route_id:r for r in routes}; dw={c.cargo_id:c for c in cargos}
+    by_id={r.route_id:r for r in routes}; cargo_map={c.cargo_id:c for c in cargos}; geom_cache={}
     drone_intervals={}; battery_intervals={}
     for row in chosen:
         route=by_id[row["route_id"]]; model=row["model"]
+        checks["compatible_resources"] &= model == route.model == row["model"]
+        if nodes is not None and full_charge is not None:
+            stops=tuple(Stop(s.area, tuple(s.cargo_ids)) for s in route.stops)
+            rebuilt=build_route(model,stops,cargo_map,aircrafts[model],nodes,DEM,geom_cache,
+                                meta,full_charge[model],hard_at_zero=False)
+            checks["route_physics_recomputed"] &= rebuilt is not None
+            if rebuilt is not None:
+                tol=1e-7
+                checks["route_physics_recomputed"] &= (
+                    abs(rebuilt.mass-route.mass)<=tol and abs(rebuilt.volume-route.volume)<=tol
+                    and abs(rebuilt.energy-route.energy)<=tol
+                    and abs(rebuilt.return_s-route.return_s)<=tol
+                    and abs(rebuilt.prep_s-route.prep_s)<=tol
+                    and abs(rebuilt.drone_duration-route.drone_duration)<=tol
+                    and abs(rebuilt.battery_duration-route.battery_duration)<=tol
+                    and abs(rebuilt.return_soc-route.return_soc)<=tol
+                    and dict(rebuilt.delivery_offsets).keys()==dict(route.delivery_offsets).keys()
+                    and all(abs(dict(rebuilt.delivery_offsets)[c]-dict(route.delivery_offsets)[c])<=tol
+                            for c in dict(rebuilt.delivery_offsets)))
         checks["compatible_resources"] &= row["drone_id"] in drones[model] and row["battery_id"] in {b for b,_ in batteries[model]}
         checks["route_soc_and_energy"] &= route.return_soc+1e-9>=aircrafts[model].reserve_fraction and route.energy<=(1-aircrafts[model].reserve_fraction)*aircrafts[model].usable_energy_kwh+1e-8
         drone_intervals.setdefault(row["drone_id"],[]).append((row["start_s"],row["start_s"]+route.drone_duration))
         battery_intervals.setdefault(row["battery_id"],[]).append((row["start_s"],row["start_s"]+route.battery_duration))
         for cid in row["cargo_ids"]:
             deadline=meta[cid]["hard_deadline"]
-            if deadline is not None: checks["hard_deadlines"] &= result["delivery_times"][cid]<=deadline+1e-6
+            expected=row["start_s"]+dict(route.delivery_offsets)[cid]
+            actual=result["delivery_times"].get(cid,math.inf)
+            checks["delivery_offsets_consistent"] &= abs(expected-actual)<=1e-6
+            if deadline is not None: checks["hard_deadlines"] &= actual<=deadline+1e-6
     for groups,key in ((drone_intervals,"drone_intervals_nonoverlap"),(battery_intervals,"battery_charge_intervals_nonoverlap")):
         for spans in groups.values():
             spans.sort()
@@ -111,6 +136,11 @@ def validate_solution(result,routes,cargos,meta,aircrafts,drones,batteries):
     return {"status":"PASS","checks":checks,"selected_sorties":len(chosen),"unique_cargo_count":len(set(ids))}
 
 def main():
+    raise SystemExit(
+        "The full-instance exact MILP is disabled. Use `python -m src.experiments.q2_alns` "
+        "for the bounded ALNS workflow; use `analysis/validation/q2_miniature_milp.py` "
+        "for the exact small-instance cross-check."
+    )
     p=argparse.ArgumentParser()
     p.add_argument("--p1-check",action="store_true",help="run a real-data three-box end-to-end slice")
     p.add_argument("--pool-cap",type=int,default=150); p.add_argument("--proposal-cap",type=int,default=1500)
@@ -131,7 +161,7 @@ def main():
     if args.p1_check:
         # Keep actual heterogeneous resources and solve a compact slice, with hard windows intact.
         result=lex_solve(routes,cargos,meta,aircrafts,drones,batteries,"energy")
-        validation=validate_solution(result,routes,cargos,meta,aircrafts,drones,batteries)
+        validation=validate_solution(result,routes,cargos,meta,aircrafts,drones,batteries,nodes,full_charge)
         payload={"experiment":"q2-real-data-p1-slice","input_sha256":{str(x.relative_to(ROOT)):sha(x) for x in input_paths+[DEM,BASELINE]},
                  "route_count":len(routes),"pool":pool,"solve":result,"validation":validation,"elapsed_s":time.time()-started,
                  "python":sys.version,"generated_utc":datetime.now(timezone.utc).isoformat()}
@@ -161,18 +191,18 @@ def main():
     vals=list(unique.values())
     nondom=[p for p in vals if not any(all(q["metrics"][k]<=p["metrics"][k]+1e-7 for k in p["metrics"]) and any(q["metrics"][k]<p["metrics"][k]-1e-7 for k in p["metrics"]) for q in vals)]
     chosen=min(nondom,key=lambda p:(p["metrics"]["late"],p["metrics"]["makespan"],p["metrics"]["energy"],p["metrics"]["sorties"]))
-    validation=validate_solution(chosen,routes,cargos,meta,aircrafts,drones,batteries)
+    validation=validate_solution(chosen,routes,cargos,meta,aircrafts,drones,batteries,nodes,full_charge)
     report={"status":"complete_pool_optimal","pool":pool,"route_count":len(routes),"input_sha256":{str(x.relative_to(ROOT)):sha(x) for x in input_paths+[DEM,BASELINE]},
             "endpoints":{k:{"status":v["status"],"metrics":v.get("metrics"),"dual_bound":v.get("dual_bound"),"gap":v.get("gap"),"lex_proof":v.get("lex_proof")} for k,v in endpoints.items()},
             "sampled_nondominated_count":len(nondom),"chosen_metrics":chosen["metrics"],"chosen":chosen["selected"],
-            "delivery_times":chosen["delivery_times"],"validation":validation,"solve_count":len(solve_records),"elapsed_s":time.time()-started,
+            "delivery_times":chosen["delivery_times"],"cargo_metadata":meta,"validation":validation,"solve_count":len(solve_records),"elapsed_s":time.time()-started,
             "scope":"Optimal only within the deterministic finite candidate-route pool; the sampled epsilon set is not the full Pareto frontier.",
             "generated_utc":datetime.now(timezone.utc).isoformat()}
     write_json(OUT/"full_report.json",report); write_json(OUT/"solve_records.json",solve_records)
-    export_rows(report,cargos)
+    export_rows(report,cargos,routes)
     print(json.dumps({"event":"full_complete","status":report["status"],"metrics":chosen["metrics"],"routes":len(chosen["selected"]),"elapsed_s":report["elapsed_s"]},ensure_ascii=False),flush=True)
 
-def export_rows(report,cargos):
+def export_rows(report,cargos,routes=None):
     OUT.mkdir(parents=True,exist_ok=True); selected=report["chosen"]
     with (OUT/"sorties.csv").open("w",newline="",encoding="utf-8-sig") as f:
         cols=["Sortie ID","Drone ID","Model ID","Battery ID","Start Time (s)","Service Area Visit Order","Return to O01 Time (s)","Sortie Energy (kWh)"]
@@ -190,6 +220,30 @@ def export_rows(report,cargos):
             sid=f"Q2-{i:03d}"; ret=r["return_s"]; ready=r["start_s"]+r["battery_duration_s"]
             w.writerow({"Sortie ID":sid,"Resource Type":"drone","Resource ID":r["drone_id"],"Model ID":r["model"],"Occupied From (s)":r["start_s"],"Occupied Until (s)":r["return_s"],"Return Time (s)":ret,"Charge Start (s)":"","Battery Ready (s)":""})
             w.writerow({"Sortie ID":sid,"Resource Type":"battery","Resource ID":r["battery_id"],"Model ID":r["model"],"Occupied From (s)":r["start_s"],"Occupied Until (s)":ready,"Return Time (s)":ret,"Charge Start (s)":ret,"Battery Ready (s)":ready})
+    route_by_id={r.route_id:r for r in (routes or [])}
+    with (OUT/"route_map.csv").open("w",newline="",encoding="utf-8-sig") as f:
+        cols=["Sortie ID","Sequence","Node","Cargo Box IDs","Start Time (s)","Return Time (s)","Drone ID","Battery ID"]
+        w=csv.DictWriter(f,fieldnames=cols);w.writeheader()
+        for i,r in enumerate(sorted(selected,key=lambda x:(x["start_s"],x["route_id"])),1):
+            sid=f"Q2-{i:03d}"
+            w.writerow({"Sortie ID":sid,"Sequence":0,"Node":"O01","Cargo Box IDs":"","Start Time (s)":r["start_s"],"Return Time (s)":r["return_s"],"Drone ID":r["drone_id"],"Battery ID":r["battery_id"]})
+            route=route_by_id.get(r["route_id"])
+            if route is not None and [stop.area for stop in route.stops] != r["stops"]:
+                raise ValueError(f"Saved route stop order disagrees for {r['route_id']}")
+            for seq,area in enumerate(r["stops"],1):
+                cargo_ids = route.stops[seq-1].cargo_ids if route is not None else ()
+                w.writerow({"Sortie ID":sid,"Sequence":seq,"Node":area,"Cargo Box IDs":",".join(cargo_ids),"Start Time (s)":r["start_s"],"Return Time (s)":r["return_s"],"Drone ID":r["drone_id"],"Battery ID":r["battery_id"]})
+            w.writerow({"Sortie ID":sid,"Sequence":len(r["stops"])+1,"Node":"O01","Cargo Box IDs":"","Start Time (s)":r["start_s"],"Return Time (s)":r["return_s"],"Drone ID":r["drone_id"],"Battery ID":r["battery_id"]})
+    late=[max(0.0,report["delivery_times"][c.cargo_id]-report.get("cargo_metadata",{}).get(c.cargo_id,{}).get("desired",0.0)) for c in cargos if c.cargo_id in report["delivery_times"]]
+    with (OUT/"timeliness_summary.csv").open("w",newline="",encoding="utf-8-sig") as f:
+        w=csv.DictWriter(f,fieldnames=["Metric","Value","Unit"]);w.writeheader()
+        w.writerows([{"Metric":"cargo_count","Value":len(cargos),"Unit":"boxes"},
+                     {"Metric":"delivered_count","Value":len(report["delivery_times"]),"Unit":"boxes"},
+                     {"Metric":"hard_deadline_count","Value":sum(1 for c in cargos if report.get("cargo_metadata",{}).get(c.cargo_id,{}).get("hard_deadline") is not None),"Unit":"boxes"},
+                     {"Metric":"hard_deadline_pass_count","Value":sum(1 for c in cargos if report.get("cargo_metadata",{}).get(c.cargo_id,{}).get("hard_deadline") is not None and report["delivery_times"].get(c.cargo_id,float("inf"))<=report["cargo_metadata"][c.cargo_id]["hard_deadline"]+1e-6),"Unit":"boxes"},
+                     {"Metric":"weighted_lateness","Value":report["metrics"]["late"],"Unit":"priority·s"},
+                     {"Metric":"unweighted_lateness_sum","Value":sum(late),"Unit":"s"},
+                     {"Metric":"on_time_desired_count","Value":sum(1 for c in cargos if c.cargo_id in report["delivery_times"] and report["delivery_times"][c.cargo_id]<=report.get("cargo_metadata",{}).get(c.cargo_id,{}).get("desired",float("inf"))+1e-6),"Unit":"boxes"}])
     # Fill the supplied workbook copy and preserve all untouched sheets/structure.
     template=ROOT/"questions"/"Results Submission Template.xlsx"
     wb=load_workbook(template)

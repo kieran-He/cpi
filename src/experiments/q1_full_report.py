@@ -1,8 +1,8 @@
 """Validate Q1 full-run checkpoints and publish tables/template without solving.
 
 Run after q1_full.py: ``uv run --locked python -m src.experiments.q1_full_report``.
-Only results/checkpoints/q1_full/*.json are authoritative inputs. The P1 slice
-has its own directory and can never become a formal 80-box result here.
+Only results/checkpoints/q1_pareto_dp_v3_2/*.json are authoritative inputs. The
+P1 slice and the earlier MILP checkpoints remain separate from formal results.
 Missing, corrupted, paused, timed-out or unproven scenarios stay explicitly
 incomplete in the summary. An XLSX is issued only for a proven baseline.
 """
@@ -41,7 +41,7 @@ CSV_COLUMNS = {
     "q1_full_scenario_status.csv": ["Scenario", "rho", "alpha", "beta", "Checkpoint status", "Report status", "Formal", "Reason", "Candidates possible", "Candidates physical", "Candidates retained", "Dominated removed", "Epsilon planned", "Epsilon optimal", "Epsilon infeasible", "Epsilon tentative"],
     "q1_full_endpoints.csv": ["Scenario", "Primary", "Status", "Sorties", "Energy (kWh)", "Operation Time (s)", "Primary lower bound", "Area count"],
     "q1_full_pareto_sample.csv": ["Scenario", "Sample ID", "Sample status", "Sorties", "Energy (kWh)", "Operation Time (s)", "Selected batch IDs"],
-    "q1_full_epsilon_status.csv": ["Scenario", "Job ID", "Stage", "Primary", "Bound N", "Bound E (kWh)", "Bound T (s)", "Status", "Solver status", "Reused certificate", "Proof source", "Root proof source", "Sorties", "Energy (kWh)", "Operation Time (s)", "Primary lower bound", "MIP gap", "Nodes", "Selected batches"],
+    "q1_full_epsilon_status.csv": ["Scenario", "Job ID", "Stage", "Primary", "Bound N", "Bound E (kWh)", "Bound T (s)", "Status", "Proof method", "Solver status", "Reused certificate", "Proof source", "Root proof source", "Sorties", "Energy (kWh)", "Operation Time (s)", "Primary lower bound", "MIP gap", "Nodes", "Selected batches"],
     "q1_full_sensitivity.csv": ["Scenario", "Report status", "Representative type", "Sorties", "Energy (kWh)", "Operation Time (s)", "Delta sorties", "Delta energy (kWh)", "Delta operation time (s)", "Changed batch pairs", "Baseline comparison available"],
     "q1_full_formal_batches.csv": ["Scenario", *Q1_HEADERS, "Operation Time (s)", "Batch ID"],
 }
@@ -189,6 +189,8 @@ def _validate_epsilon(state: dict, groups, aircrafts, geometries, scenario: Scen
         bounds = job["limits"]
         record = results.get(key)
         status = record.get("status", "missing") if isinstance(record, dict) else "missing"
+        proof_method = record.get("proof_method", "milp") if isinstance(record, dict) else "milp"
+        exact_dp = proof_method == "exact_subset_dp"
         if isinstance(record, dict) and status in ("optimal", "infeasible"):
             if record.get("primary") != primary or record.get("limits") != bounds:
                 errors.append(f"{key}: objective/limits changed")
@@ -224,7 +226,8 @@ def _validate_epsilon(state: dict, groups, aircrafts, geometries, scenario: Scen
                 errors.append(f"{key}: direct MILP provenance missing")
                 status = "unverified"
         if status == "optimal":
-            if record.get("solver_status") != 0 or not _near(record.get("gap"), 0., atol=1e-7):
+            if ((not exact_dp and record.get("solver_status") != 0) or
+                    not _near(record.get("gap"), 0., atol=1e-7)):
                 errors.append(f"{key}: purported optimal without solver proof")
                 status = "unverified"
             else:
@@ -236,7 +239,7 @@ def _validate_epsilon(state: dict, groups, aircrafts, geometries, scenario: Scen
                 elif record.get("dual_bound") is None or record["dual_bound"] > actual[primary] + 1e-5 * max(1., actual[primary]):
                     errors.append(f"{key}: invalid optimality bound")
                     status = "unverified"
-        elif status == "infeasible" and record.get("solver_status") != 2:
+        elif status == "infeasible" and not exact_dp and record.get("solver_status") != 2:
             errors.append(f"{key}: infeasible label not proven")
             status = "unverified"
         if status in ("optimal", "infeasible"):
@@ -246,7 +249,8 @@ def _validate_epsilon(state: dict, groups, aircrafts, geometries, scenario: Scen
         values = record.get("metrics") if isinstance(record, dict) and isinstance(record.get("metrics"), dict) else {}
         rows.append({"Scenario": scenario.key, "Job ID": key, "Stage": job["stage"], "Primary": primary,
                      "Bound N": bounds.get("N"), "Bound E (kWh)": bounds.get("E"), "Bound T (s)": bounds.get("T"),
-                     "Status": status, "Solver status": record.get("solver_status") if isinstance(record, dict) else None,
+                     "Status": status, "Proof method": proof_method,
+                     "Solver status": record.get("solver_status") if isinstance(record, dict) else None,
                      "Reused certificate": record.get("reused") if isinstance(record, dict) else None,
                      "Proof source": record.get("proof_source") if isinstance(record, dict) else None,
                      "Root proof source": record.get("root_proof_source") if isinstance(record, dict) else None,
@@ -326,7 +330,7 @@ def collect(checkpoint_dir: Path = CHECKPOINT_DIR) -> tuple[dict[str, list[dict]
             continue
         try:
             state = read_checkpoint(path, fingerprint)
-            if state.get("schema") != 2 or state.get("scenario") != {"rho": scenario.rho, "alpha": scenario.alpha, "beta": scenario.beta}:
+            if state.get("schema") not in (2, 3) or state.get("scenario") != {"rho": scenario.rho, "alpha": scenario.alpha, "beta": scenario.beta}:
                 raise ValueError("Scenario/schema mismatch")
             if geometries is None:
                 geometries = make_geometries(origin, areas, DEM)
@@ -388,8 +392,10 @@ def collect(checkpoint_dir: Path = CHECKPOINT_DIR) -> tuple[dict[str, list[dict]
                 for index, point in enumerate(state.get("pareto_sample", []), 1):
                     actual, _, _ = _solution(point["selected"], groups, aircrafts, geometries, scenario)
                     _assert_metrics(actual, point["metrics"])
+                    sample_status = ("exact full Pareto frontier" if state.get("proof_method") == "exact_subset_dp" else
+                                     "proven scalar; grid completion pending" if state.get("status") != "complete_sampled" else "proven sampled")
                     tables["q1_full_pareto_sample.csv"].append({"Scenario": key, "Sample ID": index,
-                        "Sample status": "proven scalar; grid completion pending" if state.get("status") != "complete_sampled" else "proven sampled",
+                        "Sample status": sample_status,
                         "Sorties": actual["N"], "Energy (kWh)": actual["E"],
                         "Operation Time (s)": actual["T"], "Selected batch IDs": ";".join(sorted(point["selected"]))})
                 formal = (state.get("status") == "complete_sampled" and refinement_done and endpoint_ok and
@@ -410,7 +416,8 @@ def collect(checkpoint_dir: Path = CHECKPOINT_DIR) -> tuple[dict[str, list[dict]
                     tables["q1_full_formal_batches.csv"].extend(rows)
                     if not any(set(point["selected"]) == set(ids) for point in state.get("pareto_sample", [])):
                         raise ValueError("Formal representative absent from sampled Pareto set")
-                    report_status = "formal_sampled"
+                    report_status = ("formal_exact_pareto" if state.get("proof_method") == "exact_subset_dp"
+                                     else "formal_sampled")
                     for row in tables["q1_full_pareto_sample.csv"]:
                         if row["Scenario"] == key:
                             row["Sample status"] = "formal sampled"
@@ -428,6 +435,13 @@ def collect(checkpoint_dir: Path = CHECKPOINT_DIR) -> tuple[dict[str, list[dict]
                 formal_rows_by_scenario.pop(key, None)
                 tables["q1_full_formal_batches.csv"] = [r for r in tables["q1_full_formal_batches.csv"] if r["Scenario"] != key]
                 tables["q1_full_pareto_sample.csv"] = [r for r in tables["q1_full_pareto_sample.csv"] if r["Scenario"] != key]
+            if state.get("status") == "infeasible" and state.get("proof_method") in (
+                    "exact_subset_dp", "candidate_coverage"):
+                formal = True
+                report_status = "proven_infeasible"
+                reason = ("No feasible single-cargo candidate for: " + ", ".join(state.get("uncovered_cargo_ids", []))
+                          if state.get("proof_method") == "candidate_coverage" else
+                          "Exact subset dynamic program found no exact partition")
         tables["q1_full_scenario_status.csv"].append({"Scenario": key, "rho": scenario.rho, "alpha": scenario.alpha,
             "beta": scenario.beta, "Checkpoint status": state.get("status") if state else verdict,
             "Report status": report_status, "Formal": formal, "Reason": reason,
@@ -459,8 +473,12 @@ def collect(checkpoint_dir: Path = CHECKPOINT_DIR) -> tuple[dict[str, list[dict]
             "Delta operation time (s)": metric["T"] - base_metric["T"] if base_metric else None,
             "Changed batch pairs": len(pairs.symmetric_difference(base_pairs)) if base_pairs is not None else None,
             "Baseline comparison available": baseline is not None})
-    summary = {"status": "all_27_formal_sampled" if len(representatives) == 27 else "incomplete",
+    resolved = sum(bool(row["Formal"]) for row in tables["q1_full_scenario_status.csv"])
+    proven_infeasible = sum(row["Report status"] == "proven_infeasible"
+                            for row in tables["q1_full_scenario_status.csv"])
+    summary = {"status": "all_27_proven" if resolved == 27 else "incomplete",
                "scenario_count": 27, "formal_scenarios": len(representatives),
+               "resolved_scenarios": resolved, "proven_infeasible_scenarios": proven_infeasible,
                "missing_or_unproven": [r["Scenario"] for r in tables["q1_full_scenario_status.csv"] if not r["Formal"]],
                "baseline_xlsx_ready": Scenario(.2, 1., 1.).key in formal_rows_by_scenario,
                "existing_xlsx_requires_review": XLSX_OUT.exists() and Scenario(.2, 1., 1.).key not in formal_rows_by_scenario,
@@ -482,6 +500,8 @@ def main() -> None:
             _xlsx_from_template(detail["baseline_rows"])
         atomic_json(STATUS_OUT, summary)
     print(json.dumps({"status": summary["status"], "formal_scenarios": summary["formal_scenarios"],
+                      "resolved_scenarios": summary["resolved_scenarios"],
+                      "proven_infeasible_scenarios": summary["proven_infeasible_scenarios"],
                       "missing_or_unproven": summary["missing_or_unproven"],
                       "baseline_xlsx_ready": summary["baseline_xlsx_ready"]}, ensure_ascii=False))
 

@@ -250,6 +250,78 @@ def metrics(selected: list[Batch]) -> dict[str, float]:
             "T": math.fsum(b.operation_time_s for b in selected)}
 
 
+def epsilon_reduce_candidates(cargoes: list[Cargo], batches: list[Batch],
+                              limits: dict[str, float]) -> tuple[list[Batch], dict[str, int]]:
+    """Safely fix candidates that cannot fit an epsilon budget.
+
+    Every selected batch's cost is at least the sum of per-cargo shares
+    ``min(cost(batch) / size(batch))`` for the cargoes it carries. The sum of
+    these shares is therefore an admissible lower bound for every exact cover.
+    Fixing one candidate lets us add the lower bounds of all uncovered cargoes
+    and all other service areas; a candidate exceeding any global cap cannot
+    occur in a feasible solution and may be removed without changing the MILP.
+    """
+    if not limits or not batches:
+        return batches, {"before": len(batches), "after": len(batches), "removed": 0}
+
+    area_cargoes: dict[str, list[Cargo]] = {}
+    for cargo in cargoes:
+        area_cargoes.setdefault(cargo.service_area_id, []).append(cargo)
+    area_batches: dict[str, list[Batch]] = {area: [] for area in area_cargoes}
+    for batch in batches:
+        if batch.area_id not in area_batches:
+            raise ValueError(f"Batch references unknown area: {batch.area_id}")
+        area_batches[batch.area_id].append(batch)
+
+    # A valid lower bound on the cost of covering each area's cargoes.
+    cargo_share: dict[str, dict[str, list[float]]] = {}
+    area_lower: dict[str, dict[str, float]] = {}
+    for area, local_cargoes in area_cargoes.items():
+        local_cargoes.sort(key=lambda c: c.cargo_id)
+        minima = {name: [math.inf] * len(local_cargoes) for name in limits}
+        for batch in area_batches[area]:
+            size = batch.mask.bit_count()
+            if size == 0:
+                raise ValueError(f"Empty batch is invalid: {batch.batch_id}")
+            for i in range(len(local_cargoes)):
+                if batch.mask & (1 << i):
+                    for name in limits:
+                        cost = (1. if name == "N" else
+                                batch.energy_kwh if name == "E" else
+                                batch.operation_time_s if name == "T" else None)
+                        if cost is None:
+                            raise ValueError(f"Unknown epsilon objective: {name}")
+                        minima[name][i] = min(minima[name][i], cost / size)
+        if any(not math.isfinite(value) for values in minima.values() for value in values):
+            raise ValueError(f"A cargo has no candidate in {area}")
+        cargo_share[area] = minima
+        area_lower[area] = {name: math.fsum(values) for name, values in minima.items()}
+
+    other_area_lower = {
+        area: {name: math.fsum(area_lower[other][name] for other in area_cargoes if other != area)
+               for name in limits}
+        for area in area_cargoes
+    }
+    kept: list[Batch] = []
+    for batch in batches:
+        local_cargoes = area_cargoes[batch.area_id]
+        for name, bound in limits.items():
+            cost = (1. if name == "N" else
+                    batch.energy_kwh if name == "E" else
+                    batch.operation_time_s if name == "T" else None)
+            if cost is None:
+                raise ValueError(f"Unknown epsilon objective: {name}")
+            uncovered_lower = math.fsum(
+                cargo_share[batch.area_id][name][i]
+                for i in range(len(local_cargoes)) if not batch.mask & (1 << i))
+            lower = cost + uncovered_lower + other_area_lower[batch.area_id][name]
+            if lower > bound + 1e-8 * max(1., abs(bound)):
+                break
+        else:
+            kept.append(batch)
+    return kept, {"before": len(batches), "after": len(kept), "removed": len(batches) - len(kept)}
+
+
 def solve_partition(cargoes: list[Cargo], batches: list[Batch], primary: str,
                     limits: dict[str, float] | None, time_limit_s: float | None) -> dict:
     """One exact MILP call; ``None`` or ``0`` means no solver time limit."""
@@ -257,9 +329,13 @@ def solve_partition(cargoes: list[Cargo], batches: list[Batch], primary: str,
         raise ValueError("Invalid primary objective or time limit")
     if not batches:
         return {"status": "infeasible", "selected": [], "metrics": None, "dual_bound": None, "gap": None}
+    limits = limits or {}
+    batches, reduction = epsilon_reduce_candidates(cargoes, batches, limits)
+    if not batches:
+        return {"status": "infeasible", "selected": [], "metrics": None, "dual_bound": None,
+                "gap": None, "candidate_reduction": reduction}
     matrix = incidence(cargoes, batches)
     vectors = objectives(batches)
-    limits = limits or {}
     constraints = [matrix]
     lower = [np.ones(len(cargoes))]
     upper = [np.ones(len(cargoes))]
@@ -296,7 +372,7 @@ def solve_partition(cargoes: list[Cargo], batches: list[Batch], primary: str,
             "dual_bound": finite_or_none(getattr(res, "mip_dual_bound", None)),
             "gap": finite_or_none(getattr(res, "mip_gap", None)),
             "node_count": finite_or_none(getattr(res, "mip_node_count", None)),
-            "primary": primary, "limits": limits}
+            "primary": primary, "limits": limits, "candidate_reduction": reduction}
 
 
 def finite_or_none(value: object) -> float | None:
@@ -351,6 +427,148 @@ def nondominated(solutions: list[dict]) -> list[dict]:
                    abs(m["T"] - y["metrics"]["T"]) <= 1e-6 for y in unique):
             unique.append(x)
     return sorted(unique, key=lambda x: (x["metrics"]["N"], x["metrics"]["E"], x["metrics"]["T"], tuple(sorted(x["selected"]))))
+
+
+def _pareto_keep_indices(points: np.ndarray) -> list[int]:
+    """Return deterministic indices of the non-dominated (N, E, T) rows."""
+    if points.size == 0:
+        return []
+    keep: list[int] = []
+    prior_energy = np.empty(0, dtype=float)
+    prior_time = np.empty(0, dtype=float)
+    for sorties in np.unique(points[:, 0]):
+        ids = np.flatnonzero(points[:, 0] == sorties)
+        order = ids[np.lexsort((points[ids, 2], points[ids, 1]))]
+        group_front: list[int] = []
+        best_time = math.inf
+        for idx in order:
+            op_time = float(points[idx, 2])
+            if op_time < best_time - 1e-6:
+                group_front.append(int(idx))
+                best_time = op_time
+        if prior_energy.size:
+            local = points[group_front]
+            positions = np.searchsorted(prior_energy, local[:, 1] + 1e-8, side="right") - 1
+            has_prior = positions >= 0
+            dominated = np.zeros(len(group_front), dtype=bool)
+            dominated[has_prior] = prior_time[positions[has_prior]] <= local[has_prior, 2] + 1e-6
+            group_front = [idx for idx, is_dominated in zip(group_front, dominated) if not is_dominated]
+        keep.extend(group_front)
+        if group_front:
+            combined = np.concatenate((
+                np.column_stack((prior_energy, prior_time)) if prior_energy.size else np.empty((0, 2)),
+                points[group_front, 1:3],
+            ))
+            by_energy = combined[np.argsort(combined[:, 0], kind="mergesort")]
+            prefix_time = np.minimum.accumulate(by_energy[:, 1])
+            # Keep the prefix envelope; searchsorted then checks every earlier N.
+            prior_energy = by_energy[:, 0]
+            prior_time = prefix_time
+    if not keep:
+        return []
+    keep.sort(key=lambda i: (points[i, 0], points[i, 1], points[i, 2], i))
+    unique: list[int] = []
+    for idx in keep:
+        if not unique:
+            unique.append(idx)
+            continue
+        prior = unique[-1]
+        if (points[idx, 0] == points[prior, 0] and
+                abs(points[idx, 1] - points[prior, 1]) <= 1e-8 and
+                abs(points[idx, 2] - points[prior, 2]) <= 1e-6):
+            continue
+        unique.append(idx)
+    return unique
+
+
+def exact_area_pareto(cargoes: list[Cargo], batches: list[Batch]) -> tuple[np.ndarray, list[tuple[str, ...]], int]:
+    """Enumerate an area's exact-cover Pareto front by subset dynamic programming.
+
+    The least uncovered cargo is assigned next, so every set partition is
+    generated once. Dominated partial covers of the same cargo mask can be
+    discarded because every continuation adds the same objective vector.
+    """
+    n = len(cargoes)
+    if n > 15:
+        raise ValueError(f"Unexpected >15 cargoes in {cargoes[0].service_area_id if cargoes else 'area'}")
+    size = 1 << n
+    by_mask: dict[int, list[Batch]] = {}
+    for batch in sorted(batches, key=lambda item: item.batch_id):
+        by_mask.setdefault(batch.mask, []).append(batch)
+    fronts: list[np.ndarray | None] = [None] * size
+    parents: list[list[tuple[int, int, str]] | None] = [None] * size
+    fronts[0] = np.zeros((1, 3), dtype=float)
+    parents[0] = []
+    total_states = 0
+    for mask in range(1, size):
+        first = mask & -mask
+        sub = mask
+        blocks: list[np.ndarray] = []
+        choices: list[tuple[int, int, str]] = []
+        while sub:
+            options = by_mask.get(sub) if sub & first else None
+            if options:
+                rest = mask ^ sub
+                base = fronts[rest]
+                assert base is not None
+                for batch in options:
+                    blocks.append(base + np.array([1., batch.energy_kwh, batch.operation_time_s]))
+                    choices.extend((rest, i, batch.batch_id) for i in range(len(base)))
+            sub = (sub - 1) & mask
+        if blocks:
+            points = np.concatenate(blocks, axis=0)
+            keep = _pareto_keep_indices(points)
+            fronts[mask] = points[keep]
+            parents[mask] = [choices[i] for i in keep]
+            total_states += len(keep)
+        else:
+            fronts[mask] = np.empty((0, 3), dtype=float)
+            parents[mask] = []
+
+    full = size - 1
+    result = fronts[full]
+    assert result is not None
+    paths: list[tuple[str, ...]] = []
+    for final_idx in range(len(result)):
+        mask, idx = full, final_idx
+        selected: list[str] = []
+        while mask:
+            parent_rows = parents[mask]
+            assert parent_rows is not None
+            rest, prior_idx, batch_id = parent_rows[idx]
+            selected.append(batch_id)
+            mask, idx = rest, prior_idx
+        paths.append(tuple(sorted(selected)))
+    return result, paths, total_states
+
+
+def exact_global_pareto(groups: dict[str, list[Cargo]], area_batches: dict[str, list[Batch]],
+                        progress=None) -> tuple[list[dict], dict[str, dict[str, float]], dict[str, int]]:
+    """Combine exact service-area fronts into the exact fleet-wide Pareto front."""
+    points = np.zeros((1, 3), dtype=float)
+    paths: list[tuple[str, ...]] = [()]
+    area_minima: dict[str, dict[str, float]] = {}
+    dp_states: dict[str, int] = {}
+    for area in sorted(groups):
+        local, local_paths, states = exact_area_pareto(groups[area], area_batches[area])
+        if not len(local):
+            return [], area_minima, dp_states
+        area_minima[area] = {name: float(np.min(local[:, i])) for i, name in enumerate(OBJECTIVES)}
+        dp_states[area] = states
+        combined = (points[:, None, :] + local[None, :, :]).reshape(-1, 3)
+        combined_paths = [left + right for left in paths for right in local_paths]
+        keep = _pareto_keep_indices(combined)
+        points = combined[keep]
+        paths = [combined_paths[i] for i in keep]
+        if progress is not None:
+            progress(area, len(local), len(points), states)
+    result = []
+    for row, selected in zip(points, paths):
+        result.append({"selected": list(selected),
+                       "metrics": {"N": int(round(float(row[0]))), "E": float(row[1]), "T": float(row[2])}})
+    result.sort(key=lambda item: (item["metrics"]["N"], item["metrics"]["E"],
+                                  item["metrics"]["T"], tuple(item["selected"])))
+    return result, area_minima, dp_states
 
 
 def representative(front: list[dict], ideals: dict[str, float]) -> tuple[dict, dict[str, float]]:

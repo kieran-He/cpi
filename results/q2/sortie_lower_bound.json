@@ -1,0 +1,1039 @@
+{
+  "status": "18_sortie_cover_infeasible_under_candidate_pool",
+  "pool_cap_per_model": 400,
+  "proposal_cap_per_model": 4000,
+  "route_count": 1200,
+  "counts_by_model": {
+    "A": 400,
+    "B": 400,
+    "C": 400
+  },
+  "candidate_pool_sha256": "e26125347325b5834b32d786c40cebd990b7d8301850a259fa2ae98396bd7d33",
+  "coverage_lower_bound": 18,
+  "minimum_covers_enumerated": 28,
+  "enumeration_termination_status": 2,
+  "enumeration_termination_message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+  "enumeration_exhaustive": true,
+  "all_18_covers_fail_B_drone_only_start_deadline_test": true,
+  "B_drone_count": 2,
+  "cover_checks": [
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-ed86d65e915901e5",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-8d67753f6fd722df",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-883828ed0a561ff4",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-704dcd808266887e",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-703bac5edf8b79b3",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-60d46e2739c180d5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5b12eda4a159883d",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-42b69e95aaf6dfb5",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-0efd766e01ec6149",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-42b69e95aaf6dfb5",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-42b69e95aaf6dfb5",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-703bac5edf8b79b3",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-703bac5edf8b79b3",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-60d46e2739c180d5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-60d46e2739c180d5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-704dcd808266887e",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8d67753f6fd722df",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-c8cb905a3858677d",
+        "Q2-cac65df276051253",
+        "Q2-ed86d65e915901e5",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9e084e7010ccbf47",
+        "Q2-9f72d839d185daa3",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-883828ed0a561ff4",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8d67753f6fd722df",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-0efd766e01ec6149",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-883828ed0a561ff4",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-ed86d65e915901e5",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 8,
+        "C": 10
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-0efd766e01ec6149",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 1,
+        "B": 8,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5b12eda4a159883d",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5b12eda4a159883d",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-8e93c6294691a0b8",
+        "Q2-9f72d839d185daa3",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-eca083603eac3d4e",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    },
+    {
+      "route_ids": [
+        "Q2-0edaa47b3d4e4f4a",
+        "Q2-118927574a53aac6",
+        "Q2-202bd3640df64ba5",
+        "Q2-28d7983964ced853",
+        "Q2-30d865db2c27439f",
+        "Q2-359cc2d3ad5b1e2f",
+        "Q2-431e5622672c0626",
+        "Q2-4d88573adf4a2d76",
+        "Q2-5bc81bb5720b5346",
+        "Q2-5f2d89f9ab0232b5",
+        "Q2-6304978344c22313",
+        "Q2-704dcd808266887e",
+        "Q2-776dd7a6253a8970",
+        "Q2-8e93c6294691a0b8",
+        "Q2-c29f4c36e61f7845",
+        "Q2-cac443ad6281a25a",
+        "Q2-cac65df276051253",
+        "Q2-f7b4efd57b02977e"
+      ],
+      "routes_by_model": {
+        "A": 0,
+        "B": 9,
+        "C": 9
+      },
+      "B_hard_3600_routes": 5,
+      "B_hard_latest_starts_s": [
+        2358.702722,
+        2387.567236,
+        2439.713033,
+        2544.774882,
+        2567.231527
+      ],
+      "B_drone_only_feasible": false
+    }
+  ],
+  "input_sha256": {
+    "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Dispatch Center and Service Areas.xlsx": "f1d23ec1c7463de50a012ca878e05e1d088cbe890808725f7dcfd2f438fc89a5",
+    "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Supply Demand and Delivery Deadlines.xlsx": "90c65bf4b9afcc69ed639e85378d31b29c81c052fd123d2fd2127c181c0573a0",
+    "D:\\cpi\\cpi\\questions\\Data\\Basic Data for Drone-Based Emergency Supply Transport\\Transport Drone Data.xlsx": "7278fca19d06a8ace75e310245d0a359a27b7f5c973c1ea604008ea97f88b980",
+    "D:\\cpi\\cpi\\questions\\Data\\Zhenlong Township Geospatial Data\\Geospatial Data for Zhenlong Township and Surrounding Areas\\Digital Elevation Model (DEM) Data\\30 m DEM for Zhenlong Township and Surrounding Areas.tif": "741fe6de0b2bcaffd0f4007f574ee698d46197094f52cc954b532c4f90fc7c03",
+    "D:\\cpi\\cpi\\results\\tables\\q1_full_baseline_batches.csv": "ce4ba465b539efc83acadf1ffb710ebad6d390934835bb28b3da07ae9cda77f6"
+  },
+  "scope": "Candidate-pool route-cover lower bound and a relaxed B-drone test only; not a proof over routes outside K=400.",
+  "elapsed_s": 2.7030000000086147,
+  "generated_utc": "2026-09-24T11:46:36.510372+00:00"
+}

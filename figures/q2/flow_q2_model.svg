@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="447.59952pt" height="202.79952pt" viewBox="0 0 447.59952 202.79952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-25T19:58:56.561281</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 202.79952 
+L 447.59952 202.79952 
+L 447.59952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="text_1">
+    <g id="patch_2">
+     <path d="M 21.101067 87.682801 
+L 91.794817 87.682801 
+Q 94.354817 87.682801 94.354817 85.122801 
+L 94.354817 58.996863 
+Q 94.354817 56.436863 91.794817 56.436863 
+L 21.101067 56.436863 
+Q 18.541067 56.436863 18.541067 58.996863 
+L 18.541067 85.122801 
+Q 18.541067 87.682801 21.101067 87.682801 
+z
+" style="fill: #eaf2f8; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(47.552317 65.420691)">Input</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(21.101067 74.127723)">Cargo, fleet, terrain,</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(27.103567 82.839441)">Q1 flight physics</text>
+   </g>
+   <g id="text_2">
+    <g id="patch_3">
+     <path d="M 129.866572 87.680535 
+L 203.229072 87.680535 
+Q 205.789072 87.680535 205.789072 85.120535 
+L 205.789072 58.999129 
+Q 205.789072 56.439129 203.229072 56.439129 
+L 129.866572 56.439129 
+Q 127.306572 56.439129 127.306572 58.999129 
+L 127.306572 85.120535 
+Q 127.306572 87.680535 129.866572 87.680535 
+z
+" style="fill: #eef7f2; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(147.201572 65.422957)">Route pool</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(130.314072 74.129988)">Insert, merge, swap;</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(129.866572 82.837176)">screen route physics</text>
+   </g>
+   <g id="text_3">
+    <g id="patch_4">
+     <path d="M 240.853952 87.680457 
+L 312.441452 87.680457 
+Q 315.001452 87.680457 315.001452 85.120457 
+L 315.001452 58.999207 
+Q 315.001452 56.439207 312.441452 56.439207 
+L 240.853952 56.439207 
+Q 238.293952 56.439207 238.293952 58.999207 
+L 238.293952 85.120457 
+Q 238.293952 87.680457 240.853952 87.680457 
+z
+" style="fill: #eaf2f8; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(250.188327 65.423035)">Initial schedule</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(240.853952 74.130066)">Greedy repair under</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(243.524577 82.837254)">hard time windows</text>
+   </g>
+   <g id="text_4">
+    <g id="patch_5">
+     <path d="M 350.056957 87.680457 
+L 423.438207 87.680457 
+Q 425.998207 87.680457 425.998207 85.120457 
+L 425.998207 58.999207 
+Q 425.998207 56.439207 423.438207 56.439207 
+L 350.056957 56.439207 
+Q 347.496957 56.439207 347.496957 58.999207 
+L 347.496957 85.120457 
+Q 347.496957 87.680457 350.056957 87.680457 
+z
+" style="fill: #eef7f2; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(376.298207 65.423035)">ALNS</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(352.734457 74.130066)">Destroy and repair;</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(350.056957 82.837254)">adaptive acceptance</text>
+   </g>
+   <g id="text_5">
+    <g id="patch_6">
+     <path d="M 350.062582 146.360313 
+L 423.432582 146.360313 
+Q 425.992582 146.360313 425.992582 143.800313 
+L 425.992582 117.679063 
+Q 425.992582 115.119063 423.432582 115.119063 
+L 350.062582 115.119063 
+Q 347.502582 115.119063 347.502582 117.679063 
+L 347.502582 143.800313 
+Q 347.502582 146.360313 350.062582 146.360313 
+z
+" style="fill: #eaf2f8; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(350.062582 124.102891)">Deadline enrichment</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(354.955082 132.809922)">Add time-targeted</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(375.631332 141.51711)">routes</text>
+   </g>
+   <g id="text_6">
+    <g id="patch_7">
+     <path d="M 252.858327 146.360235 
+L 300.437077 146.360235 
+Q 302.997077 146.360235 302.997077 143.800235 
+L 302.997077 117.679141 
+Q 302.997077 115.119141 300.437077 115.119141 
+L 252.858327 115.119141 
+Q 250.298327 115.119141 250.298327 117.679141 
+L 250.298327 143.800235 
+Q 250.298327 146.360235 252.858327 146.360235 
+z
+" style="fill: #eef7f2; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(258.638327 124.102969)">Tabu VNS</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(252.858327 132.81)">Explore route</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(253.080827 141.517032)">combinations</text>
+   </g>
+   <g id="text_7">
+    <g id="patch_8">
+     <path d="M 123.638447 146.360313 
+L 209.457197 146.360313 
+Q 212.017197 146.360313 212.017197 143.800313 
+L 212.017197 117.679063 
+Q 212.017197 115.119063 209.457197 115.119063 
+L 123.638447 115.119063 
+Q 121.078447 115.119063 121.078447 117.679063 
+L 121.078447 143.800313 
+Q 121.078447 146.360313 123.638447 146.360313 
+z
+" style="fill: #eaf2f8; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(132.307822 124.102891)">Resource schedule</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(123.638447 132.809922)">Assign drones/batteries;</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(138.094072 141.51711)">resolve conflicts</text>
+   </g>
+   <g id="text_8">
+    <g id="patch_9">
+     <path d="M 15.543567 146.362657 
+L 97.352317 146.362657 
+Q 99.912317 146.362657 99.912317 143.802657 
+L 99.912317 117.676719 
+Q 99.912317 115.116719 97.352317 115.116719 
+L 15.543567 115.116719 
+Q 12.983567 115.116719 12.983567 117.676719 
+L 12.983567 143.802657 
+Q 12.983567 146.362657 15.543567 146.362657 
+z
+" style="fill: #eef7f2; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(27.987317 124.100547)">Audit and report</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(15.543567 132.81211)">Check coverage, SOC,</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(21.099817 141.519297)">windows, objectives</text>
+   </g>
+   <g id="patch_10">
+    <path d="M 106.894976 72.059832 
+Q 111.499218 72.059832 114.761818 72.059832 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 111.761818 70.559832 
+L 114.761818 72.059832 
+L 111.761818 73.559832 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 216.994856 72.059832 
+Q 221.599098 72.059832 224.861698 72.059832 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 221.861698 70.559832 
+L 224.861698 72.059832 
+L 221.861698 73.559832 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 327.094736 72.059832 
+Q 331.698978 72.059832 334.961578 72.059832 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 331.961578 70.559832 
+L 334.961578 72.059832 
+L 331.961578 73.559832 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 386.747582 89.71011 
+Q 386.747582 101.401703 386.747582 111.751655 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 388.247582 108.751655 
+L 386.747582 111.751655 
+L 385.247582 108.751655 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 336.300549 130.739688 
+Q 331.696307 130.739688 328.433707 130.739688 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 331.433707 132.239688 
+L 328.433707 130.739688 
+L 331.433707 129.239688 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 226.200669 130.739688 
+Q 221.596427 130.739688 218.333827 130.739688 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 221.333827 132.239688 
+L 218.333827 130.739688 
+L 221.333827 129.239688 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 116.100789 130.739688 
+Q 111.496547 130.739688 108.233947 130.739688 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 111.233947 132.239688 
+L 108.233947 130.739688 
+L 111.233947 129.239688 
+" style="fill: none; stroke: #555555; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+  </g>
+ </g>
+</svg>

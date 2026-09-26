@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="533.99952pt" height="231.59952pt" viewBox="0 0 533.99952 231.59952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-25T19:58:57.107025</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 231.59952 
+L 533.99952 231.59952 
+L 533.99952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="text_1">
+    <g id="patch_2">
+     <path d="M 95.041066 105.150801 
+L 196.630675 105.150801 
+Q 201.730675 105.150801 201.730675 100.050801 
+L 201.730675 72.291992 
+Q 201.730675 67.191992 196.630675 67.191992 
+L 95.041066 67.191992 
+Q 89.941066 67.191992 89.941066 72.291992 
+L 89.941066 100.050801 
+Q 89.941066 105.150801 95.041066 105.150801 
+z
+" style="fill: #eaf2f8; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(116.783136 79.122124)">Q1 · completed</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(97.652824 88.373345)">Terrain-aware leg physics</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(95.041066 97.624731)">and feasible cargo batches</text>
+   </g>
+   <g id="text_2">
+    <g id="patch_3">
+     <path d="M 349.661306 105.150718 
+L 426.665993 105.150718 
+Q 431.765993 105.150718 431.765993 100.050718 
+L 431.765993 72.292075 
+Q 431.765993 67.192075 426.665993 67.192075 
+L 349.661306 67.192075 
+Q 344.561306 67.192075 344.561306 72.292075 
+L 344.561306 100.050718 
+Q 344.561306 105.150718 349.661306 105.150718 
+z
+" style="fill: #eef7f2; stroke: #4477aa; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(359.110915 79.122207)">Q2 · completed</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(349.661306 88.373428)">Multi-stop route pool</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(350.360564 97.624648)">and fleet scheduling</text>
+   </g>
+   <g id="text_3">
+    <g id="patch_4">
+     <path d="M 98.583175 178.15057 
+L 193.088566 178.15057 
+Q 198.188566 178.15057 198.188566 173.05057 
+L 198.188566 145.291762 
+Q 198.188566 140.191762 193.088566 140.191762 
+L 98.583175 140.191762 
+Q 93.483175 140.191762 93.483175 145.291762 
+L 93.483175 173.05057 
+Q 93.483175 178.15057 98.583175 178.15057 
+z
+" style="fill: #f5f5f5; stroke-dasharray: 2.22,0.96; stroke-dashoffset: 0; stroke: #666666; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(121.265558 152.121893)">Q3 · planned</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(105.919738 161.373114)">Communication relay</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(98.583175 170.624501)">coverage and scheduling</text>
+   </g>
+   <g id="text_4">
+    <g id="patch_5">
+     <path d="M 325.7949 178.150487 
+L 450.5324 178.150487 
+Q 455.6324 178.150487 455.6324 173.050487 
+L 455.6324 145.291845 
+Q 455.6324 140.191845 450.5324 140.191845 
+L 325.7949 140.191845 
+Q 320.6949 140.191845 320.6949 145.291845 
+L 320.6949 173.050487 
+Q 320.6949 178.150487 325.7949 178.150487 
+z
+" style="fill: #f5f5f5; stroke-dasharray: 2.22,0.96; stroke-dashoffset: 0; stroke: #666666; stroke-width: 0.6; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(363.593337 152.121976)">Q4 · planned</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(325.7949 161.373197)">Independent service-area groups</text>
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif" transform="translate(346.821111 170.624584)">and resource demand</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8.5px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #333333" x="266.99976" y="34.142703" transform="rotate(-0 266.99976 34.142703)">Shared problem data  →  question-specific models  →  auditable outputs</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8px; font-family: 'Arial', 'Helvetica', 'DejaVu Sans', sans-serif; text-anchor: start" x="3.6" y="9.42875" transform="rotate(-0 3.6 9.42875)">Overall problem decomposition and manuscript scope</text>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,871 @@
+         China Postgraduate Innovation & Practice Competitions
+
+          The 23rd “Huawei Cup” China Post-Graduate
+               Mathematical Contest in Modeling
+                 SIMULATION MANUSCRIPT — QUESTION 1 SECTION
+
+
+
+Modeling and Optimization for Emergency UAV Supply
+                    Transport
+         Terrain-Constrained Cargo Batching and Multiobjective Planning
+
+
+ University
+ Team Number
+                         1.
+   Team Members          2.
+                         3.
+
+
+
+
+         The supplied Huawei Cup template identity is retained for simulation fidelity.
+       This document contains only the Q1 body section of a larger combined manuscript.
+
+                  English single-column working draft | 25 September 2026
+Q1 | UAV CARGO BATCHING                                                                                      1
+
+
+
+1 Question 1: Terrain-Constrained UAV Cargo Batching
+1.1 Problem and data
+1.1.1 Mathematical restatement
+Let 𝑆 = {1, … , 15} be the service areas, 𝐶𝑠 the cargo boxes assigned to area 𝑠, and 𝐺 = {𝐴, 𝐵, 𝐶} the aircraft
+models. A sortie chooses one area 𝑠, one aircraft model 𝑔, and one nonempty subset 𝐵 ⊆ 𝐶𝑠 . It flies depot
+𝑂01 → 𝑠, transfers all boxes in 𝐵, and returns 𝑠 → 𝑂01 without cargo. Every box is delivered once; boxes
+are not split or mixed across service areas. The objectives are to minimize the total number of sorties 𝑁,
+total modeled energy 𝐸, and total cumulative operating time 𝑇 .
+    The dataset contains 80 boxes with a combined mass of 758 kg and a combined volume of 2.011 m3 .
+Each area has between 3 and 15 boxes. The aircraft loading limits in Table 1 are hard constraints; the
+continuous payload calculation is energy- and range-based and does not impose volume, while each actual
+box subset must satisfy both mass and volume limits.
+
+                              Table 1. Nominal aircraft loading limits used in Q1.
+
+                   Aircraft model      Maximum cargo mass (kg)          Loading volume (m3 )
+                   A                                             25                         0.060
+                   B                                             30                         0.073
+                   C                                             80                         0.250
+
+
+    Figures 1–3 summarize the original input distribution without fitting statistical models. Cargo masses
+are discrete, so Fig. 1 reports frequencies rather than a continuous density. Figure 2 displays every supplied
+mass–volume pair without jitter, and Fig. 3 shows all 15 area counts.
+
+1.1.2 Input processing and scope
+The workbooks are read by named columns and sheets; the service-area demand summary is not treated
+as additional cargo. Cargo IDs are checked for uniqueness, every area must be represented, and positive
+finite mass and volume are required. Coordinates are projected to a local metric system before distances are
+calculated. For each depot–area segment, the route is sampled against intersected DEM cells; the maximum
+terrain elevation defines the cruise altitude. A route outside the valid DEM domain or intersecting NoData
+is not silently assigned a height: the affected candidate is treated as unverifiable and excluded pending data
+correction.
+
+1.2 Physical feasibility model
+1.2.1 Terrain, range, and flight time
+For a directed leg 𝑖 → 𝑗, let 𝑑𝑖𝑗 denote the projected horizontal distance and 𝑧𝑖𝑗max the maximum DEM
+elevation along the straight horizontal route. The specified cruise altitude and climb/descent increments
+are
+
+                            𝑧𝑖𝑗cr = 𝑧𝑖𝑗max + 50 m,                                                          (1)
+                            ℎ𝑖𝑗+ = max{0, 𝑧𝑖𝑗cr − 𝑧𝑖op },   ℎ𝑖𝑗− = max{0, 𝑧𝑖𝑗cr − 𝑧𝑗op },                   (2)
+
+where the depot operates at its supplied elevation and a service-area aircraft operates 30 m above its supplied
+elevation. For aircraft model 𝑔, the payload-dependent range 𝐿𝑔 (𝑞) and leg time 𝑡𝑔𝑖𝑗 follow the supplied
+Q1 | UAV CARGO BATCHING                                                                                     2
+
+
+
+
+                     40
+                                                                                             36
+                     35
+
+                     30
+   Number of boxes
+
+
+
+
+                     25
+                                                          19
+                     20
+                             16
+                     15
+                                               9
+                     10
+
+                     5
+
+                     0
+                             3                 6           8                                 14
+                                             Cargo-box mass (kg)
+Figure 1. Frequency of the 80 supplied cargo-box masses (kg). Exact counts are shown; no continuous density is
+fitted.
+Q1 | UAV CARGO BATCHING                                                                                                      3
+
+
+
+
+                          0.035                                              Food (n=19)                Medical (n=16)
+                                                                             Hygiene (n=9)              Water (n=36)
+
+
+
+                          0.030
+  Cargo-box volume (m³)
+
+
+
+
+                          0.025
+
+
+
+
+                          0.020
+
+
+
+
+                          0.015
+
+
+
+
+                                  3                      6               8                                            14
+                                                              Cargo-box mass (kg)
+                    Figure 2. Mass–volume pairs for all 80 boxes by cargo class. Coordinates are unjittered source values.
+Q1 | UAV CARGO BATCHING                                                                                4
+
+
+
+
+                            S001                                                        15
+
+
+                            S003                                   8
+
+
+                            S002                                   8
+
+
+                            S006                         6
+
+
+                            S005                         6
+
+
+                            S004                         6
+
+
+                            S008                     5
+             Service area
+
+
+
+
+                            S007                     5
+
+
+                            S015           3
+
+
+                            S014           3
+
+
+                            S013           3
+
+
+                            S012           3
+
+
+                            S011           3
+
+
+                            S010           3
+
+
+                            S009           3
+
+
+                               0.0   2.5       5.0           7.5       10.0   12.5   15.0    17.5
+                                                         Cargo boxes (count)
+
+        Figure 3. Exact number of cargo boxes assigned to each service area; all 15 areas are shown.
+Q1 | UAV CARGO BATCHING                                                                                           5
+
+
+
+range and speed relationships:
+                                                           3/2
+                                         0    0    𝐹    𝑞
+                              𝐿𝑔 (𝑞) = 𝐿𝑔 − (𝐿𝑔 − 𝐿𝑔 ) ( ) ,                 0 ≤ 𝑞 ≤ 𝑄𝑔 ,                       (3)
+                                                        𝑄𝑔
+                                         +
+                                       ℎ𝑖𝑗 𝑑𝑖𝑗 ℎ𝑖𝑗 −
+                                 𝑡𝑔𝑖𝑗 = ↑ + 𝑐 + ↓ .                                                             (4)
+                                        𝑣𝑔   𝑣𝑔   𝑣𝑔
+
+Here 𝑄𝑔 is rated payload, 𝐿𝑔0 , 𝐿𝑔𝐹 are unloaded and fully loaded ranges, and 𝑣𝑔↑ , 𝑣𝑔𝑐 , 𝑣𝑔↓ are climb, cruise, and
+descent speeds.
+
+1.2.2 Conditional energy convention
+The task describes energy as horizontal plus ascent energy but does not provide explicit component equa-
+tions. We therefore define, and do not attribute to the task as a uniquely prescribed law, the baseline con-
+vention
+
+                                             hor (𝑞) = 𝐸 use
+                                                              𝑑𝑖𝑗
+                                            𝐸𝑔𝑖𝑗        𝑔          ,                                            (5)
+                                                            𝐿𝑔 (𝑞)
+                                             up          (𝑀𝑔 + 𝑞)𝑔ℎ𝑖𝑗+
+                                            𝐸𝑔𝑖𝑗 (𝑞) =                   ,                                      (6)
+                                                         3.6 × 106 𝜂↑𝑔
+                                                        hor (𝑞) + 𝐸 up (𝑞),
+                                            𝐸𝑔𝑖𝑗 (𝑞) = 𝐸𝑔𝑖𝑗                                                     (7)
+                                                                   𝑔𝑖𝑗
+
+where 𝐸𝑔use is usable battery energy in kWh, 𝑀𝑔 is empty aircraft mass including the battery in kg, 𝑔 =
+9.81 m s−2 , ℎ+ is in metres, and 𝜂↑𝑔 is climb eﬀiciency. The first term allocates usable energy in proportion
+to distance divided by payload-adjusted range; the second converts 𝑚𝑔ℎ/𝜂 from joules to kWh. Descent
+has no separate energy term under this convention. Its adequacy depends on standard range representing
+horizontal cruise and usable battery energy reflecting unavailable reserve energy as recorded in the input.
+    For a cargo subset 𝐵 with total mass 𝑚(𝐵), the outbound leg carries 𝑚(𝐵) and the return leg is empty.
+Thus
+                                                                      return      𝐸𝑔𝑠𝐵
+                  𝐸𝑔𝑠𝐵 = 𝐸𝑔,𝑂01,𝑠 (𝑚(𝐵)) + 𝐸𝑔,𝑠,𝑂01 (0),        SOC𝑔𝑠𝐵 = 1 − use ≥ 𝜌𝑔 .                     (8)
+                                                                                  𝐸𝑔
+Range is checked separately by 𝑑𝑂01,𝑠 /𝐿𝑔 (𝑚(𝐵)) + 𝑑𝑠,𝑂01 /𝐿𝑔 (0) ≤ 1. This prevents the common but
+incorrect substitution of a loaded round trip for a loaded outbound plus empty return. The continuous safe
+payload is
+                    max = max{𝑞 ∈ [0, 𝑄 ] ∶ 𝐸
+                   𝑞𝑔𝑠                                                                 use             (9)
+                                         𝑔      𝑔,𝑂01,𝑠 (𝑞) + 𝐸𝑔,𝑠,𝑂01 (0) ≤ (1 − 𝜌𝑔 )𝐸𝑔 }.
+
+If even an empty round trip violates the reserve, the pair (𝑔, 𝑠) is reported unreachable rather than assigned
+a zero-kilogram capacity. Actual subsets are additionally subject to 𝑚(𝐵) ≤ 𝑄𝑔 and 𝑣(𝐵) ≤ 𝑉𝑔 ; volume is
+intentionally absent from Eq. (9).
+    The reserve baseline is 𝜌 = 0.20. To expose dependence on the unspecified energy split, we also scale
+horizontal and ascent components by 𝛼, 𝛽 ∈ {0.9, 1.0, 1.1} and repeat the complete solve for reserves 𝜌 ∈
+{0.20, 0.30, 0.40}. These multipliers are diagnostic perturbations, not empirically estimated uncertainty
+bounds or oﬀicial parameter ranges. Accordingly, all reported capacities, feasibility conclusions, Pareto
+fronts, and energy values are conditional on Eqs. (7) and the stated scenario grid.
+
+1.3 Discrete batching and objectives
+1.3.1 Feasible candidate set
+For each area, every nonempty cargo subset is paired with each of the three aircraft types. Candidate
+𝑏 = (𝑠, 𝑔, 𝐵) is retained only if
+                                                                                  𝑑𝑂01,𝑠    𝑑𝑠,𝑂01
+          𝑚(𝐵) ≤ 𝑄𝑔 ,         𝑣(𝐵) ≤ 𝑉𝑔 ,        𝐸𝑔𝑠𝐵 ≤ (1 − 𝜌𝑔 )𝐸𝑔use ,                  +        ≤ 1.        (10)
+                                                                                 𝐿𝑔 (𝑚(𝐵)) 𝐿𝑔 (0)
+Q1 | UAV CARGO BATCHING                                                                                    6
+
+
+
+No candidate cap is imposed. Since |𝐶𝑠 | ≤ 15, area-wise exhaustive enumeration is bounded by 3(2|𝐶𝑠 | − 1)
+model–subset pairs before physical pruning.
+   Let 𝑥𝑏 ∈ {0, 1} indicate selection of candidate 𝑏, and 𝐶𝑏 its box set. The exact set-partitioning require-
+ments are
+                                  ∑ 𝑥𝑏 = 1 (∀𝑐 ∈ 𝐶),            𝑥𝑏 ∈ {0, 1}.                            (11)
+                                 𝑏∶𝑐∈𝐶𝑏
+
+This equality enforces both complete delivery and no duplicate delivery. For each sortie, the modeled
+operating time includes round-trip flight, baseline handover, per-box handover, preflight preparation, and
+per-box loading:
+
+                   𝑇𝑏 = 𝑡𝑔,𝑂01,𝑠 + 𝑡𝑔,𝑠,𝑂01 + 𝑡𝑔prep + |𝐶𝑏 |𝑡𝑔load + 𝑡𝑔hand,base + |𝐶𝑏 |𝑡𝑔hand,box .    (12)
+
+We minimize the vector
+
+                                                  ⎜∑ 𝑥𝑏 , ∑ 𝐸𝑏 𝑥𝑏 , ∑ 𝑇𝑏 𝑥𝑏 ⎞
+                            min (𝐹𝑁 , 𝐹𝐸 , 𝐹𝑇 ) = ⎛                         ⎟.                          (13)
+                                                  ⎝𝑏      𝑏         𝑏       ⎠
+𝐹𝑇 is cumulative operating time summed over sorties. Q1 assigns no individual airframes and models
+no parallel execution, so it is not a fleet makespan and should not be interpreted as elapsed wall-clock
+completion time.
+
+1.3.2 Exact subset dynamic programming
+For area 𝑠 and local cargo subset 𝑈 ⊆ 𝐶𝑠 , let 𝑃𝑠 (𝑈) contain the nondominated triples (𝑁, 𝐸, 𝑇 ) and their
+realizing partitions. Set 𝑃𝑠 (∅) = {(0, 0, 0)}. For nonempty 𝑈, let 𝑖(𝑈) be its lowest-indexed box and
+consider only feasible batches containing it:
+
+            𝑃𝑠 (𝑈) = ND {(1, 𝐸𝑏 , 𝑇𝑏 ) + 𝑝 ∶ 𝑏 ∈ ℬ𝑠 , 𝐶𝑏 ⊆ 𝑈, 𝑖(𝑈) ∈ 𝐶𝑏 , 𝑝 ∈ 𝑃𝑠 (𝑈 ∖ 𝐶𝑏 )} .           (14)
+
+Anchoring every transition at the lowest uncovered box generates each partition once. At a fixed coverage
+mask, a dominated partial objective vector can be discarded: any continuation adds the same feasible future
+batch vectors, and therefore cannot make the dominated vector nondominated. After each area’s full set has
+been solved, area fronts are combined by Minkowski addition and Pareto pruning:
+
+                              𝒫 = ND (𝑃1 (𝐶1 ) ⊕ 𝑃2 (𝐶2 ) ⊕ ⋯ ⊕ 𝑃15 (𝐶15 )) .                           (15)
+
+The decomposition is valid because Q1 has no shared aircraft, battery, charging, or inter-area timing con-
+straints. Exactness is with respect to the fully enumerated candidates and the recorded floating-point com-
+parison tolerances. This recurrence follows the established use of dynamic programming for discrete mul-
+ticriteria optimization, while the area-wise state decomposition is tailored to this instance [1, 2].
+     The workflow in Fig. 4 separates physical feasibility, exact combinatorial optimization, and result au-
+diting. The epsilon grid is a downstream audit/read-out over the completed front: it does not generate the
+front and does not invoke a MILP.
+Q1 | UAV CARGO BATCHING                                                                                          7
+
+
+
+                         Cargo, aircraft, depot/service-area coordinates, and 30-m DEM
+
+
+                  Terrain profile, loaded-outbound / empty-return range and conditional energy
+
+
+                                  Exhaustive area-wise subset–aircraft enumera-
+                                  tion; mass, volume, range, and reserve checks
+
+
+             Exact subset DP within each area; remove only dominated states at identical coverage
+
+
+                     Minkowski merge of 15 area fronts and global nondominance pruning
+
+
+            Epsilon-grid audit records; scenario feasibility, Pareto endpoints, and representative plan
+
+     Figure 4. Q1 solution workflow. Epsilon records audit the exact front; they are not separate MILP solves.
+
+
+1.3.3 Pareto interpretation and representative plan
+A solution dominates another if it is no worse in all three objectives and strictly better in at least one. We
+retain the complete nondominated set rather than imposing an arbitrary scalar trade-off during optimization.
+For descriptive comparison, each objective’s ideal value 𝐿𝑗 and nadir value 𝑈𝑗 are computed from the
+complete front. The representative plan minimizes its equal-weight Euclidean distance to the normalized
+ideal:
+                      ⎧(𝐹 (𝑥) − 𝐿 )/(𝑈 − 𝐿 ), 𝑈 > 𝐿 ,
+            𝐹̂𝑗 (𝑥) = { 𝑗        𝑗     𝑗   𝑗      𝑗      𝑗
+                                                               𝑥 rep = arg min √ ∑ 𝐹        ̂𝑗 (𝑥)2 .      (16)
+                      ⎨
+                      {                                                    𝑥∈𝒫
+                      ⎩ 0,                      𝑈 𝑗 =  𝐿 𝑗 ,                     𝑗∈{𝑁,𝐸,𝑇 }
+
+Ties within numerical tolerance are resolved by sortie count, energy, cumulative time, and then canonical
+plan ID. This is a declared decision rule for a representative, not a claim that the selected plan is universally
+optimal under every stakeholder preference.
+
+1.4 Computational procedure and verification
+The implementation first computes area route geometries and aircraft physics, then enumerates feasi-
+ble subsets and applies the local Pareto DP. Global front merging is followed by an epsilon-grid audit,
+representative-plan selection, and independent reconstruction of each reported partition. The code
+uses Python 3.12.14 and SciPy 1.18.1; the exact front is generated by the project implementation in
+src/models/q1_full.py, with route physics in src/models/q1_physics.py. No machine-learning
+surrogate or stochastic search is used to certify optimality.
+    In a repository checkout with uv, reproduce the full experiment and exports with:
+
+       uv run --locked python -m src.experiments.q1_full --scenario all
+      --max-scenarios 27 --resume
+      uv run --locked python -m src.experiments.q1_full_report
+      uv run --locked python -m src.visualization.q1_full_figures
+
+    The validation record reports 27/27 scenario outcomes resolved: 18 feasible scenarios have complete
+exact fronts and nine are proven infeasible. Candidate and DP results are fingerprinted against the source
+workbooks, DEM, model code, and lockfile. Validation checks cargo uniqueness, per-batch mass and vol-
+ume, loaded outbound versus empty return, range, energy reserve, time-component reconciliation, and
+objective totals. The independent model review passed with conditions: the energy convention in Eqs. (7)
+must be disclosed. The original epsilon records (10,184 across the experiment) are grid status records, not
+10,184 MILP solves; epsilon enumeration is an audit of already-computed fronts.
+Q1 | UAV CARGO BATCHING                                                                                           8
+
+
+
+
+                                                            100,731
+                                                       5
+                                                  10
+   Candidate combinations (count; log scale)
+
+
+
+
+                                               6 × 104
+
+
+
+
+                                               4 × 104
+
+
+
+                                               3 × 104
+
+
+
+
+                                                                          19,373
+                                                                                                    18,735
+                                               2 × 104
+
+
+                                                           All subsets    Physical               Dominance
+                                                            × models     feasibility              retention
+
+Figure 5. Candidate counts at each enumeration stage across 27 scenarios. The line is the median and the band is the
+empirical interquartile range, not a confidence interval; the vertical axis is logarithmic.
+
+
+    Figure 5 summarizes how exhaustive raw model–subset combinations are reduced by physical checks
+and same-subset dominance pruning. Figure 6 shows the exact audit-record status by primary objective,
+pooled only over globally feasible scenarios. Figure 7 reports the exact number of objective vectors on each
+feasible scenario front; an X denotes a scenario proven infeasible, not a zero-cardinality feasible front.
+
+1.5 Results and discussion
+1.5.1 Safe payload and baseline feasibility
+For the baseline (𝜌, 𝛼, 𝛽) = (0.20, 1, 1), the exported capacity table contains 45 aircraft–area pairs. Fifteen
+A-model pairs are bounded by the 25-kg rated payload, 14 B pairs by 30 kg, and 10 C pairs by 80 kg; the
+remaining six are energy-bound at lower values. This distinction is important: the capacity envelope is
+not uniform across all areas even though the nominal limits bind for most pairs. Figure 8 presents each
+computed value; these are energy/range safe payloads and do not replace subset-level volume screening.
+    Across the 27 modeled scenarios, feasibility declines as the return reserve rises: all nine (𝛼, 𝛽) combi-
+nations are feasible at 𝜌 = 0.20, six are feasible at 𝜌 = 0.30, and three at 𝜌 = 0.40. The infeasible cases
+arise in the complete partitioning model; no hard constraint is relaxed to force a plan. Feasibility is thus
+scenario-specific, and an infeasible mark in Fig. 7 means no full cargo partition exists under the relevant
+physics and reserve, not that the optimization procedure timed out.
+Q1 | UAV CARGO BATCHING                                                                                          9
+
+
+
+
+                                                   Feasible and optimal            Certified infeasible
+
+
+
+
+                              Sorties         1,499                                2,077
+   Primary objective
+
+
+
+
+                              Energy                            3,240
+
+
+
+
+                       Operation time         1,408                              1,960
+
+
+
+                                        0   500      1000     1500        2000    2500      3000          3500
+                                                  Certified epsilon-grid records (count)
+Figure 6. Feasible and infeasible epsilon-grid records by primary objective, pooled over the 18 globally feasible
+scenarios. These are exact front-based certificates, not sampled data or MILP execution counts.
+Q1 | UAV CARGO BATCHING                                                                                                 10
+
+
+
+
+                                       Return reserve ρ = 0.2
+
+
+
+                                 0.9            2                  2            2
+
+
+
+
+                                 1.0            2                  2            2
+                             α
+
+
+
+
+                                 1.1            3                  5            5
+
+
+
+                                       Return reserve ρ = 0.3                         60
+
+
+
+                                                                                      50
+                                 0.9            2                  2            2
+
+
+
+
+                                                                                           Nondominated plans (count)
+                                                                                      40
+
+
+                                 1.0           13                 13            13
+                             α
+
+
+
+
+                                                                                      30
+
+
+
+                                                                                      20
+                                 1.1            X                 X             X
+                                                                                      10
+
+                                       Return reserve ρ = 0.4
+
+
+
+                                 0.9           47                 39            63
+
+
+
+
+                                 1.0            X                 X             X
+                             α
+
+
+
+
+                                 1.1            X                 X             X
+
+
+                                               0.9                1.0           1.1
+                                                          Energy multiplier β
+
+Figure 7. Cardinality of the complete exact nondominated objective set for each reserve and energy-multiplier com-
+bination. X marks a proven-infeasible scenario.
+Q1 | UAV CARGO BATCHING                                                                                                  11
+
+
+
+
+                                        Baseline capacity envelope
+
+                                 S001          25              30               80
+
+
+                                 S002          25              30              68.9
+
+
+                                 S003          25              30              68.2
+
+
+                                 S004          25              30              63.7     80
+
+
+                                 S005          25              30               80      70
+
+
+                                 S006          25              30               80      60
+
+
+
+
+                                                                                             Maximum safe payload (kg)
+                                 S007          25              30               80      50
+                  Service area
+
+
+
+
+                                 S008          25             28.8             58.9     40
+
+
+                                 S009          25              30               80      30
+
+
+                                 S010          25              30               80      20
+
+
+                                 S011          25              30               80      10
+
+                                 S012          25              30              68.1
+                                                                                        0
+
+                                 S013          25              30               80
+
+
+                                 S014          25              30               80
+
+
+                                 S015          25              30               80
+
+                                            Model A          Model B          Model C
+                                                      Transport-drone model
+
+Figure 8. Maximum safe payload (kg) for each aircraft–area pair at the baseline parameter setting. Color and cell
+annotations encode the same computed value.
+Q1 | UAV CARGO BATCHING                                                                                       12
+
+
+
+1.5.2 Exact baseline trade-off
+The baseline front contains exactly two distinct objective vectors (Table 2). The 18-sortie plan is both the
+minimum-sortie and minimum-cumulative-time endpoint in this two-point front; the 19-sortie plan is the
+minimum-energy endpoint. The representative rule in Eq. (16) selects the 18-sortie point. It uses 0.09736
+kWh (about 0.165%) more than the energy-minimizing endpoint, while saving one sortie and 1,663.973 s
+of cumulative operating time. Figure 9 plots the pairwise projections; the points are deterministic nondom-
+inated plans, not repeated trials.
+
+                       Table 2. Complete baseline Pareto front and selected representative.
+
+Plan                           Sorties    Energy (kWh)      Cumulative time (s)      Interpretation
+Representative                      18        59.131669               32,776.093     Equal-weight normalized
+                                                                                     ideal-distance rule; fewer
+                                                                                     sorties
+Minimum-energy endpoint             19        59.034314               34,440.065     Lowest energy on the
+                                                                                     complete front
+
+
+    The representative plan has 18 sorties: nine use model B and nine use model C; model A is not selected
+in this baseline representative. Figure 10 shows the per-sortie mass composition by cargo class. Its source
+reconciliation confirms that the selected batches contain all 80 distinct cargo IDs exactly once; each bar is
+a planned batch, not an observed flight.
+
+1.5.3 Reserve and energy sensitivity
+Each point on the sensitivity grid triggers a complete re-enumeration and re-optimization; it does not reuse
+the baseline partition. Figure 11 reports representative total-energy change relative to the baseline repre-
+sentative when a feasible representative exists. The gray infeasible cells are not assigned artificial energy
+values. The pattern should be interpreted jointly with feasibility: a reserve increase can eliminate the full as-
+signment rather than merely increase energy. The 𝛼 and 𝛽 grid is a structured model-diagnostic experiment,
+not a probability distribution, so we report no confidence interval or probabilistic robustness claim.
+
+1.5.4 Limitations
+The largest limitation is structural: the explicit energy components are not supplied by the task, and the
+baseline equations are an interpretable modeling convention rather than a uniquely verified aircraft energy
+law. The multiplier experiment tests local sensitivity to that choice but cannot substitute for manufacturer
+flight logs or a calibrated propulsion model. Terrain is represented by the maximum intersected DEM eleva-
+tion on a straight horizontal route; wind, weather, payload-dependent climb eﬀiciency, turning, landing-site
+constraints, battery aging, and stochastic failure are not modeled. Finally, Q1 sums sortie operating times
+without assigning vehicles or scheduling concurrency. Consequently, its time objective cannot be read as
+response time or fleet makespan. These issues motivate richer Q2/Q3 scheduling, but those problems are
+outside the present paper’s solved scope.
+Q1 | UAV CARGO BATCHING                                                                                                                  13
+
+
+
+
+                                                                      Balanced representative      Minimum-energy endpoint
+
+                                                        19.25
+
+                                                        19.00
+                              Sorties (count)
+
+
+
+
+                                                        18.75
+
+                                                        18.50
+
+                                                        18.25
+
+                                                        18.00
+
+                                                        17.75
+                                                             59.02     59.04       59.06        59.08      59.10      59.12      59.14
+                                                                                            Energy (kWh)
+                        Cumulative operation time (s)
+
+
+
+
+                                                        34500
+
+                                                        34000
+
+                                                        33500
+
+                                                        33000
+
+                                                        32500
+
+                                                            59.02      59.04       59.06        59.08      59.10      59.12      59.14
+                                                                                            Energy (kWh)
+                        Cumulative operation time (s)
+
+
+
+
+                                                        34500
+
+                                                        34000
+
+                                                        33500
+
+                                                        33000
+
+                                                        32500
+
+                                                                     18.0       18.2        18.4        18.6       18.8       19.0
+                                                                                           Sorties (count)
+
+Figure 9. Pairwise projections of both distinct objective vectors on the complete baseline Pareto front. The star
+identifies the selected representative and the diamond the minimum-energy endpoint; no statistical error bars apply.
+Q1 | UAV CARGO BATCHING                                                                                                             14
+
+
+
+
+                                                   001 | S001 | C                                                     76
+
+
+
+                                                   002 | S001 | C                                                      78
+
+
+
+                                                   003 | S002 | B             25
+
+
+
+                                                   004 | S002 | C                                 56
+
+
+
+                                                   005 | S003 | B             25
+
+
+
+                                                   006 | S003 | C                                 56
+
+
+
+                                                   007 | S004 | C                                      59
+
+
+
+                                                   008 | S005 | C                                      59
+                           Sortie | area | model
+
+
+
+
+                                                   009 | S006 | C                                      59
+
+
+
+                                                   010 | S007 | C                         45
+
+
+
+                                                   011 | S008 | C                         45
+
+
+
+                                                   012 | S009 | B             25
+
+
+
+                                                   013 | S010 | B             25
+
+
+
+                                                   014 | S011 | B             25
+
+
+
+                                                   015 | S012 | B             25
+
+
+
+                                                   016 | S013 | B             25
+
+
+
+                                                   017 | S014 | B             25
+
+
+
+                                                   018 | S015 | B             25
+                                                                                       Food    Hygiene      Medical         Water
+
+                                                                    0   20           40           60                  80
+                                                                             Cargo mass per sortie (kg)
+
+Figure 10. Cargo-class mass composition (kg) for each of the 18 representative sorties. Stacks sum to each sortie’s
+payload; all 80 source cargo IDs occur exactly once.
+Q1 | UAV CARGO BATCHING                                                                                                         15
+
+
+
+
+                                         Return reserve ρ = 0.2
+
+
+
+                                   0.9          -5.9              -5.7           -5.4
+
+
+
+
+                                   1.0          -0.3              +0.0           +0.3
+                               α
+
+
+
+
+                                   1.1          +7.5              +10.0          +10.3
+
+
+                                                                                         10.0
+                                         Return reserve ρ = 0.3
+
+                                                                                         7.5
+
+                                   0.9          -5.9              -5.7           -5.4
+
+
+
+                                                                                                 Change in total energy (kWh)
+                                                                                         5.0
+
+
+                                                                                         2.5
+
+
+                                   1.0          +7.4              +7.7           +8.0    0.0
+                               α
+
+
+
+
+                                                                                         -2.5
+
+
+                                                                                         -5.0
+                                   1.1           X                 X              X
+                                                                                         -7.5
+
+                                         Return reserve ρ = 0.4
+                                                                                         -10.0
+
+
+                                   0.9          +7.1              +7.5           +9.5
+
+
+
+
+                                   1.0           X                 X              X
+                               α
+
+
+
+
+                                   1.1           X                 X              X
+
+
+                                                 0.9               1.0            1.1
+                                                           Energy multiplier β
+
+Figure 11. Change in selected representative total energy (kWh) from baseline over the reserve and energy-multiplier
+grid. Each feasible cell is fully re-solved; X denotes a proven-infeasible scenario.
+Q1 | UAV CARGO BATCHING                                                                             16
+
+
+
+References
+[1] R. L. Carraway, T. L. Morin, and H. Moskowitz, “Generalized dynamic programming for multicrite-
+    ria optimization,” European Journal of Operational Research, vol. 44, no. 1, pp. 95–104, 1990, doi:
+    10.1016/0377-2217(90)90318-6.
+
+[2] M. Ehrgott and X. Gandibleux, “A survey and annotated bibliography of multiobjective combinatorial
+    optimization,” OR Spectrum, vol. 22, pp. 425–460, 2000, doi: 10.1007/s002910000046.
+

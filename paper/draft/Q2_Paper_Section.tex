@@ -1,0 +1,142 @@
+\section{Question 2: Joint Scheduling of Multi-Destination UAV Sorties}
+\subsection{Problem and data}
+Question 2 extends Q1's single-area cargo batching to dispatches that visit one or more service areas and return to O01. It jointly chooses cargo grouping, stop sequence, aircraft model, individual drone, compatible shared battery, and preparation start time. The cargo attachment contains 80 boxes assigned to 15 service areas; 30 boxes are marked for initial delivery. Every box must be delivered exactly once. As in Q1, the flight-time and energy calculations follow the stated terrain and payload conventions; in particular, the explicit energy decomposition in Eq.~\eqref{eq:energy} remains a conditional modeling convention rather than a uniquely specified physical law.
+
+Let $\mathcal C$ be the cargo set, $m_c$ and $v_c$ the mass and volume of box $c$, $D_c^{\mathrm{des}}$ its desired delivery time, $D_c^{\mathrm{init}}$ its initial-delivery deadline when applicable, and $w_c$ its emergency priority factor. Medical boxes must meet their desired times, and boxes marked for initial delivery must meet their initial-delivery deadlines; both constraints apply if both conditions hold. Other desired times affect the lateness objective but are not hard deadlines. Figure~\ref{fig:q2-area-demand} shows box counts by service area, Figure~\ref{fig:q2-mass-volume} shows the supplied mass--volume pairs by priority, and Figure~\ref{fig:q2-desired-times} reports requested delivery-time frequencies; none fits a distribution. The fleet comprises eight drones (U01--U08) and 6, 4, and 4 shared batteries for models A, B, and C, respectively; the listed stock already includes batteries initially mounted on aircraft.
+
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.70\linewidth]{figs/q2_raw_q2_area_demand.pdf}\caption{Cargo-box count for each of the 15 service areas, sorted by demand; labels report exact counts. Source: Q2 cargo attachment.}\label{fig:q2-area-demand}\end{figure}
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.75\linewidth]{figs/q2_raw_q2_mass_volume_priority.pdf}\caption{Mass--volume combinations grouped by emergency priority. Bubble area is proportional to the number of boxes at an exact mass--volume pair; labels give counts. Source: Q2 cargo attachment.}\label{fig:q2-mass-volume}\end{figure}
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.75\linewidth]{figs/q2_raw_q2_desired_windows.pdf}\caption{Exact frequency of the 80 requested delivery times, expressed in hours. Bars represent supplied time values; no fitted distribution is used. Source: Q2 cargo attachment.}\label{fig:q2-desired-times}\end{figure}
+
+\subsection{Candidate routes and physical feasibility}
+Let $\mathcal R$ denote the finite candidate route pool. Candidate $p$ fixes aircraft model $g_p$, cargo set $C_p$, cargo subsets $C_{p,k}$ delivered at each stop $k$, and sequence $O01\to v_{p,1}\to\cdots\to v_{p,h_p}\to O01$. Every stop delivers at least one box to its assigned service area. A service area may occur more than once if its boxes are assigned to distinct stops. Q1 representative batches and recomputed feasible single-box sorties seed the pool; insertion, migration, exchange, stop changes, and disjoint-route merges create additional proposals. The initial $K_g=400$ pool retains 1,200 candidates across the three models. The deadline-directed extension used for the final tabu-guided variable-neighborhood-search (VNS) record adds routes to a total of 2,628. Neither finite pool enumerates all feasible routes.
+
+For each leg $(i,j)$ of route $p$, let $q_{p,ij}$ be the mass still aboard before departure. Its load decreases after each handover and is zero on the return leg. With model limits $Q_g$ and $V_g$, route energy $E_p$, usable battery energy $E_g^{\mathrm{use}}$, and return reserve $\rho_g$, physical feasibility requires
+\begin{equation}
+q_{p,ij}\le Q_{g_p},\qquad \sum_{c\in C_p}v_c\le V_{g_p},\qquad E_p=\sum_{(i,j)\in p}E_{g_p,ij}(q_{p,ij})\le(1-\rho_{g_p})E_{g_p}^{\mathrm{use}}.
+\label{eq:q2-physics}
+\end{equation}
+The equivalent-range check is applied separately where used. Before scheduling, each retained route has fixed preparation and loading duration $P_p$, delivery offsets $\tau_{p,c}$ from takeoff, return offset $\tau_p^{\mathrm{return}}$, return state of charge (SOC), and full-recharge duration $T_p^{\mathrm{chg}}$. The latter uses the attachment's two-phase charging rule: for return SOC $r_p$, $T_p^{\mathrm{chg}}=t_{g_p}^{\mathrm{full}}f(r_p)$, where $f(r)=0.65(0.90-r)/0.90+0.35$ for $r<0.90$, and $f(r)=0.35(1-r)/0.10$ otherwise. Figure~\ref{fig:q2-pool-model} and Figure~\ref{fig:q2-stop-counts} describe route proposals and retained routes in the initial $K=400$ pool only.
+
+\begin{figure}[H]\centering
+\begin{subfigure}[t]{0.49\linewidth}\centering
+\includegraphics[width=0.98\linewidth]{figs/q2_process_q2_pool_by_model.pdf}
+\caption{Generated proposals and retained candidates by aircraft model in the initial $K=400$-per-model pool, before deadline-directed extension. Source: \texttt{candidate\_pool\_k400.json}.}\label{fig:q2-pool-model}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\linewidth}\centering
+\includegraphics[width=0.98\linewidth]{figs/q2_process_q2_route_stop_counts.pdf}
+\caption{Candidate-route counts by stop count in the same initial pool, before deadline-directed extension. Source: \texttt{candidate\_pool\_k400.json}.}\label{fig:q2-stop-counts}
+\end{subfigure}
+\end{figure}
+
+\subsection{Joint schedule and search objectives}
+For each selected route, the schedule assigns one compatible drone and battery and a nonnegative preparation start $s_p$. Delivery completion is $d_c=s_p+P_p+\tau_{p,c}$. Drone occupancy lasts from preparation start through return, $D_p^U=P_p+\tau_p^{\mathrm{return}}+t_p^{\mathrm{turn}}$, with the source model setting the turnaround duration $t_p^{\mathrm{turn}}=0$; battery occupancy additionally includes full recharge, $D_p^B=D_p^U+T_p^{\mathrm{chg}}$. The corresponding half-open intervals must not overlap on any shared resource. The recorded battery stock includes initially mounted batteries; a battery can serve any compatible drone of the same model. The makespan ends at the last drone's return and excludes turnaround and battery recharge.
+
+The compact selection and assignment conditions are
+\begin{equation}
+\sum_{p:c\in C_p}x_p=1\quad(c\in\mathcal C),\qquad
+\sum_{u\in\mathcal U_{g_p}}y_{pu}=x_p,\qquad
+\sum_{b\in\mathcal B_{g_p}}z_{pb}=x_p,
+\label{eq:q2-cover}
+\end{equation}
+where $x_p,y_{pu},z_{pb}$ indicate route selection, drone assignment, and battery assignment. Hard deadlines are $d_c\le D_c^{\mathrm{des}}$ for medical boxes and $d_c\le D_c^{\mathrm{init}}$ for initial-delivery boxes, whenever applicable. Define $\ell_c\ge\max(0,d_c-D_c^{\mathrm{des}})$. The four reported minimization objectives are
+\begin{align}
+F_{\mathrm{late}}&=\sum_{c\in\mathcal C}w_c\ell_c, &
+F_{\mathrm{makespan}}&=\max_{p:x_p=1}(s_p+P_p+\tau_p^{\mathrm{return}}),\\
+F_{\mathrm{energy}}&=\sum_{p\in\mathcal R}E_px_p, &
+F_{\mathrm{sortie}}&=\sum_{p\in\mathcal R}x_p.
+\label{eq:q2-objectives}
+\end{align}
+Weighted lateness is measured in priority-seconds. The late-first baseline uses lexicographic order $(F_{\mathrm{late}},F_{\mathrm{makespan}},F_{\mathrm{energy}},F_{\mathrm{sortie}})$; the sortie-first recommendation uses $(F_{\mathrm{sortie}},F_{\mathrm{late}},F_{\mathrm{makespan}},F_{\mathrm{energy}})$. The full 80-box problem is solved by adaptive large-neighborhood search (ALNS), deadline-directed route enrichment, and tabu-guided VNS. A small exact mixed-integer linear program (MILP) is used only to cross-check the implementation on a miniature instance. Any nondominated archive is defined only over schedules discovered by the heuristic search.
+
+Figure~\ref{fig:q2-workflow} summarizes the data-to-validation sequence. Figure~\ref{fig:q2-drone-schedule} shows preparation-to-return occupancy for the eight drones in the recommended schedule; battery recharge intervals are reported in \texttt{resource\_timeline.csv}. Figure~\ref{fig:q2-heuristic-archive} is an incomplete two-dimensional projection of the heuristic archive: color encodes energy, while sortie count is omitted. Figure~\ref{fig:q2-objective-tradeoff} compares the four metrics on separate scales.
+
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.80\linewidth]{figs/q2_flow_q2_model.pdf}\caption{Q2 solution chain from input and base route generation through initial scheduling, ALNS, deadline-directed route enrichment, tabu-guided VNS, resource scheduling, and independent audit. Source: Q2 model and experiment implementation.}\label{fig:q2-workflow}\end{figure}
+
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.85\linewidth]{figs/q2_process_q2_drone_schedule.pdf}\caption{Preparation-to-return intervals for the eight drones in the recommended schedule. Bars identify aircraft model; battery recharge intervals are listed in \texttt{resource\_timeline.csv}. Source: \texttt{alns\_sortie\_k400\_seed20260929.json}.}\label{fig:q2-drone-schedule}\end{figure}
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.75\linewidth]{figs/q2_process_q2_pareto_archive.pdf}\caption{Two-dimensional projection of the incomplete heuristic nondominated archive: axes show weighted lateness and makespan, color encodes energy, and sortie count is omitted. This is not a complete Pareto frontier. Source: \texttt{alns\_report.json} and \texttt{alns\_sortie\_k400\_seed20260929.json}.}\label{fig:q2-heuristic-archive}\end{figure}
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.82\linewidth]{figs/q2_process_q2_objective_tradeoff.pdf}\caption{Objective values for the 39-sortie late-first baseline and 24-sortie sortie-first recommendation; axes are separate by objective. Source: \texttt{alns\_report.json} and \texttt{alns\_sortie\_k400\_seed20260929.json}.}\label{fig:q2-objective-tradeoff}\end{figure}
+
+\subsection{Verification and results}
+The miniature MILP has two boxes, three feasible routes, one drone, and one compatible battery. Its objective is route energy plus $0.01$ times sorties plus $0.001$ times the sum of both delivery times, both lateness values, and makespan. Exact enumeration and the 14-variable, 26-constraint MILP agree on the optimum, 4.055; the solver reports the same incumbent and dual bound and zero gap. This checks the small-instance constraint implementation only and provides no full-instance optimality certificate.
+
+Both full schedules pass independent checks for unique coverage of all 80 boxes, compatible drone and battery assignments, hard deadlines, route physics, delivery offsets, and nonoverlapping drone and battery intervals. Table~\ref{tab:q2-validation} summarizes the checks. The selected 24-sortie schedule is independently reproduced with identical selected routes and delivery times in the initial 1,200-route pool. This is a consistency check and does not establish that route enrichment was necessary for this schedule.
+
+\begin{table}[H]
+\centering
+\caption{Independent validation checks for the reported Q2 schedules.}
+\label{tab:q2-validation}
+\begin{tabularx}{\linewidth}{@{}lXc@{}}
+\toprule
+Check & Validation condition & Status\\
+\midrule
+Cargo coverage & All 80 boxes occur exactly once; each stop matches its box's service area. & PASS\\
+Route SOC and energy & Route energy and return SOC satisfy the aircraft reserve requirement in Eq.~\eqref{eq:q2-physics}. & PASS\\
+Physical recomputation & Recomputed leg loads, volume, route physics, and return reserve agree with the retained routes. & PASS\\
+Hard deadlines & All medical desired-time and initial-delivery deadlines are met where applicable. & PASS\\
+Resource compatibility & Every selected route is assigned one drone and battery matching its aircraft model. & PASS\\
+Drone resources & Drone assignments are model-compatible and preparation-to-return intervals do not overlap. & PASS\\
+Battery resources & Battery assignments are compatible and preparation-to-full-recharge intervals do not overlap. & PASS\\
+Delivery offsets & Recomputed handover and return times agree with the scheduled route offsets. & PASS\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The late-first baseline attains zero weighted tardiness with 39 sorties. The sortie-first recommendation reduces sortie count, modeled energy, and last-return makespan at the cost of positive soft-deadline tardiness, while retaining hard-deadline feasibility (Table~\ref{tab:q2-comparison}). Figure~\ref{fig:q2-delivery-times} displays all delivery times and applicable hard deadlines; Figure~\ref{fig:q2-fleet-energy} reports model-specific sortie counts and energy; Figure~\ref{fig:q2-routes-map} plots every selected sortie leg in local east--north coordinates. The straight legs are schematic; overlapping lines do not identify itineraries or route order, which are listed in \texttt{sorties.csv}.
+
+\begin{table}[H]
+\centering
+\caption{Late-first baseline and sortie-first recommendation. Values are from the validated schedule records. Lexicographic orders are late, makespan, energy, sorties and sorties, late, makespan, energy, respectively.}
+\label{tab:q2-comparison}
+\begin{tabularx}{\linewidth}{@{}Xrrrr@{}}
+\toprule
+Schedule & Sorties & \shortstack{Weighted lateness\\(priority$\cdot$s)} & \shortstack{Makespan\\(s)} & \shortstack{Energy\\(kWh)}\\
+\midrule
+Late-first baseline & 39 & 0 & 9,767.13 & 100.47\\
+Sortie-first recommendation & 24 & 215,397.29 & 8,268.57 & 71.47\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.92\linewidth]{figs/q2_result_q2_delivery_windows.pdf}\caption{Actual delivery times, desired delivery times, and applicable hard deadlines for all 80 boxes under the recommended schedule. Hard constraints apply only to medical cargo and initial-delivery cargo. Source: \texttt{alns\_sortie\_k400\_seed20260929.json} and Q2 cargo attachment.}\label{fig:q2-delivery-times}\end{figure}
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.66\linewidth]{figs/q2_result_q2_fleet_energy.pdf}\caption{Number of sorties and modeled energy by aircraft model in the 24-sortie recommendation. Energy follows the conditional Q1 physics convention. Source: \texttt{alns\_sortie\_k400\_seed20260929.json}.}\label{fig:q2-fleet-energy}\end{figure}
+\begin{figure}[H]\captionsetup{justification=raggedright,singlelinecheck=false}\centering\includegraphics[width=0.82\linewidth]{figs/q2_result_q2_routes_map.pdf}\caption{All selected sortie legs projected in a local east--north coordinate frame. Line color identifies aircraft model; straight legs are schematic, and overlapping lines do not identify itinerary or route order. The stop sequence is in \texttt{sorties.csv}. Source: \texttt{alns\_sortie\_k400\_seed20260929.json} and Q2 node attachment.}\label{fig:q2-routes-map}\end{figure}
+
+\paragraph{Notation.} Table~\ref{tab:q2-notation} consolidates Q2 notation from the project glossary; units follow the source attachments and time convention.
+\begin{table}[H]
+\centering
+\caption{Principal Q2 notation.}
+\label{tab:q2-notation}
+\small
+\begin{tabularx}{\linewidth}{@{}lXl@{}}
+\toprule
+Symbol & Meaning & Unit\\
+\midrule
+$\mathcal C$ & Set of cargo boxes & --\\
+$\mathcal R$ & Finite candidate route pool & --\\
+$C_p$ & Cargo boxes carried by route $p$ & boxes\\
+$C_{p,k}$ & Boxes delivered at stop $k$ of route $p$ & boxes\\
+$x_p$ & Route-selection variable & 0/1\\
+$y_{pu},z_{pb}$ & Assignment of route $p$ to drone $u$ and battery $b$ & 0/1\\
+$s_p,d_c$ & Preparation start of route $p$; completion time for box $c$ & s\\
+$P_p$ & Preparation and loading duration & s\\
+$\tau_{p,c}$ & Time from takeoff to completion of delivery $c$ & s\\
+$\tau_p^{\mathrm{return}}$ & Time from takeoff until return to O01 & s\\
+$E_p$ & Total modeled energy of route $p$ & kWh\\
+$D_p^U,D_p^B$ & Drone occupancy; battery occupancy through full recharge & s\\
+$F_{\mathrm{late}}$ & Priority-weighted desired-time tardiness & priority$\cdot$s\\
+$F_{\mathrm{makespan}}$ & Last-return fleet makespan & s\\
+$F_{\mathrm{energy}}$ & Total modeled energy & kWh\\
+$F_{\mathrm{sortie}}$ & Number of selected routes & sorties\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{samepage}
+\subsection{Limitations}
+The 24-sortie result is a validated feasible heuristic schedule, not a global optimum. The value 18 is a route-cover lower bound for the recorded initial $K_g=400$ pool, not a feasible dispatch schedule. The 28 enumerated 18-route covers fail the recorded necessary B-drone deadline test; the conclusion applies only to that pool and test and does not prove that an 18-sortie schedule is impossible using routes outside it. We therefore make no scheduling optimality-gap claim. The search explores finite candidate pools, and its saved nondominated archive is incomplete. In addition, modeled energy remains conditional on Q1's explicit energy convention; unmodeled operating effects and the stated preparation, turnaround, and charging assumptions limit operational interpretation.
+
+\subsection*{Reproducibility note}
+\begingroup\raggedright
+The main model entry point is \path{src/models/q2_alns.py}; the deadline-enrichment/VNS experiment is \path{src/experiments/q2_deadline_vns.py}. Validated records are \path{results/q2/alns_report.json}, \path{results/q2/alns_deadline_vns.json}, and \path{results/q2/alns_sortie_k400_seed20260929.json}. Input hashes, parameters, software versions, and checksums are listed in the Q2 reproduction manifest under \path{results/q2/}. Detailed sortie, delivery, resource, route, and timeliness outputs remain in the corresponding CSV files in that directory. The global abstract, keywords, synthesis, and overall conclusion are reserved until Q3--Q4 are integrated.\par\endgroup
+\end{samepage}

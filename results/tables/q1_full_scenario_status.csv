@@ -1,0 +1,28 @@
+﻿Scenario,rho,alpha,beta,Checkpoint status,Report status,Formal,Reason,Candidates possible,Candidates physical,Candidates retained,Dominated removed,Epsilon planned,Epsilon optimal,Epsilon infeasible,Epsilon tentative
+r0.20_a0.9_b0.9,0.2,0.9,0.9,complete_sampled,formal_exact_pareto,True,,100731,19537,18869,668,363,163,200,0
+r0.20_a0.9_b1.0,0.2,0.9,1.0,complete_sampled,formal_exact_pareto,True,,100731,19537,18869,668,363,163,200,0
+r0.20_a0.9_b1.1,0.2,0.9,1.1,complete_sampled,formal_exact_pareto,True,,100731,19537,18869,668,363,163,200,0
+r0.20_a1.0_b0.9,0.2,1.0,0.9,complete_sampled,formal_exact_pareto,True,,100731,19525,18857,668,363,163,200,0
+r0.20_a1.0_b1.0,0.2,1.0,1.0,complete_sampled,formal_exact_pareto,True,,100731,19525,18857,668,363,163,200,0
+r0.20_a1.0_b1.1,0.2,1.0,1.1,complete_sampled,formal_exact_pareto,True,,100731,19525,18857,668,363,163,200,0
+r0.20_a1.1_b0.9,0.2,1.1,0.9,complete_sampled,formal_exact_pareto,True,,100731,19460,18800,660,363,239,124,0
+r0.20_a1.1_b1.0,0.2,1.1,1.0,complete_sampled,formal_exact_pareto,True,,100731,19449,18795,654,455,296,159,0
+r0.20_a1.1_b1.1,0.2,1.1,1.1,complete_sampled,formal_exact_pareto,True,,100731,19449,18795,654,455,296,159,0
+r0.30_a0.9_b0.9,0.3,0.9,0.9,complete_sampled,formal_exact_pareto,True,,100731,19512,18845,667,363,163,200,0
+r0.30_a0.9_b1.0,0.3,0.9,1.0,complete_sampled,formal_exact_pareto,True,,100731,19511,18844,667,363,163,200,0
+r0.30_a0.9_b1.1,0.3,0.9,1.1,complete_sampled,formal_exact_pareto,True,,100731,19511,18844,667,363,163,200,0
+r0.30_a1.0_b0.9,0.3,1.0,0.9,complete_sampled,formal_exact_pareto,True,,100731,19392,18754,638,798,532,266,0
+r0.30_a1.0_b1.0,0.3,1.0,1.0,complete_sampled,formal_exact_pareto,True,,100731,19373,18735,638,767,525,242,0
+r0.30_a1.0_b1.1,0.3,1.0,1.1,complete_sampled,formal_exact_pareto,True,,100731,19363,18735,628,798,550,248,0
+r0.30_a1.1_b0.9,0.3,1.1,0.9,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S008-WAT-01, S008-WAT-02",100731,19020,18490,530,0,0,0,0
+r0.30_a1.1_b1.0,0.3,1.1,1.0,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S008-WAT-01, S008-WAT-02",100731,18998,18474,524,0,0,0,0
+r0.30_a1.1_b1.1,0.3,1.1,1.1,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S008-WAT-01, S008-WAT-02",100731,18986,18465,521,0,0,0,0
+r0.40_a0.9_b0.9,0.4,0.9,0.9,complete_sampled,formal_exact_pareto,True,,100731,19199,18618,581,1121,776,345,0
+r0.40_a0.9_b1.0,0.4,0.9,1.0,complete_sampled,formal_exact_pareto,True,,100731,19186,18618,568,1043,696,347,0
+r0.40_a0.9_b1.1,0.4,0.9,1.1,complete_sampled,formal_exact_pareto,True,,100731,19164,18597,567,1117,770,347,0
+r0.40_a1.0_b0.9,0.4,1.0,0.9,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S004-WAT-01, S004-WAT-02, S004-WAT-03, S008-FOD-01, S008-HYG-01, S008-MED-01, S008-WAT-01, S008-WAT-02",100731,18788,18312,476,0,0,0,0
+r0.40_a1.0_b1.0,0.4,1.0,1.0,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S004-WAT-01, S004-WAT-02, S004-WAT-03, S008-FOD-01, S008-HYG-01, S008-MED-01, S008-WAT-01, S008-WAT-02",100731,18785,18310,475,0,0,0,0
+r0.40_a1.0_b1.1,0.4,1.0,1.1,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S004-FOD-01, S004-WAT-01, S004-WAT-02, S004-WAT-03, S008-FOD-01, S008-HYG-01, S008-MED-01, S008-WAT-01, S008-WAT-02",100731,18775,18301,474,0,0,0,0
+r0.40_a1.1_b0.9,0.4,1.1,0.9,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S002-FOD-01, S002-FOD-02, S002-HYG-01, S002-MED-01, S002-WAT-01, S002-WAT-02, S002-WAT-03, S002-WAT-04, S003-FOD-01, S003-FOD-02, S003-HYG-01, S003-MED-01, S003-WAT-01, S003-WAT-02, S003-WAT-03, S003-WAT-04, S004-FOD-01, S004-HYG-01, S004-MED-01, S004-WAT-01, S004-WAT-02, S004-WAT-03, S008-FOD-01, S008-HYG-01, S008-MED-01, S008-WAT-01, S008-WAT-02, S012-FOD-01, S012-MED-01, S012-WAT-01",100731,18711,18262,449,0,0,0,0
+r0.40_a1.1_b1.0,0.4,1.1,1.0,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S002-FOD-01, S002-FOD-02, S002-HYG-01, S002-MED-01, S002-WAT-01, S002-WAT-02, S002-WAT-03, S002-WAT-04, S003-FOD-01, S003-FOD-02, S003-HYG-01, S003-MED-01, S003-WAT-01, S003-WAT-02, S003-WAT-03, S003-WAT-04, S004-FOD-01, S004-HYG-01, S004-MED-01, S004-WAT-01, S004-WAT-02, S004-WAT-03, S008-FOD-01, S008-HYG-01, S008-MED-01, S008-WAT-01, S008-WAT-02, S012-FOD-01, S012-MED-01, S012-WAT-01",100731,18709,18262,447,0,0,0,0
+r0.40_a1.1_b1.1,0.4,1.1,1.1,infeasible,proven_infeasible,True,"No feasible single-cargo candidate for: S002-FOD-01, S002-FOD-02, S002-HYG-01, S002-MED-01, S002-WAT-01, S002-WAT-02, S002-WAT-03, S002-WAT-04, S003-FOD-01, S003-FOD-02, S003-HYG-01, S003-MED-01, S003-WAT-01, S003-WAT-02, S003-WAT-03, S003-WAT-04, S004-FOD-01, S004-HYG-01, S004-MED-01, S004-WAT-01, S004-WAT-02, S004-WAT-03, S008-FOD-01, S008-HYG-01, S008-MED-01, S008-WAT-01, S008-WAT-02, S012-FOD-01, S012-MED-01, S012-WAT-01",100731,18709,18262,447,0,0,0,0

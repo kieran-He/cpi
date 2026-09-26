@@ -1,0 +1,69 @@
+# Q2 manuscript outline — joint multi-destination UAV scheduling
+
+This is the evidence outline for an English Q2 section appended after the existing Q1 section in the combined-project copy `paper/Q1_Q2_Paper-LaTeX/HuaweiCup23_LaTeX_Template.tex`. Match Q1's single-column structure, notation, units, source-grounded captions, and explicit distinction between exact and heuristic claims. The Q1 energy convention remains conditional. This outline is an internal writing artifact, not manuscript prose.
+
+## Section structure and claim–evidence map
+
+### 1. Problem and data
+
+- **Claim:** Q2 extends Q1's single-area cargo partition to a time-indexed dispatch of multi-stop sorties from and back to O01. Its decisions are box grouping, visit order, aircraft model, individual drone, compatible shared battery, and preparation start. All 80 boxes assigned to 15 service areas must be delivered exactly once; 30 are marked for initial delivery.
+- **Symbols/formulas:** Introduce cargo set $\mathcal C$, Q2 candidate route pool $\mathcal R$ (retaining Q1 $\mathcal P$ for its nondominated solution set), aircraft models $g$, drones $\mathcal U_g$, batteries $\mathcal B_g$, mass $m_c$, volume $v_c$, desired time $D_c^{\mathrm{des}}$, initial-delivery deadline $D_c^{\mathrm{init}}$, and priority weight $w_c$. Distinguish medical desired-time and initial-delivery deadlines as hard constraints; other desired times enter the lateness objective. Relate Q1's cumulative sortie operating time to Q2's last-return fleet makespan without equating them.
+- **Figures:** `figures/raw_q2_area_demand.svg`, `figures/raw_q2_mass_volume_priority.svg`, and `figures/raw_q2_desired_windows.svg`. Use PDF versions derived from these masters in the manuscript. Keep exact counts, units, and no fitted distribution, as specified in `figures/q2_paper_figure_captions.json`.
+- **Evidence:** `analysis/problems/Q2.md` §1; source workbooks under `questions/Data/Basic Data for Drone-Based Emergency Supply Transport/`; `results/q2/cargo_profile.csv`; caption contract `figures/q2_paper_figure_captions.json`.
+
+### 2. Route pool and physical feasibility
+
+- **Claim:** Each candidate route fixes a compatible model, a sequence $O01\to v_1\to\cdots\to v_h\to O01$, a box set and its stop assignment. Q1 feasible batches and recomputed single-box sorties seed the pool; insertion, migration, exchange and merge operations form the initial K=400 pool of 1,200 routes. Deadline-directed enrichment extends it to 2,628 candidates for the final tabu-guided VNS record. A service area may be visited more than once if distinct boxes are delivered at different stops. Neither finite pool enumerates every feasible route.
+- **Symbols/formulas:** Define $C_p$, $C_{p,k}$, $g_p$, leg load $q_{p,ij}$ and energy $E_p$. Show $q_{p,ij}\le Q_{g_p}$, $\sum_{c\in C_p}v_c\le V_{g_p}$ and $E_p\le(1-\rho_{g_p})E_{g_p}^{\rm use}$. State that leg load falls after each handover and the return leg is empty. Define preparation duration $P_p$, delivery offset $\tau_{p,c}$, return offset $\tau_p^{\rm return}$, return SOC, and the source-defined two-phase full-recharge time $T_p^{\rm chg}$.
+- **Figures:** `figures/flow_q2_model.svg` for the Q2 workflow; `figures/process_q2_pool_by_model.svg` for generated proposals and retained routes in the *initial* K=400 pool; `figures/process_q2_route_stop_counts.svg` for that same initial pool's stop counts. The captions must not identify these two initial-pool figures as measurements of a later enriched pool.
+- **Evidence:** `analysis/problems/Q2.md` §§2–3; `results/q2/candidate_pool_k400.json`; `results/q2/alns_deadline_vns.json` (`candidate_route_count=2628`); `results/q2/复现清单.json`; Q1 physics convention in `paper/Q1_Paper-LaTeX/HuaweiCup23_LaTeX_Template.tex` and `src/models/q1_physics.py`; `figures/q2_paper_figure_captions.json`.
+
+### 3. Joint scheduling and heuristic search
+
+- **Claim:** For selected routes, a feasible schedule assigns one compatible drone and battery per sortie, a start time, each handover time, and a last-return time. Drone occupancy begins with preparation and ends at return under the zero-turnaround assumption; battery occupancy additionally includes recharge to full SOC. The fleet's listed battery stock already includes initially mounted batteries. A small exact MILP checks the implementation on a miniature instance; the 80-box experiment uses ALNS with route enrichment and tabu-guided variable-neighborhood search.
+- **Symbols/formulas:** Give $x_p\in\{0,1\}$, compatible $y_{pu},z_{pb}\in\{0,1\}$, $s_p\ge0$, $d_c$, $\ell_c$, and $T$. Show unique cover $\sum_{p:c\in C_p}x_p=1$, one drone and battery per selected route, $d_c=s_p+P_p+\tau_{p,c}$ for the route serving $c$, $D_p^U=P_p+\tau_p^{\rm return}$, and $D_p^B=D_p^U+T_p^{\rm chg}$. State nonoverlap of the corresponding half-open resource intervals. Show $d_c\le D_c^{\rm des}$ for medical boxes and $d_c\le D_c^{\rm init}$ for initial-delivery boxes, whenever applicable.
+- **Figures:** `figures/process_q2_drone_schedule.svg` for the eight-drone preparation-to-return timeline. Its battery-recharge periods are reported by the resource schedule table, not by these bars. Refer again to `figures/flow_q2_model.svg` when explaining solve and validation stages.
+- **Evidence:** `analysis/problems/Q2.md` §§4–5; `src/models/q2_alns.py`; `src/experiments/q2_deadline_vns.py`; `results/q2/resource_timeline.csv`; `analysis/validation/q2_miniature_milp.py` and its log; `results/q2/alns_deadline_vns.json` validation record. The independently reproduced base-pool schedule is recorded in `results/q2/alns_sortie_k400_seed20260929.json`.
+
+### 4. Objectives and interpretation of solution quality
+
+- **Claim:** Report four objectives separately: priority-weighted tardiness, last-return makespan, modeled energy and sortie count. The late-first baseline and sortie-first recommendation use different lexicographic priorities, so neither is a universal compromise. The saved nondominated set is a heuristic archive, not a complete Pareto front.
+- **Symbols/formulas:** $F_{\rm late}=\sum_c w_c\max(0,d_c-D_c^{\rm des})$, $F_{\rm makespan}=\max_{p:x_p=1}(s_p+P_p+\tau_p^{\rm return})$, $F_{\rm energy}=\sum_pE_px_p$, $F_{\rm sortie}=\sum_px_p$. Give both objective orders exactly: late–makespan–energy–sorties, and sorties–late–makespan–energy. Define nondominance only over solutions actually discovered by search.
+- **Figures:** `figures/process_q2_pareto_archive.svg` (explicitly label incomplete heuristic archive) and `figures/process_q2_objective_tradeoff.svg` (separate scales for the four metrics).
+- **Evidence:** `analysis/problems/Q2.md` §§4.3–5; `results/q2/alns_report.json`; `results/q2/alns_deadline_vns.json`; `results/q2/alns_sortie_k400_seed20260929.json` for archive figure provenance and the base-pool consistency check; `figures/q2_paper_figure_captions.json`.
+
+### 5. Computational verification
+
+- **Claim:** Both reported schedules pass independent checks for 80 unique boxes, compatible resources, applicable hard deadlines, route physics, delivery offsets, and nonoverlapping drone and battery intervals. The miniature MILP cross-check is a constraint implementation check and gives no full-instance optimality certificate.
+- **Symbols/formulas:** State the eight Boolean validation conditions in plain text or a compact table. If the paper includes the miniature model, put its exact objective and optimal result only in a short verification paragraph, with clear miniature-instance scope. Define the candidate-pool route-cover lower bound separately from a feasible schedule.
+- **Figures/tables:** Use a compact validation table sourced from the two JSON `validation.checks` objects. The Q2 workflow figure carries the computational sequence; no invented statistical uncertainty is appropriate for deterministic validations.
+- **Evidence:** `results/q2/alns_report.json` and `results/q2/alns_deadline_vns.json`, both `validation.status=PASS`; `results/q2/alns_sortie_k400_seed20260929.json` independently reproduces the 24-sortie selected schedule in the initial pool; `analysis/validation/q2_miniature_milp.py`; `analysis/validation/q2_miniature_milp.log`; `results/q2/sortie_lower_bound.json`.
+
+### 6. Results and comparison
+
+- **Claim:** The late-first baseline delivers in 39 sorties with zero weighted tardiness, 9,767.13 s last-return makespan, and 100.47 kWh modeled energy. The sortie-first recommended schedule has 24 sorties, 215,397.29 priority-seconds of weighted tardiness, 8,268.57 s makespan, and 71.47 kWh energy. Both retain all hard-deadline feasibility. The observed trade-off is less work and modeled energy for greater soft-deadline tardiness.
+- **Symbols/formulas:** Use a four-metric comparison table with units and objective order. If reporting relative changes, compute them from the unrounded JSON values and label the comparison against the 39-sortie baseline. Keep weighted tardiness in priority·s, not plain seconds.
+- **Figures:** `figures/result_q2_delivery_windows.svg` for all 80 delivery times, desired times, and applicable hard deadlines; `figures/result_q2_fleet_energy.svg` for model-specific sortie counts and energy; `figures/result_q2_routes_map.svg` for selected sorties in local east–north coordinates. The route map is schematic with straight projected legs, not a flown trajectory. Refer to `figures/process_q2_drone_schedule.svg` for operational concurrency and to `figures/process_q2_objective_tradeoff.svg` for the comparison.
+- **Evidence:** `results/q2/alns_report.json` and final `results/q2/alns_deadline_vns.json` metrics; `results/q2/alns_sortie_k400_seed20260929.json` records identical selected routes and delivery times in the initial pool; `results/q2/sorties.csv`, `deliveries.csv`, `resource_timeline.csv`, `route_map.csv`, `timeliness_summary.csv`; baseline versions under `results/q2/baseline_lateness/`; `figures/q2_paper_figure_captions.json`.
+
+### 7. Limitations and scope of conclusions
+
+- **Claim:** Twenty-four sorties is a validated feasible heuristic solution, not the global optimum. The 18-sortie number is a route-cover lower bound over the recorded K=400 pool; an 18-route cover is not a dispatch schedule. The enumerated 18-route covers fail the recorded necessary B-drone deadline test, but that result must not be extended to routes outside the examined pool. Route-pool choice, ALNS search, and Q1's conditional energy model limit inference.
+- **Symbols/formulas:** Explain $F_{\rm sortie}\ge18$ only as a cover relaxation for that pool. Do not state a certified scheduling gap, a complete Pareto frontier, or global infeasibility of 18 sorties. If discussing the later enriched search, cite its own record and distinguish its route pool from the frozen result source.
+- **Figures/tables:** No additional figure is needed. Finish with a short limitations paragraph comparable to Q1's `Limitations` subsubsection.
+- **Evidence:** `results/q2/sortie_lower_bound.json`; `results/q2/alns_deadline_vns.json`; `analysis/problems/Q2.md` §5; Q1 limitation statement in the existing LaTeX source.
+
+## Figure placement and tables
+
+Place `figures/flow_overall_model.pdf` at the start of the paper's problem-analysis section, before Q1, under `Figure~\ref{fig:overall-workflow}`. Q1 currently contains its Q1-specific process diagram only. Caption the overall flow as a roadmap across four questions; Q3 and Q4 boxes indicate planned analytical branches and do not assert results. All 11 Q2 data figures and `flow_q2_model` have a section landing above. Use current SVGs as masters and derived PDF copies for LaTeX; match source-based captions in `figures/q2_paper_figure_captions.json`. Maintain continuous figure numbering after Q1, unique `fig:q2-*` labels, and a text reference before each figure.
+
+Include three concise Q2 tables: (1) four-objective baseline/recommendation comparison; (2) validation checks and resource compatibility; and (3) notation. The notation table is sourced from `术语表格.md` and contains at minimum $\mathcal C,\mathcal R,C_p,C_{p,k},x_p,y_{pu},z_{pb},s_p,d_c,P_p,\tau_{p,c},\tau_p^{\rm return},E_p,D_p^U,D_p^B,F_{\rm late},F_{\rm makespan},F_{\rm energy},F_{\rm sortie}$, with symbol, meaning and unit columns. Reuse Q1 definitions for shared symbols and do not duplicate or silently redefine them.
+
+Add a compact appendix/reproducibility note after the Q2 limitations section, consistent with the existing Q1 source's deferred whole-paper conclusion convention. Identify code entry points `src/models/q2_alns.py`, `src/experiments/q2_deadline_vns.py`, the validated result JSONs and the Q2 reproduction manifest `results/q2/复现清单.json`. Keep runnable code as a separate supporting artifact; do not paste a long source listing into the paper. Preserve detailed per-sortie, per-box and battery/charging timelines in existing CSV supporting files. Label the deliverable a Q1+Q2 working manuscript, with global abstract, keywords, synthesis and overall conclusion reserved until Q3–Q4 are integrated.
+
+## Evidence and wording controls for the full draft
+
+- The comparison values above come directly from the JSON records; quote rounded values consistently and retain exact values for any derived arithmetic.
+- The final VNS record uses 2,628 candidates and validates a 24-sortie schedule. The initial K=400 pool has 1,200 retained routes; an independent ALNS record finds exactly the same selected routes and delivery times. Present the latter as a consistency check, not as evidence that enrichment was necessary for this particular solution.
+- Q1's baseline 18 sorties are unscheduled cargo batches and cannot be equated with Q2's 18-route cover lower bound or its fleet schedule.
+- Do not add literature citations unless DOI/publisher metadata have been verified under the paper-writing workflow. Do not carry internal audit, gate, or build terminology into the manuscript.

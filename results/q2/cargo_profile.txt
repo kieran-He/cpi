@@ -1,0 +1,39 @@
+# Data profile: results\q2\cargo_profile.csv
+
+**Shape:** 80 rows × 8 cols
+
+## Columns
+
+| Column | Type | n | missing | summary |
+|---|---|---|---|---|
+| `cargo_id` | unknown | 80 | 0 |  |
+| `area` | unknown | 80 | 0 |  |
+| `mass_kg` | ordinal | 80 | 0 | 4 levels: 14.0(36), 8.0(19), 3.0(16), 6.0(9); min_group_n=9 |
+| `volume_m3` | continuous | 80 | 0 | mean=0.0251, sd=0.00704, range=[0.012, 0.035], skew=-0.97 (moderately skewed); outliers=25 (IQR) |
+| `desired_s` | ordinal | 80 | 0 | 5 levels: 3600.0(28), 7200.0(26), 10800.0(18), 14400.0(7), 18000.0(1); min_group_n=1 |
+| `priority` | continuous | 80 | 0 | mean=11.9, sd=5.18, range=[4, 24], skew=1.19 (highly skewed); outliers=12 (IQR) |
+| `hard_deadline_s` | ordinal | 30 | 50 (62%) | 3 levels: 3600.0(16), 7200.0(7), 10800.0(7); min_group_n=7 |
+| `supply_type` | unknown | 80 | 0 |  |
+
+## Group structure
+- Grouped by: `area`, `supply_type`
+- Number of groups: 53
+- Group size: min=1, median=1, max=8
+- **WARN**: at least one group has n<3 — statistics unreliable; must show all raw points.
+
+## Correlations (Pearson, sorted by |r|)
+- `volume_m3` ↔ `priority` : r = -0.912 (very strong)
+
+## Warnings
+- 列 'mass_kg' 至少有一个类别 n<10 — 小样本必须展示原始数据点，不要只画均值柱状图。
+- 列 'desired_s' 至少有一个类别 n<10 — 小样本必须展示原始数据点，不要只画均值柱状图。
+- 列 'hard_deadline_s' 缺失率 62% — 画图前考虑是否填补、剔除、或在图注中交代。
+- 列 'hard_deadline_s' 至少有一个类别 n<10 — 小样本必须展示原始数据点，不要只画均值柱状图。
+
+## Chart suggestions (preliminary)
+- 分类 vs 连续，小样本（每组 n<10）→ **箱线图/小提琴图 + stripplot 叠加原始点**；**避免**只画均值柱状图，会掩盖分布。
+- 两连续变量 volume_m3 vs priority → 散点图（含回归拟合 + r 值）
+- 分类维度组合数 = 60（mass_kg, desired_s, hard_deadline_s 全交叉），**一张图塞不下**——建议按某一维拆成多面板，或选择子集。
+- priority 高度偏态（skew=1.19）→ 考虑对数变换或小提琴图代替均值柱图
+
+> 这是基于数据形态的**初步建议**。最终图型选择必须结合**论证目标**（你想说什么）—— 详见 `references/chart_selection.md`。

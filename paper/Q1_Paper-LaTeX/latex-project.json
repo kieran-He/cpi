@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "contest": "generic",
+  "main_tex": "HuaweiCup23_LaTeX_Template.tex",
+  "template": {
+    "path": "D:\\cpi\\cpi\\HuaweiCup23_LaTeX_Template",
+    "source": "Workspace-provided converted HuaweiCup23 LaTeX template (user-directed; simulation manuscript)",
+    "version": "Workspace copy; adapted for simulated Q1 paper, 2026-09-25",
+    "sha256": "65594e55beb6d82376cae7c0ecbcdac36c408f2245f788bb4f651aa77d22d99c"
+  },
+  "template_files": {
+    "figures/contest-logo.png": "d5cae3c2fd0b2574eb742657589489e95412fdcdc1169c4a57e5888f3b6fac69",
+    "figures/cpipc-logo.png": "e438706ce5feb8acab7c64693f4f0f7f87f984d8a32f7c970618d41423932faa",
+    "figures/huawei-logo.png": "99ced3af8924baa45321dfb0367001f15c3645538d1da37ecb6fb78026fe8b49",
+    "figures/university-logo.png": "dd545f7fdbb7b8121bab603062e6ee25f5328419f3841b38a9865be10e117f6c",
+    "HuaweiCup23_LaTeX_Template.aux": "75015c367427d1a2586c3f4ae101b107aad1991b30791546f97ba8bd1fcd7ade",
+    "HuaweiCup23_LaTeX_Template.fdb_latexmk": "5a4c001e08b4e2339dbae41fda0719980967947d68199bed77f9b8939236557d",
+    "HuaweiCup23_LaTeX_Template.fls": "b02680f242063e26d20df412e01cc71315af9f0c686ac9805bbbf8e27bf83c97",
+    "HuaweiCup23_LaTeX_Template.log": "4fafa6e61653dd5477a11e18db7a3d3c6f89cddfffd3e4ebe0467e3715f81927",
+    "HuaweiCup23_LaTeX_Template.out": "780a88dc3b5e6ecfc5d9c10a152e568a840c9110457aeef8e228676fed34df8f",
+    "HuaweiCup23_LaTeX_Template.pdf": "c73598bd3fa128b2173d217d87a8b1b8eca507908f254eaf91d6cd2b8301a7e9",
+    "HuaweiCup23_LaTeX_Template.synctex.gz": "fadda663ffbbe2c06f6b97d99024312f8410b24732fa12c96103b4cababea60b",
+    "HuaweiCup23_LaTeX_Template.tex": "e35710835aa25811c10179d440ea1eddd0c453af3cf27ad7a95ca100c987cac6",
+    "HuaweiCup23_LaTeX_Template.toc": "f4ed58dfd744034f3c02bfe9a665a07e59b5b091f20f1f931403ee65a24fc9cf",
+    "latex-project.json": "0d70a5411f41dd13b81d0138d45c224a1fb70c387e5c5dbba8983d49ab9f8013",
+    "README.md": "1f51e402e292d8c879d7b45043e38e96e608f6a434a12bd82989bcbe7811b74d"
+  },
+  "resource_bindings": [
+    {
+      "source": "figures/Q1_Paper/q1_fig01_mass_profile.pdf",
+      "destination": "figs/q1_fig01_mass_profile.pdf",
+      "sha256": "5d7eda155637a1eb5d7fe3aa9e38e2f03bb35b9a0aeb20ad10c05a407b08ec26",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T06:23:59.551674+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig02_mass_volume.pdf",
+      "destination": "figs/q1_fig02_mass_volume.pdf",
+      "sha256": "e7b81c7345f609affcb3e8e8ebf2aa90d68033a4b1e6c776a74753a3be7ae9c0",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T06:23:59.672426+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig03_area_demand.pdf",
+      "destination": "figs/q1_fig03_area_demand.pdf",
+      "sha256": "f672e52c81a91d4fe46331e0f1d8888e2d2243d1d7639a10b28e6cfc1f918640",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T06:23:59.809976+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig04_candidate_reduction.pdf",
+      "destination": "figs/q1_fig04_candidate_reduction.pdf",
+      "sha256": "7f5bb6aa60ffea1687641ce3559e6cb29c5758f0dbc24c59fa29202bb24672c3",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T06:23:59.932810+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig05_epsilon_certification.pdf",
+      "destination": "figs/q1_fig05_epsilon_certification.pdf",
+      "sha256": "d415ad05ac5af34ce8efea38b4881b87dffb649833041ef4e6c8da16579d7d1a",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T06:24:00.054957+00:00"
+    },
+    {
+      "source": "draft/Q1_Paper_README.md",
+      "destination": "README.md",
+      "sha256": "804b6e5c26a8fb6cca8cb9697d1beb03785c4b28e8d8a4f09d7c845b4513156e",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T07:06:59.923648+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig06_frontier_cardinality.pdf",
+      "destination": "figs/q1_fig06_frontier_cardinality.pdf",
+      "sha256": "3a307c7b85a624812cfef5d9ded3150ef19d0fe06b05de8d7a8d78e9705ecffd",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T08:03:46.146924+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig07_capacity_envelope.pdf",
+      "destination": "figs/q1_fig07_capacity_envelope.pdf",
+      "sha256": "271f0d35b38b18214a17293118533437890aea82732a484e6f220d61180ea9c6",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T08:03:46.315541+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig09_sortie_manifest.pdf",
+      "destination": "figs/q1_fig09_sortie_manifest.pdf",
+      "sha256": "091e262084486bbb7ca9fb3dd11e7d432778bb16863e8e7500e33918e990e25b",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T08:03:46.700704+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig10_energy_sensitivity.pdf",
+      "destination": "figs/q1_fig10_energy_sensitivity.pdf",
+      "sha256": "5b34b5707a112b2ff3d621bbc6a54e235c884424155602ef8cf5b30f84f2500d",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T08:03:46.913664+00:00"
+    },
+    {
+      "source": "figures/Q1_Paper/q1_fig08_baseline_pareto.pdf",
+      "destination": "figs/q1_fig08_baseline_pareto.pdf",
+      "sha256": "b32e5272b0529ce98b48bdad861420c637f54a1015ab84c9cf724b3b867f1a27",
+      "hash_mode": "content",
+      "bound_at": "2026-09-25T08:25:55.533414+00:00"
+    }
+  ],
+  "created_at": "2026-09-25T06:21:17.289089+00:00"
+}

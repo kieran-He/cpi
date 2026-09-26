@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-24T02:16:39.593558+00:00",
+  "created_at_utc": "2026-09-25T05:25:24+00:00",
   "random_seed": 0,
   "input_files": [
     {
@@ -30,28 +30,28 @@
     },
     {
       "path": "D:\\cpi\\cpi\\analysis\\problems\\Q1.md",
-      "sha256": "5ba020e4e80fa5117c6bf82e5990613fcc785dbd8b973e10cbceb8fa4b265425",
-      "bytes": 10749
+      "sha256": "1ccf89abc65af5c9f35b54d6bc66b6ba2f4a7736cd3b7f79053ac7634b439233",
+      "bytes": 10930
     },
     {
       "path": "D:\\cpi\\cpi\\src\\models\\q1_full.py",
-      "sha256": "a2ae52d7ebc17eb097522fb3fc48c798d88c9ee8e05179bc554ca8808040e553",
-      "bytes": 17975
+      "sha256": "5e27b81d66e2f9be6e2adece9edd8a61a5329d8f8541af0b23ce5ce3cbe0491d",
+      "bytes": 28327
     },
     {
       "path": "D:\\cpi\\cpi\\src\\experiments\\q1_full.py",
-      "sha256": "1f477611b2d1009bc13a4b29828eb72f83c1c61211beea60dd64d08bc79535af",
-      "bytes": 29727
+      "sha256": "88cb5e0beb5c90058a8422db4dab50fd93da559ca97e45882b583a4892dfbe64",
+      "bytes": 37758
     },
     {
       "path": "D:\\cpi\\cpi\\src\\experiments\\q1_full_report.py",
-      "sha256": "256e9ea7933301a9901544a662da834f7df8cd1f4f4dc758ee1ca72c2a364773",
-      "bytes": 30693
+      "sha256": "27c865abd6ef93155e354e95e76704567cd03a897d82a9609118b9d3ec426aeb",
+      "bytes": 32275
     },
     {
       "path": "D:\\cpi\\cpi\\src\\visualization\\q1_full_figures.py",
-      "sha256": "5e1787041ceffd876333a8eb8f9512292a5c34020350482941138d1a28e25570",
-      "bytes": 13184
+      "sha256": "a6995fac7f133bf9d965ca8dd16731c6c3ef757dc496c45479fc81c65668d272",
+      "bytes": 13557
     },
     {
       "path": "D:\\cpi\\cpi\\pyproject.toml",
@@ -87,10 +87,10 @@
       1.0,
       1.1
     ],
-    "milp_time_limit_seconds": 600,
-    "max_solves_per_scenario": 100000,
+    "solver_method": "exact_subset_pareto_dp_v3.2",
+    "milp_time_limit_seconds": "not_applicable",
     "q1_energy_model": "conditional baseline",
-    "checkpoint_algorithm": "q1-exact-epsilon-certificate-v2"
+    "checkpoint_algorithm": "q1-exact-subset-pareto-dp-v3.2"
   },
-  "reproduce_command": "& \"D:\\Research\\tools\\uv\\uv.exe\" run --locked python -m src.experiments.q1_full --scenario <one-unstarted-key> --time-limit 600 --max-solves 100000 --max-scenarios 1 --resume; repeat for the 10 unstarted keys; then run q1_full_report and q1_full_figures"
+  "reproduce_command": "& \"D:\\Research\\tools\\uv\\uv.exe\" run --locked python -m src.experiments.q1_full --scenario all --max-scenarios 27 --resume; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & \"D:\\Research\\tools\\uv\\uv.exe\" run --locked python -m src.experiments.q1_full_report; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; & \"D:\\Research\\tools\\uv\\uv.exe\" run --locked python -m src.visualization.q1_full_figures; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }"
 }

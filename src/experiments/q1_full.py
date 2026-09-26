@@ -24,14 +24,16 @@ import scipy
 
 from src.data.q1_inputs import load_q1_inputs
 from src.models.q1_full import (OBJECTIVES, Batch, Scenario, all_scenarios, enumerate_area,
-                                load_full_inputs, make_geometries, max_safe_payload, nondominated,
-                                representative, solve_partition, validate_selected)
+                                exact_global_pareto, load_full_inputs, make_geometries,
+                                max_safe_payload, nondominated, representative, solve_partition,
+                                validate_selected)
 
 ROOT = Path(__file__).resolve().parents[2]
 DEM = ROOT / "questions" / "Data" / "Zhenlong Township Geospatial Data" / "Geospatial Data for Zhenlong Township and Surrounding Areas" / "Digital Elevation Model (DEM) Data" / "30 m DEM for Zhenlong Township and Surrounding Areas.tif"
-ALGORITHM_VERSION = "q1-exact-epsilon-certificate-v2"
-# New proof semantics must never read or rewrite the old fingerprint's directory.
-CHECKPOINT_DIR = ROOT / "results" / "checkpoints" / "q1_full_cert_v2"
+ALGORITHM_VERSION = "q1-exact-subset-pareto-dp-v3.2"
+# Keep the previous MILP run immutable; the DP solver writes a separate lineage.
+CHECKPOINT_DIR = ROOT / "results" / "checkpoints" / "q1_pareto_dp_v3_2"
+LEGACY_MILP_CHECKPOINT_DIR = ROOT / "results" / "checkpoints" / "q1_full_cert_v2"
 P1_CHECKPOINT_DIR = ROOT / "results" / "checkpoints" / "q1_full_p1_cert_v2"
 P1_EVIDENCE_DIR = ROOT / "results" / "logs" / "q1_full_p1_gate_cert_v2"
 TABLE_DIR = ROOT / "results" / "tables"
@@ -305,7 +307,7 @@ def _publish_baseline(state: dict, batch_map: dict[str, Batch], scenario: Scenar
     write_csv_atomic(TABLE_DIR / "q1_full_baseline_capacity.csv", list(capacity_rows[0]), capacity_rows)
 
 
-def run_scenario(scenario: Scenario, groups, aircrafts, geoms, fingerprint: dict,
+def run_scenario_milp(scenario: Scenario, groups, aircrafts, geoms, fingerprint: dict,
                  *, time_limit_s: float, max_solves: int, resume: bool,
                  checkpoint_dir: Path = CHECKPOINT_DIR, publish: bool = True) -> dict:
     path = checkpoint_dir / f"{scenario.key}.json"
@@ -447,6 +449,149 @@ def run_scenario(scenario: Scenario, groups, aircrafts, geoms, fingerprint: dict
     return state
 
 
+def run_scenario(scenario: Scenario, groups, aircrafts, geoms, fingerprint: dict,
+                 *, time_limit_s: float, max_solves: int, resume: bool,
+                 checkpoint_dir: Path = CHECKPOINT_DIR, publish: bool = True) -> dict:
+    """Solve Q1 by exact local subset DP and global Pareto convolution.
+
+    ``time_limit_s`` and ``max_solves`` remain in the signature for CLI/API
+    compatibility; this algorithm uses no MILP calls. Each area's cargo mask
+    has at most 2^15 states, and only non-dominated partial covers survive.
+    """
+    path = checkpoint_dir / f"{scenario.key}.json"
+    if path.exists() and not resume:
+        raise FileExistsError(f"Checkpoint exists; use --resume: {path}")
+    if path.exists():
+        state = read_checkpoint(path, fingerprint)
+        if state.get("scenario") != {"rho": scenario.rho, "alpha": scenario.alpha, "beta": scenario.beta}:
+            raise ValueError("Scenario mismatch in checkpoint")
+        if state.get("status") in ("complete_sampled", "infeasible"):
+            emit("scenario_cached", scenario=scenario.key, status=state["status"],
+                 method=state.get("pareto_method"))
+            return state
+    else:
+        state = {"schema": 3, "scenario": {"rho": scenario.rho, "alpha": scenario.alpha, "beta": scenario.beta},
+                 "fingerprint": fingerprint, "status": "started", "pareto_method": "exact_subset_dp",
+                 "capacity": [], "candidate_counts": {}, "endpoint_steps": {}, "endpoints": {},
+                 "epsilon_plan": [], "epsilon_results": {}}
+
+    def save() -> None:
+        state["updated_utc"] = datetime.now(timezone.utc).isoformat()
+        atomic_json(path, state)
+
+    area_batches: dict[str, list[Batch]] = {}
+    capacity = []
+    counts = {}
+    for area in sorted(groups):
+        for model, aircraft in sorted(aircrafts.items()):
+            status, payload = max_safe_payload(aircraft, geoms[area], scenario)
+            capacity.append({"Service Area ID": area, "Model ID": model,
+                             "Status": status, "Maximum Safe Payload (kg)": payload})
+        area_batches[area], counts[area] = enumerate_area(area, groups[area], aircrafts, geoms[area], scenario)
+        emit("enumerated", scenario=scenario.key, area=area, **counts[area])
+    state["capacity"], state["candidate_counts"] = capacity, counts
+    cargoes = [cargo for area in sorted(groups) for cargo in groups[area]]
+    batches = [batch for area in sorted(groups) for batch in area_batches[area]]
+    batch_map = {batch.batch_id: batch for batch in batches}
+    if len(batch_map) != len(batches):
+        raise AssertionError("Duplicate candidate ID")
+    state["candidate_digest"] = hashlib.sha256(canonical([batch.batch_id for batch in batches])).hexdigest()
+    uncovered = sorted({cargo.cargo_id for cargo in cargoes} -
+                       {ident for batch in batches for ident in batch.cargo_ids})
+    if uncovered:
+        state["status"] = "infeasible"
+        state["uncovered_cargo_ids"] = uncovered
+        state["proof_method"] = "candidate_coverage"
+        save()
+        emit("scenario_infeasible", scenario=scenario.key, uncovered=uncovered)
+        return state
+    state["status"] = "started"
+    save()
+
+    def progress(area: str, local_count: int, global_count: int, states: int) -> None:
+        emit("pareto_dp_area_complete", scenario=scenario.key, area=area,
+             local_front=local_count, global_front=global_count, dp_states=states)
+
+    pareto_front, area_minima, dp_states = exact_global_pareto(groups, area_batches, progress)
+    state["dp_states_by_area"] = dp_states
+    if not pareto_front:
+        state["status"] = "infeasible"
+        state["proof_method"] = "exact_subset_dp"
+        save()
+        emit("scenario_infeasible", scenario=scenario.key, reason="no exact area partition")
+        return state
+
+    state["pareto_complete"] = True
+    state["exact_pareto_count"] = len(pareto_front)
+    for target in OBJECTIVES:
+        order = [target, *[objective for objective in OBJECTIVES if objective != target]]
+        chosen = min(pareto_front, key=lambda point: (
+            *(point["metrics"][objective] for objective in order), tuple(point["selected"])))
+        metric = chosen["metrics"]
+        area_status = {area: {"status": "optimal", "dual_bound": area_minima[area][target],
+                              "gap": 0., "proof_method": "exact_subset_dp"}
+                       for area in sorted(groups)}
+        state["endpoints"][target] = {"status": "optimal", "selected": chosen["selected"],
+                                      "metrics": metric, "primary_dual_bound": metric[target],
+                                      "area_status": area_status, "proof_method": "exact_subset_dp"}
+        emit("endpoint_complete", scenario=scenario.key, target=target, metrics=metric,
+             method="exact_subset_dp")
+
+    initial = _levels(list(state["endpoints"].values()))
+    state["epsilon_initial_levels"] = initial
+    state["epsilon_plan"] = _jobs(initial, "base")
+
+    def epsilon_record(job: dict) -> dict:
+        bounds = job["limits"]
+        feasible = [point for point in pareto_front if all(
+            point["metrics"][name] <= value + 1e-8 * max(1., abs(value))
+            for name, value in bounds.items())]
+        primary = job["primary"]
+        if not feasible:
+            return {"status": "infeasible", "solver_status": None, "message": "Exact Pareto frontier proves no feasible point",
+                    "selected": [], "metrics": None, "dual_bound": None, "gap": 0., "node_count": None,
+                    "primary": primary, "limits": bounds, "reused": False,
+                    "proof_source": job["id"], "proof_method": "exact_subset_dp"}
+        secondary = [name for name in OBJECTIVES if name != primary]
+        chosen = min(feasible, key=lambda point: (
+            point["metrics"][primary], *(point["metrics"][name] for name in secondary),
+            tuple(point["selected"])))
+        return {"status": "optimal", "solver_status": None, "message": "Exact Pareto frontier proves optimality",
+                "selected": chosen["selected"], "metrics": chosen["metrics"],
+                "dual_bound": chosen["metrics"][primary], "gap": 0., "node_count": None,
+                "primary": primary, "limits": bounds, "reused": False,
+                "proof_source": job["id"], "proof_method": "exact_subset_dp"}
+
+    state["epsilon_stage"] = "base"
+    state["epsilon_results"] = {job["id"]: epsilon_record(job) for job in state["epsilon_plan"]}
+    endpoint_ids = {tuple(endpoint["selected"]) for endpoint in state["endpoints"].values()}
+    refined = _refine_levels(initial, pareto_front, endpoint_ids)
+    state["epsilon_refined_levels"] = refined
+    refinement_jobs = _jobs(refined, "refine", initial)
+    state["epsilon_plan"].extend(refinement_jobs)
+    state["epsilon_stage"] = "refine"
+    state["epsilon_results"].update({job["id"]: epsilon_record(job) for job in refinement_jobs})
+
+    ideal = {name: state["endpoints"][name]["metrics"][name] for name in OBJECTIVES}
+    chosen, ceilings = representative(pareto_front, ideal)
+    for point in pareto_front:
+        validate_selected(point["selected"], batch_map, cargoes, aircrafts, geoms, scenario)
+    state["pareto_sample"] = pareto_front
+    state["ideal"] = ideal
+    state["sample_upper"] = ceilings
+    state["representative"] = chosen["selected"]
+    state["tentative_representative"] = None
+    state["status"] = "complete_sampled"
+    state["proof_method"] = "exact_subset_dp"
+    save()
+    if publish:
+        _publish_baseline(state, batch_map, scenario)
+    emit("scenario_complete", scenario=scenario.key, status=state["status"],
+         pareto_points=len(pareto_front), epsilon_jobs=len(state["epsilon_results"]),
+         method="exact_subset_dp")
+    return state
+
+
 def self_check() -> None:
     """New-code P1 gate: real three-box slice through all full-run stages.
 
@@ -506,10 +651,10 @@ def self_check() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Q1 full exact batching and sampled epsilon experiment")
+    parser = argparse.ArgumentParser(description="Q1 full exact batching by subset Pareto dynamic programming")
     parser.add_argument("--scenario", default="all", help="all, baseline, or r0.20_a1.0_b1.0 etc")
-    parser.add_argument("--time-limit", type=float, default=120., help="seconds per MILP call; 0 means unlimited")
-    parser.add_argument("--max-solves", type=int, default=100000, help="MILP calls per scenario this invocation")
+    parser.add_argument("--time-limit", type=float, default=120., help="legacy MILP limit; ignored by exact subset DP")
+    parser.add_argument("--max-solves", type=int, default=100000, help="legacy MILP-call budget; ignored by exact subset DP")
     parser.add_argument("--max-scenarios", type=int, default=27, help="scenario count this invocation")
     parser.add_argument("--resume", action="store_true", help="resume only matching checksummed checkpoints")
     parser.add_argument("--p1-check", "--self-check", action="store_true", dest="self_check",

@@ -1,0 +1,162 @@
+{
+  "raw_q1_box_mass": {
+    "claim": "Cargo mass varies across the 80 original boxes",
+    "evidence": "all 80 box masses",
+    "chart_type": "histogram",
+    "source": "q1_full_input_boxes.csv",
+    "size_inches": [
+      6.4,
+      3.7
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "raw_q1_mass_volume": {
+    "claim": "Mass and volume are separate loading limits",
+    "evidence": "all 80 mass-volume pairs",
+    "chart_type": "scatter",
+    "source": "q1_full_input_boxes.csv",
+    "size_inches": [
+      6.4,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "raw_q1_area_demand": {
+    "claim": "Box counts differ among the 15 areas",
+    "evidence": "all 15 area counts",
+    "chart_type": "horizontal bars",
+    "source": "q1_full_input_areas.csv",
+    "size_inches": [
+      6.4,
+      5.2
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "process_q1_candidate_pruning": {
+    "claim": "Physical filtering and dominance reduce the candidate pool",
+    "evidence": "27 scenario counts",
+    "chart_type": "scatter",
+    "source": "q1_full_scenario_status.csv",
+    "size_inches": [
+      6.4,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "process_q1_epsilon_status": {
+    "claim": "The epsilon grid is answered from exact Pareto frontiers",
+    "evidence": "all epsilon status records",
+    "chart_type": "stacked bars",
+    "source": "q1_full_epsilon_status.csv",
+    "size_inches": [
+      7.2,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "process_q1_endpoint_shift": {
+    "claim": "Single-objective energy endpoints respond to uncertainty",
+    "evidence": "feasible-scenario energy endpoints",
+    "chart_type": "dot plot",
+    "source": "q1_full_endpoints.csv",
+    "size_inches": [
+      6.4,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "result_q1_pareto": {
+    "claim": "Exact baseline tradeoffs form the complete finite Pareto frontier",
+    "evidence": "baseline exact Pareto frontier",
+    "chart_type": "scatter",
+    "source": "q1_full_pareto_sample.csv",
+    "size_inches": [
+      6.4,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "result_q1_batch_load": {
+    "claim": "The chosen baseline partitions cargo into physical sorties",
+    "evidence": "baseline formal batches",
+    "chart_type": "strip plot",
+    "source": "q1_full_formal_batches.csv",
+    "size_inches": [
+      6.4,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "result_q1_sensitivity": {
+    "claim": "Representative energy and sortie counts shift by feasible scenario",
+    "evidence": "feasible-scenario representatives",
+    "chart_type": "scatter",
+    "source": "q1_full_sensitivity.csv",
+    "size_inches": [
+      6.4,
+      4.1
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  },
+  "flow_overall_model": {
+    "claim": "Q1 feeds Q2, Q3 and Q4 in the documented model chain",
+    "evidence": "Q1 code and Q1-Q4 model documents",
+    "chart_type": "method flow",
+    "source": "analysis/problems/Q1.md-Q4.md",
+    "size_inches": [
+      8.0,
+      5.0
+    ],
+    "backend": "Python Matplotlib",
+    "formats": [
+      "SVG",
+      "PNG 300 DPI",
+      "grayscale preview"
+    ]
+  }
+}
